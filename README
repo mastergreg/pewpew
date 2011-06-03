@@ -1,0 +1,3 @@
+libs:
+  -libgc-dev
+  -libglut-dev or libglut3-dev
