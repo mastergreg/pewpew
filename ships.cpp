@@ -1,9 +1,19 @@
 #include "ships.h"
-
-
-
 extern std::list<game_object *> enemyList;
 extern std::list<game_object *> fireList;
+
+void collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *> enemies)
+{
+  std::list<game_ship *>::iterator enemy = enemies.begin();
+  
+  while (enemy !=enemies.end())
+  {
+    (*enemy)->collisions(bullets);
+    enemy++;
+  }
+}
+
+
 
 
   game_ship::game_ship(vector pos,vector sp)

@@ -20,16 +20,6 @@ using namespace std;
       double mX,mY;
 
 
-void collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *> enemies)
-{
-  std::list<game_ship *>::iterator enemy = enemies.begin();
-  
-  while (enemy !=enemies.end())
-  {
-    (*enemy)->collisions(bullets);
-    enemy++;
-  }
-}
 
 void display()
 {

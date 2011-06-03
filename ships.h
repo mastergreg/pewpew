@@ -60,6 +60,7 @@ class fire : public game_ship
 };
 
 
+void collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *> enemies);
 
 
 #endif
