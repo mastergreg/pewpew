@@ -2,6 +2,7 @@
 #include <iostream>
 #include "ships.h"
 #include "vector.h"
+#include "peripherals.h"
 #define DT 0.01
 
 //accumulator buffer
@@ -159,91 +160,6 @@ void reshape(int w,int h)
 
 
 
-void keyboardreleasefunction(unsigned char key,int x, int y)
-{
-  vector current_speed;
-  current_speed.set_vector(mship.get_speed());
-  switch (key)
-  {
-    case 'w':
-      //current_speed.increase_vector(0,0.001,0);
-      current_speed.increase_reset();//scale(1.2,1.2,1.2);
-      mship.set_speed(current_speed);
-      break;
-  
-    case 'a':
-      //current_speed.increase_vector(-0.001,0,0);
-      current_speed.rotate_reset();
-      mship.set_speed(current_speed);
-      break;
-    case 's':
-      //current_speed.increase_vector(0,-0.001,0);
-      current_speed.increase_reset();//scale(1.2,1.2,1.2);
-      mship.set_speed(current_speed);
-      break;
-    
-    case 'd':
-      //current_speed.increase_vector(0.001,0,0);
-      current_speed.rotate_reset();
-      mship.set_speed(current_speed);
-      break;
-    case 'q':
-      current_speed.scale(0.25,0.25,0.25);
-      mship.set_speed(current_speed);
-      break;
-    case 'e':
-      current_speed.scale(4,4,4);
-      mship.set_speed(current_speed);
-      break;
-  }
-}
-void myMouseFunction(int x,int y)
-{
-  mX=3*((double(x)/WINDOW_SIZEX)-0.5);
-  mY=2*((double(y)/WINDOW_SIZEY)-0.5);
-}
-void keyboardfunction(unsigned char key,int x,int y)
-{
-  vector current_speed;
-  current_speed.set_vector(mship.get_speed());
-  switch (key)
-  {
-    case 27:
-      exit (0);
-      break;
-    case 'w':
-      //current_speed.increase_vector(0,0.001,0);
-      current_speed.vincrease();//scale(1.2,1.2,1.2);
-      mship.set_speed(current_speed);
-      break;
-    case 'a':
-      //current_speed.increase_vector(-0.001,0,0);
-      current_speed.rotatel();
-      current_speed.scale(1.01,1.01,1.01);
-      mship.set_speed(current_speed);
-      break;
-    case 's':
-      //current_speed.increase_vector(0,-0.001,0);
-      current_speed.vdecrease();//scale(0.8,0.8,0.8);
-      mship.set_speed(current_speed);
-      break;
-    case 'd':
-      //current_speed.increase_vector(0.001,0,0);
-      current_speed.rotater();
-      current_speed.scale(1.01,1.01,1.01);
-      mship.set_speed(current_speed);
-      break;
-    case 'q':
-      current_speed.scale(4,4,4);
-      mship.set_speed(current_speed);
-      break;
-    case 'e':
-      current_speed.scale(0.25,0.25,0.25);
-      mship.set_speed(current_speed);
-      break;
-  }
-}
-
 int main(int argc, char** argv)
 {
   glutInit(&argc,argv);
@@ -281,8 +197,8 @@ int main(int argc, char** argv)
   glutReshapeFunc(reshape);
   glutDisplayFunc(display);
   glutIdleFunc(glutPostRedisplay);
-  glutKeyboardUpFunc(keyboardreleasefunction);
-  glutKeyboardFunc(keyboardfunction);
+  glutKeyboardUpFunc(keyboardReleaseFunction);
+  glutKeyboardFunc(keyboardFunction);
   glutPassiveMotionFunc(myMouseFunction);
   glutMainLoop();
 

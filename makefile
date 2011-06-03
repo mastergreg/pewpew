@@ -10,8 +10,10 @@ ships.o: ships.h ships.cpp
 	g++ ${LIBS} -c ships.cpp ${EXTRA_FLAGS}
 drawables.o: drawables.cpp drawables.h
 	g++ ${LIBS} -c drawables.cpp ${EXTRA_FLAGS}
-${PROG}:	pewpew.cpp vector.o ships.o game_object.o drawables.o
-	g++ ${LIBS} game_object.o ships.o vector.o drawables.o pewpew.cpp -o ${PROG} ${EXTRA_FLAGS}
+peripherals.o:	peripherals.cpp peripherals.h
+	g++ ${LIBS} -c peripherals.cpp -o peripherals.o ${EXTRA_FLAGS}
+${PROG}:	pewpew.cpp peripherals.o vector.o ships.o game_object.o drawables.o
+	g++ ${LIBS} game_object.o peripherals.o ships.o vector.o drawables.o pewpew.cpp -o ${PROG} ${EXTRA_FLAGS}
 clean:
 	rm *.o ${PROG}.tar
 

@@ -1,3 +1,5 @@
+#ifndef SHIPS_H
+#define SHIPS_H
 #include "game_object.h"
 #include "drawables.h"
 #include <list>
@@ -56,3 +58,8 @@ class fire : public game_ship
     fire(vector posit,vector sp);
     void draw();
 };
+
+
+
+
+#endif
