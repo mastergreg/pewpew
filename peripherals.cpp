@@ -1,4 +1,29 @@
 #include "peripherals.h"
+double shipMouseAngle()
+{
+  vector pos = mship.get_pos();
+  double x = pos.getX();
+  double y = pos.getY();
+  x=mX-x;
+  y=-mY-y;
+  //std::cout <<" x y = --|#>> " << x << " " << y << std::endl;
+  if(x>0) 
+  {
+    return atan(y/x);
+  }
+  else if (x<0)
+  {
+    return atan(y/x)+M_PI;
+  }
+  else if (y>0)
+  {
+    return M_PI/2;
+  }
+  else 
+  {
+    return -M_PI/2;
+  }
+}
 void keyboardReleaseFunction(unsigned char key,int x, int y)
 {
   vector current_speed;

@@ -1,3 +1,6 @@
+#ifndef DRAWABLES_H
+#define DRAWABLES_H
+
 #include "game_object.h"
 #include <list>
 #include <GL/glut.h>
@@ -25,3 +28,4 @@ class xplosion : public game_object
 };
  
 
+#endif

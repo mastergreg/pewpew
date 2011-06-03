@@ -1,42 +1,24 @@
 #include <GL/glut.h>
 #include <iostream>
 #include "ships.h"
-#include "vector.h"
 #include "peripherals.h"
+#include "drawFunctions.h"
 #define DT 0.01
 
 //accumulator buffer
 using namespace std;
-ship mship;
-vector sp(0.001,0.005,0.005,0,0);
+      ship mship;
+      vector sp(0.001,0.005,0.005,0,0);
 
-vector esp(0.001,0.005,0.005,0,0);
-vector pos(-0.5,0,0.5,0,0);
-list<game_ship *> fireList;
-list<game_ship *> enemyList;
-list<game_object *> drawableList;
-int WINDOW_SIZEX;
-int WINDOW_SIZEY;
-double mX,mY;
-void drawEnemyList(std::list<game_ship *> lst)
-{
-  std::list<game_ship*>::iterator p=lst.begin();
-  while(p != lst.end())
-  {  
-    (*p)->draw();
-    p++;
-  }
-}
+      vector esp(0.001,0.005,0.005,0,0);
+      vector pos(-0.5,0,0.5,0,0);
+      list<game_ship *> fireList;
+      list<game_ship *> enemyList;
+      list<game_object *> drawableList;
+      int WINDOW_SIZEX;
+      int WINDOW_SIZEY;
+      double mX,mY;
 
-void drawDrawableList(std::list<game_object *> lst)
-{
-  std::list<game_object *>::iterator p=lst.begin();
-  while(p != lst.end())
-  {  
-    (*p)->draw();
-    p++;
-  }
-}
 
 void collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *> enemies)
 {
@@ -49,31 +31,6 @@ void collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *> enemi
   }
 }
 
-double shipMouseAngle()
-{
-  vector pos = mship.get_pos();
-  double x = pos.getX();
-  double y = pos.getY();
-  x=mX-x;
-  y=-mY-y;
-  //std::cout <<" x y = --|#>> " << x << " " << y << std::endl;
-  if(x>0) 
-  {
-    return atan(y/x);
-  }
-  else if (x<0)
-  {
-    return atan(y/x)+M_PI;
-  }
-  else if (y>0)
-  {
-    return M_PI/2;
-  }
-  else 
-  {
-    return -M_PI/2;
-  }
-}
 void display()
 {
   static int time = 0;

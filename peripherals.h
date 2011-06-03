@@ -3,7 +3,7 @@
 void keyboardReleaseFunction(unsigned char key,int x, int y);
 void keyboardFunction(unsigned char key,int x,int y);
 void myMouseFunction(int x,int y);
-
+double shipMouseAngle();
 
 
 

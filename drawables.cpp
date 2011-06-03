@@ -1,6 +1,9 @@
 #include "drawables.h"
 
-  chink::chink(vector pos)
+
+
+
+chink::chink(vector pos)
 :game_object(pos)
 {
   radius = 0.01;  
@@ -43,8 +46,8 @@ void chink::draw()
   glBegin(GL_TRIANGLE_FAN);
   {
     GLfloat  mycolor[]={1.0,0.0,0.0};
-//    GLfloat shiny[]={0.0};
-//    glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
+    //    GLfloat shiny[]={0.0};
+    //    glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
     glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
   }
   glVertex3f(x,y,z);
@@ -95,7 +98,7 @@ void xplosion::draw()
   double px = position.getX();
   double py = position.getY();
   double pz = position.getZ();
-  
+
   move();
   glPushMatrix();
   GLfloat mycolor[] = {1.0,0.0,0.0}; 
