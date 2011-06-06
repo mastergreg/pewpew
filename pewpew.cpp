@@ -1,5 +1,7 @@
+#include <stdio.h>
 #include <GL/glut.h>
 #include <iostream>
+#include <string.h>
 #include "ships.h"
 #include "peripherals.h"
 #include "drawFunctions.h"
@@ -7,22 +9,44 @@
 
 //accumulator buffer
 using namespace std;
-      ship mship;
-      vector sp(0.001,0.005,0.005,0,0);
+ship mship;
+vector sp(0.001,0.005,0.005,0,0);
+void *font = GLUT_BITMAP_TIMES_ROMAN_24;
 
-      vector esp(0.001,0.005,0.005,0,0);
-      vector pos(-0.5,0,0.5,0,0);
-      list<game_ship *> fireList;
-      list<game_ship *> enemyList;
-      list<game_object *> drawableList;
-      int WINDOW_SIZEX;
-      int WINDOW_SIZEY;
-      double mX,mY;
+vector esp(0.001,0.005,0.005,0,0);
+vector pos(-0.5,0,0.5,0,0);
+list<game_ship *> fireList;
+list<game_ship *> enemyList;
+list<game_object *> drawableList;
+int WINDOW_SIZEX;
+int WINDOW_SIZEY;
+double mX,mY;
+
+void output(double x, double y, char *string)
+{
+  int len, i;
+  glRasterPos2f(x, y);
+  len = (int) strlen(string);
+  for (i = 0; i < len; i++) 
+  {
+    glutBitmapCharacter(font, string[i]);
+  }
+}
 
 
+void show_score(int score)
+{
+  char c_score[20];
+  sprintf(c_score,"%d",score);
+  output(0.8,0.9,c_score);
+}
 
 void display()
 {
+  int enemie_before;
+  int enemie_after;
+  static int enemie_killed =0 ;
+  static int score = 0;
   static int time = 0;
   static int ftime=0;
   glClearColor(0,0,0,0);
@@ -46,21 +70,32 @@ void display()
   //draw life rectangle
   glDisable(GL_LINE_STIPPLE);
 
+  enemie_before = (int) enemyList.size();
+  collisionDetect(fireList,enemyList);
+  enemie_after = (int) enemyList.size();
+  enemie_killed+=enemie_before-enemie_after;
+  if (enemie_killed > 1)
+  {
+    enemie_killed = 0;
+    mship.set_life(mship.get_life()+50);
+    score+=10;
+  }
+  show_score(score);
   if (mship.isAlive()) 
   {
-  glLineWidth(10);
-  int mlife = mship.getLife();
-  glBegin(GL_LINES);
+    glLineWidth(10);
+    int mlife = mship.getLife();
+    glBegin(GL_LINES);
     GLfloat  my1color[]={0.0,1.0,0.0};
     GLfloat shiny[]={200.0};
     glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
     glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,my1color);
-  glVertex3f(-0.9,0.8,0);  
+    glVertex3f(-0.9,0.8,0);  
     GLfloat  mycolor[]={1.0,0.0,0.0};
     glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
     glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
-  glVertex3f(mlife/20000.0-0.9,0.8,0);  
-  glEnd();
+    glVertex3f(mlife/20000.0-0.9,0.8,0);  
+    glEnd();
     mship.collisions(enemyList);
     mship.draw();
     if (ftime==10)
@@ -74,7 +109,13 @@ void display()
       fireList.push_back(bullet);
     }
   }
-  collisionDetect(fireList,enemyList);
+  else 
+  {
+    enemie_killed =0 ;
+    score = 0;           
+    time = 0;
+    ftime=0;     
+  }
   drawDrawableList(drawableList);
   drawEnemyList(enemyList);
   glutSwapBuffers();
@@ -90,7 +131,7 @@ void display()
 void reshape(int w,int h)
 {
   GLsizei minSize=w>h ? (GLsizei) h : (GLsizei) w;
-  
+
   GLsizei startX=((w-h)/2.0);
   if (startX>0)
   {

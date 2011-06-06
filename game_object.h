@@ -15,6 +15,7 @@ class game_object
   public:
     game_object();
     game_object(vector pos);
+    void set_life(int new_life);
     int get_life();
     //Pure virtual function 
     //to make it an abstract class

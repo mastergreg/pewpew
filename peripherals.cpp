@@ -106,6 +106,11 @@ void keyboardFunction(unsigned char key,int x,int y)
       current_speed.scale(0.25,0.25,0.25);
       mship.set_speed(current_speed);
       break;
+    case 'r':
+      mship = *(new ship);
+      vector sp(0.001,0.005,0.005,0,0);
+      mship.set_speed(sp);
+      break;
   }
 }
 

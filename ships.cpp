@@ -43,6 +43,7 @@ void game_ship::collisions(std::list<game_ship *> lst)
       }
       else
       {
+        (*current)->set_life(-life);
         die();
       }
       drawableList.push_back(new chink(position));
@@ -171,7 +172,7 @@ void dummyship::die()
 
 bool game_ship::isAlive()
 {
-  return life>0;
+  return life>1;
 }
 void ship::die()
 {
@@ -226,7 +227,7 @@ int ship::getLife()
   fire::fire(vector pos,vector sp)
 :game_ship(pos,sp)
 {
-  life=60;
+  life=100;
   radius=0.02;
 }
 void fire::move()

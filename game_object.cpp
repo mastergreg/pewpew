@@ -15,6 +15,10 @@ int game_object::get_life()
 {
   return life;
 }
+void game_object::set_life(int new_life)
+{
+  life=new_life;
+}
 void game_object::draw() {}
 bool game_object::collides(game_object *test)
 {
