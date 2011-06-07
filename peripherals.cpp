@@ -35,7 +35,7 @@ void keyboardReleaseFunction(unsigned char key,int x, int y)
       current_speed.increase_reset();//scale(1.2,1.2,1.2);
       mship.set_speed(current_speed);
       break;
-  
+
     case 'a':
       //current_speed.increase_vector(-0.001,0,0);
       current_speed.rotate_reset();
@@ -46,7 +46,7 @@ void keyboardReleaseFunction(unsigned char key,int x, int y)
       current_speed.increase_reset();//scale(1.2,1.2,1.2);
       mship.set_speed(current_speed);
       break;
-    
+
     case 'd':
       //current_speed.increase_vector(0.001,0,0);
       current_speed.rotate_reset();
@@ -107,9 +107,12 @@ void keyboardFunction(unsigned char key,int x,int y)
       mship.set_speed(current_speed);
       break;
     case 'r':
-      mship = *(new ship);
-      vector sp(0.001,0.005,0.005,0,0);
-      mship.set_speed(sp);
+      if (!mship.isAlive())
+      {
+        mship = *(new ship);
+        vector sp(0.001,0.005,0.005,0,0);
+        mship.set_speed(sp);
+      }
       break;
   }
 }

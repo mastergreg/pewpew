@@ -50,22 +50,12 @@ void display()
   static int time = 0;
   static int ftime=0;
   glClearColor(0,0,0,0);
-  {
-    GLfloat  mycolor[]={0.0,1.0,0.0};
-    GLfloat shiny[]={200.0};
-    glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-    glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
-  }
   glClear(GL_COLOR_BUFFER_BIT);
   glPushMatrix();
 
   glLineWidth(5);
-  {
-    GLfloat  mycolor[]={1.0,0.0,0.0};
-    GLfloat shiny[]={200.0};
-    glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-    glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
-  }
+  GLfloat  mycolor[]={1.0,0.0,0.0};
+  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
   glutWireCube(1.5);
   //draw life rectangle
   glDisable(GL_LINE_STIPPLE);
@@ -168,10 +158,10 @@ int main(int argc, char** argv)
   //glEnable(GL_BLEND);
   glShadeModel(GL_SMOOTH);
   glEnable(GL_LIGHT0);
-  GLfloat specular[] = {1.0f, 1.0f, 1.0f , 0.5f};
-  glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
-  GLfloat diff[] = {0.9,0.9,0.9,0};
-  glLightfv(GL_LIGHT0, GL_DIFFUSE, diff);
+  //GLfloat specular[] = {1.0f, 1.0f, 1.0f , 0.5f};
+  //glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+  //GLfloat diff[] = {0.9,0.9,0.9,0};
+  //glLightfv(GL_LIGHT0, GL_DIFFUSE, diff);
   /*  glLightfv(GL_LIGHT0,GL_POSITION,);
       glLightfv(GL_LIGHT0,GL_);
       glLightfv(GL_LIGHT0,GL_);
