@@ -51,7 +51,7 @@ void display()
   static int ftime=0;
   glClearColor(0,0,0,0);
   glClear(GL_COLOR_BUFFER_BIT);
-  glPushMatrix();
+  //glPushMatrix();
 
   glLineWidth(5);
   GLfloat  mycolor[]={1.0,0.0,0.0};
@@ -77,7 +77,7 @@ void display()
     int mlife = mship.getLife();
     glBegin(GL_LINES);
     GLfloat  my1color[]={0.0,1.0,0.0};
-    GLfloat shiny[]={200.0};
+    GLfloat shiny[]={100.0};
     glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
     glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,my1color);
     glVertex3f(-0.9,0.8,0);  
@@ -131,7 +131,6 @@ void reshape(int w,int h)
   {
     glViewport(0,-startX,minSize,minSize);
   }
-  gluOrtho2D(-1.0,1.0,-1.0,1.0);
   WINDOW_SIZEX=w;
   WINDOW_SIZEY=h;
 }
