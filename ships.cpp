@@ -1,6 +1,6 @@
 #include "ships.h"
-extern std::list<game_object *> enemyList;
-extern std::list<game_object *> fireList;
+extern std::list<game_ship *> enemyList;
+extern std::list<game_ship *> fireList;
 
 void collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *> enemies)
 {
@@ -141,7 +141,7 @@ void dummyship::draw()
 }
 void dummyship::die()
 {
-  std::list<game_object*>::iterator p=enemyList.begin();
+  std::list<game_ship*>::iterator p=enemyList.begin();
   while(p!=enemyList.end())
   {
     dummyship *ptr = dynamic_cast<dummyship *>(*p);
@@ -151,8 +151,11 @@ void dummyship::die()
       {
         p=enemyList.erase(p);
       }
+      else
+      {
+        p++;
+      }
     }
-    p++;
   }
 }
 
@@ -240,7 +243,7 @@ void fire::move()
   double px = position.getX();
   double py = position.getY();
   double pz = position.getZ();
-  if (px > 0.7 ||px < -0.7) 
+  if (px > 0.7 || px < -0.7) 
   {
     die(); 
   }
@@ -297,10 +300,13 @@ void fire::die()
       {
         p=drawableList.erase(p);
       }
+      else
+      {
+        p++;
+      }
     }
-    p++;
   }
-  std::list<game_object*>::iterator p2=fireList.begin();
+  std::list<game_ship*>::iterator p2=fireList.begin();
   while(p2!=fireList.end())
   {
     fire *ptr2 = dynamic_cast<fire *>(*p2);
@@ -310,8 +316,11 @@ void fire::die()
       {
         p2=fireList.erase(p2);
       }
+      else
+      {
+        p2++;
+      }
     }
-    p2++;
   }
   //delete this;
 }
