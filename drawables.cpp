@@ -1,6 +1,8 @@
 #include "drawables.h"
 
+#include "level.h"
 
+extern level lv;
 
 
 chink::chink(vector pos)
@@ -20,15 +22,15 @@ void chink::move()
 
 void chink::die()
 {
-  std::list<game_object*>::iterator p=drawableList.begin();
-  while(p!=drawableList.end())
+  std::list<game_object*>::iterator p=lv.drawableList.begin();
+  while(p!=lv.drawableList.end())
   {
     chink *ptr = dynamic_cast<chink *>(*p);
     if (ptr)
     {
       if(ptr->radius>0.03)
       {
-        p=drawableList.erase(p);
+        p=lv.drawableList.erase(p);
       }
     }
     p++;
@@ -73,15 +75,15 @@ void xplosion::move()
 }
 void xplosion::die()
 {
-  std::list<game_object*>::iterator p=drawableList.begin();
-  while(p!=drawableList.end())
+  std::list<game_object*>::iterator p=lv.drawableList.begin();
+  while(p!=lv.drawableList.end())
   {
     xplosion *ptr = dynamic_cast<xplosion *>(*p);
     if (ptr)
     {
       if(ptr->radius>0.2)
       {
-        p=drawableList.erase(p);
+        p=lv.drawableList.erase(p);
       }
     }
     p++;

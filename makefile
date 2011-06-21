@@ -14,8 +14,11 @@ drawFunctions.o: drawFunctions.cpp drawFunctions.h
 	g++ ${LIBS} -c drawFunctions.cpp ${EXTRA_FLAGS}
 peripherals.o:	peripherals.cpp peripherals.h
 	g++ ${LIBS} -c peripherals.cpp -o peripherals.o ${EXTRA_FLAGS}
-OBJECTS=game_object.o drawFunctions.o peripherals.o ships.o vector.o drawables.o
-${PROG}:	${PROG}.cpp ${OBJECTS} 
+level.o:  level.cpp level.h
+	g++ ${LIBS} -c 	level.cpp ${EXTRA_FLAGS}
+
+OBJECTS=game_object.o drawFunctions.o ships.o vector.o drawables.o level.o
+${PROG}:	${PROG}.cpp ${OBJECTS}
 	g++ ${LIBS}  ${PROG}.cpp ${OBJECTS} -o ${PROG} ${EXTRA_FLAGS}
 clean:
 	rm *.o ${PROG}.tar

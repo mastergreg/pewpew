@@ -1,6 +1,7 @@
 #include "ships.h"
-extern std::list<game_ship *> enemyList;
-extern std::list<game_ship *> fireList;
+#include "level.h"
+
+extern level lv;
 
 void collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *> enemies)
 {
@@ -46,7 +47,7 @@ void game_ship::collisions(std::list<game_ship *> lst)
         (*current)->set_life(-life);
         die();
       }
-      drawableList.push_back(new chink(position));
+      lv.drawableList.push_back(new chink(position));
     }
     current++;
   }
@@ -141,15 +142,15 @@ void dummyship::draw()
 }
 void dummyship::die()
 {
-  std::list<game_ship*>::iterator p=enemyList.begin();
-  while(p!=enemyList.end())
+  std::list<game_ship*>::iterator p=lv.enemyList.begin();
+  while(p!=lv.enemyList.end())
   {
     dummyship *ptr = dynamic_cast<dummyship *>(*p);
     if (ptr)
     {
       if(ptr->life<0)
       {
-        p=enemyList.erase(p);
+        p=lv.enemyList.erase(p);
       }
       else
       {
@@ -179,7 +180,7 @@ bool game_ship::isAlive()
 }
 void ship::die()
 {
-  drawableList.push_back(new xplosion(position));
+  lv.drawableList.push_back(new xplosion(position));
 }
   ship::ship()
 :game_ship(vector(0,0,0,0,0),vector(0,0,0,0,0))
@@ -290,15 +291,15 @@ void fire::draw()
 
 void fire::die()
 {
-  std::list<game_object*>::iterator p=drawableList.begin();
-  while(p!=drawableList.end())
+  std::list<game_object*>::iterator p=lv.drawableList.begin();
+  while(p!=lv.drawableList.end())
   {
     fire *ptr = dynamic_cast<fire *>(*p);
     if (ptr)
     {
       if(ptr->life<1)
       {
-        p=drawableList.erase(p);
+        p=lv.drawableList.erase(p);
       }
       else
       {
@@ -306,15 +307,15 @@ void fire::die()
       }
     }
   }
-  std::list<game_ship*>::iterator p2=fireList.begin();
-  while(p2!=fireList.end())
+  std::list<game_ship*>::iterator p2=lv.fireList.begin();
+  while(p2!=lv.fireList.end())
   {
     fire *ptr2 = dynamic_cast<fire *>(*p2);
     if (ptr2)
     {
       if(ptr2->life<1)
       {
-        p2=fireList.erase(p2);
+        p2=lv.fireList.erase(p2);
       }
       else
       {
