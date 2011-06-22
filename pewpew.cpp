@@ -29,7 +29,7 @@ int main(int argc, char** argv)
   glutInitWindowPosition(50,50);
   glutInitWindowSize(800,600);
   glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB);
-  glutCreateWindow("A sample OpenGL application");
+  glutCreateWindow("PewPew");
   glEnable(GL_LIGHTING);
   glShadeModel(GL_SMOOTH);
   glEnable(GL_LIGHT0);

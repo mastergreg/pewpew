@@ -79,7 +79,7 @@ void level::play()
     GLfloat  mycolor[]={1.0,0.0,0.0};
     glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
     glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
-    glVertex3f(mlife/20000.0-0.9,0.8,0);  
+    glVertex3f(mlife/2000.0-0.9,0.8,0);  
     glEnd();
     playerShip.collisions(enemyList);
     playerShip.draw();

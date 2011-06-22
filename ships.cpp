@@ -37,7 +37,6 @@ std::list<game_object *> game_ship::collisions(std::list<game_ship *> lst)
         (*current)->set_life(-life);
         die();
       }
-      std::cout << *current << std::endl;
       newDrawableList.push_back(new chink(position));
     }
     current++;
@@ -163,7 +162,7 @@ void ship::die()
   ship::ship()
 :game_ship(vector(0,0,0,0,0),vector(0,0,0,0,0))
 {
-  life=50000;
+  life=5000;
   radius = 0.04;
 }
 vector ship::get_pos()
@@ -209,7 +208,7 @@ int ship::getLife()
   fire::fire(vector pos,vector sp)
 :game_ship(pos,sp)
 {
-  life=100;
+  life=300;
   radius=0.02;
 }
 void fire::move()

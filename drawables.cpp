@@ -51,6 +51,7 @@ void chink::draw()
   xplosion::xplosion(vector pos)
 :game_object(pos)
 {
+  life=10;
   radius = 0.02;
 }
 void xplosion::move()
