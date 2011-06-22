@@ -10,7 +10,6 @@
 #define DT 0.01
 class level
 {
-  public:
     void *font;
     vector esp;
     vector pos;
@@ -20,13 +19,10 @@ class level
     std::list<game_ship *> fireList;
     std::list<game_ship *> enemyList;
     std::list<game_object *> drawableList;
-    level();
     void output(double x, double y, char *string);
-    void reshape(int w,int h);
     void show_score(int score);
-    void keyboardReleaseFunction(unsigned char key,int x, int y);
-    void keyboardFunction(unsigned char key,int x,int y);
-    void myMouseFunction(int x,int y);
+    std::list<game_object*>::iterator drawListErase(std::list<game_object*>::iterator p);
+    void collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *> enemies);
     double shipMouseAngle();
     int enemie_before;
     int enemie_after;
@@ -35,11 +31,18 @@ class level
     int time;
     int ftime;
     void start();
-    void play();
     void drawScene();
     ship playerShip;
     vector startingSpeed;
     int windowX;
     int windowY;
+  public:
+    void shipExplode(vector position);
+    level();
+    void play();
+    void keyboardReleaseFunction(unsigned char key,int x, int y);
+    void keyboardFunction(unsigned char key,int x,int y);
+    void myMouseFunction(int x,int y);
+    void reshape(int w,int h);
 };
 #endif

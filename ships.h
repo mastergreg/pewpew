@@ -23,7 +23,7 @@ class game_ship : public game_object
     vector get_speed();
     bool isAlive();
     void set_speed(vector new_speed);
-    void collisions(std::list<game_ship *> lst);
+    std::list<game_object *> collisions(std::list<game_ship *> lst);
     
 };
 
@@ -60,7 +60,6 @@ class fire : public game_ship
 };
 
 
-void collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *> enemies);
 
 
 #endif

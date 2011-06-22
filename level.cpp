@@ -17,12 +17,27 @@ level::level()
   playerShip.set_speed(startingSpeed);
 }
 
-
+void level::shipExplode(vector position)
+{
+  drawableList.push_back(new xplosion(position));
+}
 void level::drawScene()
 {
 }
 
 
+void level::collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *> enemies)
+{
+  std::list<game_ship *>::iterator enemy = enemies.begin();
+  std::list<game_object *> newdrawList;
+  while (enemy !=enemies.end())
+  {
+    newdrawList = (*enemy)->collisions(bullets);
+    drawableList.insert
+      (drawableList.end(),newdrawList.begin(),newdrawList.end());
+    enemy++;
+  }
+}
 
 void level::play()
 {
@@ -38,7 +53,10 @@ void level::play()
   glDisable(GL_LINE_STIPPLE);
 
   enemie_before = (int) enemyList.size();
-  //collisionDetect(fireList,enemyList);
+  collisionDetect(fireList,enemyList);
+  fireList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
+  enemyList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
+  drawableList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
   enemie_after = (int) enemyList.size();
   enemie_killed+=enemie_before-enemie_after;
   if (enemie_killed > 1)
@@ -63,7 +81,7 @@ void level::play()
     glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
     glVertex3f(mlife/20000.0-0.9,0.8,0);  
     glEnd();
-    //playerShip.collisions(enemyList);
+    playerShip.collisions(enemyList);
     playerShip.draw();
     if (ftime==10)
     {

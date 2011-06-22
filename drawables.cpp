@@ -22,19 +22,7 @@ void chink::move()
 
 void chink::die()
 {
-  std::list<game_object*>::iterator p=lv.drawableList.begin();
-  while(p!=lv.drawableList.end())
-  {
-    chink *ptr = dynamic_cast<chink *>(*p);
-    if (ptr)
-    {
-      if(ptr->radius>0.03)
-      {
-        p=lv.drawableList.erase(p);
-      }
-    }
-    p++;
-  }
+  life=-1;
 }
 
 void chink::draw()
@@ -75,19 +63,7 @@ void xplosion::move()
 }
 void xplosion::die()
 {
-  std::list<game_object*>::iterator p=lv.drawableList.begin();
-  while(p!=lv.drawableList.end())
-  {
-    xplosion *ptr = dynamic_cast<xplosion *>(*p);
-    if (ptr)
-    {
-      if(ptr->radius>0.2)
-      {
-        p=lv.drawableList.erase(p);
-      }
-    }
-    p++;
-  }
+  life=-1;
 }
 double xplosion::spinnit()
 {
