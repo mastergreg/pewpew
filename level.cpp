@@ -1,20 +1,4 @@
 #include "level.h"
-void moveAll(game_object *p)
-{
-  p->move();
-}
-void drawAll(game_object *p)
-{
-  p->draw();
-}
-void moveAllShip(game_ship *p)
-{
-  p->move();
-}
-void drawAllShip(game_ship *p)
-{
-  p->draw();
-}
 level::level()
 {
   WINDOW_SIZEX=800;
@@ -84,11 +68,11 @@ void level::drawScene()
     playerShip.draw();
   }
   //drawDrawableList(drawableList);
-  for_each(drawableList.begin(),drawableList.end(),drawAll);
+  for_each(drawableList.begin(),drawableList.end(),[](game_object *p)->void{p->draw();});
   //drawEnemyList(fireList); 
-  for_each(fireList.begin(),fireList.end(),drawAllShip);
+  for_each(fireList.begin(),fireList.end(),[](game_ship *p)->void{p->draw();});
   //drawEnemyList(enemyList);
-  for_each(enemyList.begin(),enemyList.end(),drawAllShip);
+  for_each(enemyList.begin(),enemyList.end(),[](game_ship *p)->void{p->draw();});
   glutSwapBuffers();
 }
 void level::displayLife()
@@ -166,9 +150,9 @@ void level::play()
     time = 0;
     ftime=0;     
   }
-  for_each(drawableList.begin(),drawableList.end(),moveAll);
-  for_each(enemyList.begin(),enemyList.end(),moveAllShip);
-  for_each(fireList.begin(),fireList.end(),moveAll);
+  for_each(drawableList.begin(),drawableList.end(),[](game_object *p)->void{p->move();});
+  for_each(enemyList.begin(),enemyList.end(),[](game_ship *p)->void{p->move();});
+  for_each(fireList.begin(),fireList.end(),[](game_ship *p)->void{p->move();});
   usleep(10000);
   time++;
   ftime++;

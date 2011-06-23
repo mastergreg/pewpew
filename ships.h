@@ -4,7 +4,6 @@
 #include "drawables.h"
 #include <list>
 #include <GL/glut.h>
-#include <iostream>
 
 
 class game_ship : public game_object
