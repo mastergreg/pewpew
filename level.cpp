@@ -1,73 +1,4 @@
 #include "level.h"
-
-level::level()
-{
-  windowX=0;
-  windowY=0;
-  font = GLUT_BITMAP_TIMES_ROMAN_24;
-  esp.set_vector(vector(0.001,0.005,0.005,0,0));
-  pos.set_vector(vector(-0.5,0,0.5,0,0));
-  enemie_killed = 0;
-  enemie_before = 0;
-  enemie_after = 0;
-  score = 0;
-  time = 0;
-  ftime = 0;
-  startingSpeed.set_vector(vector(0.001,0.005,0.005,0,0));
-  playerShip.set_speed(startingSpeed);
-}
-
-void level::shipExplode(vector position)
-{
-  drawableList.push_back(new xplosion(position));
-}
-void level::drawScene()
-{
-  glClearColor(0,0,0,0);
-  glClear(GL_COLOR_BUFFER_BIT);
-  //glPushMatrix();
-
-  glLineWidth(5);
-  GLfloat  mycolor[]={1.0,0.0,0.0};
-  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
-  glutWireCube(1.5);
-  glDisable(GL_LINE_STIPPLE);
-  show_score(score);
-  if (playerShip.isAlive()) 
-  {
-    glLineWidth(10);
-    int mlife = playerShip.getLife();
-    glBegin(GL_LINES);
-    GLfloat  my1color[]={0.0,1.0,0.0};
-    GLfloat shiny[]={100.0};
-    glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-    glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,my1color);
-    glVertex3f(-0.9,0.8,0);  
-    GLfloat  mycolor[]={1.0,0.0,0.0};
-    glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-    glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
-    glVertex3f(mlife/2000.0-0.9,0.8,0);  
-    glEnd();
-    playerShip.draw();
-  }
-  //drawDrawableList(drawableList);
-  for_each(drawableList.begin(),drawableList.end(),drawAll);
-  //drawEnemyList(fireList); 
-  for_each(fireList.begin(),fireList.end(),drawAllShip);
-  //drawEnemyList(enemyList);
-  for_each(enemyList.begin(),enemyList.end(),drawAllShip);
-  glutSwapBuffers();
-  usleep(10000);
-  time++;
-  ftime++;
-  if (time==100)
-  {
-    time=0;
-    enemyList.push_back(new dummyship(pos,esp));
-  }
-  
-}
-
 void moveAll(game_object *p)
 {
   p->move();
@@ -83,6 +14,105 @@ void moveAllShip(game_ship *p)
 void drawAllShip(game_ship *p)
 {
   p->draw();
+}
+level::level()
+{
+  WINDOW_SIZEX=800;
+  WINDOW_SIZEY=600;
+  windowX=0;
+  windowY=0;
+  font = GLUT_BITMAP_TIMES_ROMAN_24;
+  esp.set_vector(vector(0.001,0.005,0.005,0,0));
+  pos.set_vector(vector(-0.5,0,0.5,0,0));
+  enemie_killed = 0;
+  enemie_before = 0;
+  enemie_after = 0;
+  score = 0;
+  time = 0;
+  ftime = 0;
+  startingSpeed.set_vector(vector(0.001,0.005,0.005,0,0));
+  playerShip.set_speed(startingSpeed);
+  lifeDraw=playerShip.get_life();
+}
+
+void level::shipExplode(vector position)
+{
+  drawableList.push_back(new xplosion(position));
+}
+void level::drawScene()
+{
+  glClearColor(0,0,0,0);
+  glClear(GL_COLOR_BUFFER_BIT);
+  //glPushMatrix();
+
+  //glEnable(GL_CONVOLUTION_2D);
+	glEnable(GL_SEPARABLE_2D);
+	//GLfloat filter[7][7] = {
+	//	{0.00000067, 0.00002292, 0.00019117, 0.00038771, 0.00019117, 0.00002292, 0.00000067},
+	//	{0.00002292, 0.00078633, 0.00655965, 0.01330373, 0.00655965, 0.00078633, 0.00002292},
+	//	{0.00019117, 0.00655965, 0.05472157, 0.11098164, 0.05472157, 0.00655965, 0.00019117},
+	//	{0.00038771, 0.01330373, 0.11098164, 0.22508352, 0.11098164, 0.01330373, 0.00038771},
+	//	{0.00019117, 0.00655965, 0.05472157, 0.11098164, 0.05472157, 0.00655965, 0.00019117},
+	//	{0.00002292, 0.00078633, 0.00655965, 0.01330373, 0.00655965, 0.00078633, 0.00002292},
+	//	{0.00000067, 0.00002292, 0.00019117, 0.00038771, 0.00019117, 0.00002292, 0.00000067}
+	//};
+	//GLfloat filter[7][7] = {
+	//	{0.00000067, 0.00002292, 0.00019117, 0.00038771, 0.00019117, 0.00002292, 0.00000067},
+	//	{0.00002292, 0.00078633, 0.00655965, 0.01330373, 0.00655965, 0.00078633, 0.00002292},
+	//	{0.00019117, 0.00655965, 0.05472157, 0.11098164, 0.05472157, 0.00655965, 0.00019117},
+	//	{0.00038771, 0.01330373, 0.11098164, 0.22508352, 0.11098164, 0.01330373, 0.00038771},
+	//	{0.00019117, 0.00655965, 0.05472157, 0.11098164, 0.05472157, 0.00655965, 0.00019117},
+	//	{0.00002292, 0.00078633, 0.00655965, 0.01330373, 0.00655965, 0.00078633, 0.00002292},
+	//	{0.00000067, 0.00002292, 0.00019117, 0.00038771, 0.00019117, 0.00002292, 0.00000067}
+	//};
+	//glConvolutionFilter2D(GL_CONVOLUTION_2D, GL_LUMINANCE, 6, 6, GL_LUMINANCE, GL_FLOAT, filter);
+	glWindowPos2i(0,0);
+	glCopyPixels(0,0,WINDOW_SIZEX,WINDOW_SIZEY,GL_COLOR);
+	glDisable(GL_SEPARABLE_2D);
+	//glDisable(GL_CONVOLUTION_2D);
+
+  glLineWidth(5);
+  GLfloat  mycolor[]={1.0,0.0,0.0};
+  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+  glutWireCube(1.5);
+  glDisable(GL_LINE_STIPPLE);
+  show_score(score);
+  if (playerShip.isAlive()) 
+  {
+    glLineWidth(10);
+    displayLife();
+    playerShip.draw();
+  }
+  //drawDrawableList(drawableList);
+  for_each(drawableList.begin(),drawableList.end(),drawAll);
+  //drawEnemyList(fireList); 
+  for_each(fireList.begin(),fireList.end(),drawAllShip);
+  //drawEnemyList(enemyList);
+  for_each(enemyList.begin(),enemyList.end(),drawAllShip);
+  glutSwapBuffers();
+}
+void level::displayLife()
+{
+    int mlife = playerShip.getLife();
+    if (lifeDraw<mlife) 
+    {
+      lifeDraw+=10;
+    }
+    else if (lifeDraw > mlife ) 
+    {
+      lifeDraw-=10;
+    }
+    glBegin(GL_LINES);
+    GLfloat  my1color[]={0.0,1.0,0.0};
+    GLfloat shiny[]={100.0};
+    glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
+    glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,my1color);
+    glVertex3f(-0.9,0.8,0);  
+    GLfloat  mycolor[]={1.0,0.0,0.0};
+    glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
+    glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+    glVertex3f(lifeDraw/2000.0-0.9,0.8,0);  
+    glEnd();
 }
 void level::collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *> enemies)
 {
@@ -106,6 +136,7 @@ void level::play()
   drawableList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
   enemie_after = (int) enemyList.size();
   enemie_killed+=enemie_before-enemie_after;
+
   if (enemie_killed > 1)
   {
     enemie_killed = 0;
@@ -114,7 +145,9 @@ void level::play()
   }
   if (playerShip.isAlive())
   {
-    playerShip.collisions(enemyList);
+    std::list<game_object *> newdrawList;
+    newdrawList = playerShip.collisions(enemyList);
+    drawableList.insert(drawableList.end(),newdrawList.begin(),newdrawList.end());
     playerShip.move(); 
     if (ftime==10)
     {
@@ -136,6 +169,15 @@ void level::play()
   for_each(drawableList.begin(),drawableList.end(),moveAll);
   for_each(enemyList.begin(),enemyList.end(),moveAllShip);
   for_each(fireList.begin(),fireList.end(),moveAll);
+  usleep(10000);
+  time++;
+  ftime++;
+  if (time==100)
+  {
+    time=0;
+    enemyList.push_back(new dummyship(pos,esp));
+  }
+  
   drawScene();
 }
 

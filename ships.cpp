@@ -1,4 +1,3 @@
-#include "ships.h"
 #include "level.h"
 
 extern level lv;

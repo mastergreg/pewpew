@@ -1,6 +1,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 #include <stdio.h>
+#include <GL/glew.h>
 #include <GL/glut.h>
 #include <iostream>
 #include <string.h>
@@ -17,11 +18,13 @@ class level
     int WINDOW_SIZEX;
     int WINDOW_SIZEY;
     double mX,mY;
+    int lifeDraw;
     std::list<game_ship *> fireList;
     std::list<game_ship *> enemyList;
     std::list<game_object *> drawableList;
     void output(double x, double y, char *string);
     void show_score(int score);
+    void displayLife();
     std::list<game_object*>::iterator drawListErase(std::list<game_object*>::iterator p);
     void collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *> enemies);
     double shipMouseAngle();
