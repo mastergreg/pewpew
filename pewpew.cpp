@@ -42,7 +42,7 @@ int main(int argc, char** argv)
     exit(EXIT_FAILURE);
   }
 	GLfloat filter[11] = {0.3,0.28,0.26,0.24,0.22,0.20,0.22,0.24,0.26,0.28,0.3};	//GOOD
-	glSeparableFilter2D(GL_SEPARABLE_2D, GL_LUMINANCE, 11, 11, GL_LUMINANCE, GL_FLOAT, filter,filter); //<< segfault !!!
+	//glSeparableFilter2D(GL_SEPARABLE_2D, GL_LUMINANCE, 11, 11, GL_LUMINANCE, GL_FLOAT, filter,filter); //<< segfault !!!
 
   glHint(GL_LINE_SMOOTH_HINT, GL_FASTEST);
   glutReshapeFunc(reshape);
