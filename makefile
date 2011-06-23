@@ -10,14 +10,12 @@ ships.o: ships.h ships.cpp
 	g++ ${LIBS} -c ships.cpp ${EXTRA_FLAGS}
 drawables.o: drawables.cpp drawables.h
 	g++ ${LIBS} -c drawables.cpp ${EXTRA_FLAGS}
-drawFunctions.o: drawFunctions.cpp drawFunctions.h
-	g++ ${LIBS} -c drawFunctions.cpp ${EXTRA_FLAGS}
 peripherals.o:	peripherals.cpp peripherals.h
 	g++ ${LIBS} -c peripherals.cpp -o peripherals.o ${EXTRA_FLAGS}
 level.o:  level.cpp level.h
 	g++ ${LIBS} -c 	level.cpp ${EXTRA_FLAGS}
 
-OBJECTS=game_object.o drawFunctions.o ships.o vector.o drawables.o level.o
+OBJECTS=game_object.o ships.o vector.o drawables.o level.o
 ${PROG}:	${PROG}.cpp ${OBJECTS}
 	g++ ${LIBS}  ${PROG}.cpp ${OBJECTS} -o ${PROG} ${EXTRA_FLAGS}
 clean:
