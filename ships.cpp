@@ -113,7 +113,6 @@ void dummyship::draw()
   double py = position.getY();
   double pz = position.getZ();
 
-  move();
   glPushMatrix();
   GLfloat mycolor[] = {0.0,1.0,0.0}; 
   GLfloat shiny[]={200.0};
@@ -175,7 +174,6 @@ void ship::draw()
   double py = position.getY();
   double pz = position.getZ();
 
-  move();
   speed.soft_scale();
   glPushMatrix();
 
@@ -245,7 +243,6 @@ void fire::draw()
   double py = position.getY();
   double pz = position.getZ();
 
-  move();
   glPushMatrix();
   GLfloat  mycolor[]={1.0,0.5,1.0};
   GLfloat shiny[]={256.0};

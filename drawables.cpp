@@ -8,6 +8,7 @@ extern level lv;
 chink::chink(vector pos)
 :game_object(pos)
 {
+  life=10;
   radius = 0.01;  
 }
 
@@ -17,7 +18,7 @@ chink::chink(vector pos)
 void chink::move()
 {
   if(radius>0.03) die();
-  radius +=0.001;
+  radius +=0.0005;
 }
 
 void chink::die()
@@ -27,19 +28,14 @@ void chink::die()
 
 void chink::draw()
 {
-  move();
   double x = position.getX();
   double y = position.getY();
   double z = position.getZ();
   int i=0;
   glPolygonMode(GL_FRONT_AND_BACK,GL_POINT);
   glBegin(GL_TRIANGLE_FAN);
-  {
-    GLfloat  mycolor[]={1.0,0.0,0.0};
-    //    GLfloat shiny[]={0.0};
-    //    glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-    glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
-  }
+  GLfloat  mycolor[]={1.0,0.0,0.0};
+  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
   glVertex3f(x,y,z);
   for (;i<=360;i+=45)
   {
@@ -78,7 +74,6 @@ void xplosion::draw()
   double py = position.getY();
   double pz = position.getZ();
 
-  move();
   glPushMatrix();
   GLfloat mycolor[] = {1.0,0.0,0.0}; 
   GLfloat shiny[]={200.0};

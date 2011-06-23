@@ -12,12 +12,12 @@ class game_ship : public game_object
   protected:
     double angle;
     vector speed;
-    void move();
     double spini;
     double spinnit();
     virtual void die();
   public:
 
+    virtual void move();
     double get_angle();
     game_ship(vector pos,vector sp);
     vector get_speed();

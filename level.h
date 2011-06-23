@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string.h>
 #include <list>
+#include <algorithm>
 #include "ships.h"
 #include "drawFunctions.h"
 #define DT 0.01
@@ -45,4 +46,8 @@ class level
     void myMouseFunction(int x,int y);
     void reshape(int w,int h);
 };
+void drawAll(game_object *p);
+void moveAll(game_object *p);
+void drawAllShip(game_ship *p);
+void moveAllShip(game_ship *p);
 #endif
