@@ -50,9 +50,12 @@ void level::drawScene()
     glEnd();
     playerShip.draw();
   }
-  drawDrawableList(drawableList);
-  drawEnemyList(fireList);
-  drawEnemyList(enemyList);
+  //drawDrawableList(drawableList);
+  for_each(drawableList.begin(),drawableList.end(),drawAll);
+  //drawEnemyList(fireList); 
+  for_each(fireList.begin(),fireList.end(),drawAllShip);
+  //drawEnemyList(enemyList);
+  for_each(enemyList.begin(),enemyList.end(),drawAllShip);
   glutSwapBuffers();
   usleep(10000);
   time++;
@@ -76,6 +79,10 @@ void drawAll(game_object *p)
 void moveAllShip(game_ship *p)
 {
   p->move();
+}
+void drawAllShip(game_ship *p)
+{
+  p->draw();
 }
 void level::collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *> enemies)
 {

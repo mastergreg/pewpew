@@ -87,6 +87,7 @@ void game_ship::move()
   }
   speed.set_vector(vector(x,y,z,rd,ri));
   position.increase_vector(speed);  
+  spinnit();
 
 }
 vector game_ship::get_speed()
@@ -125,7 +126,7 @@ void dummyship::draw()
   glRotatef(-90, 1.0, 0.0, 0.0); 
   glRotatef(-57.29578*angle, 0.0, 1.0, 0.0); 
   glRotatef(90, 0.0, 1.0, 0.0); 
-  glRotatef(spinnit(),spini , spini, 1.0); 
+  glRotatef(spini,spini , spini, 1.0); 
 
   glutWireSphere(0.04,4,3);
   glPopMatrix(); 
@@ -186,7 +187,7 @@ void ship::draw()
   glRotatef(-90, 1.0, 0.0, 0.0); 
   glRotatef(-57.29578*angle, 0.0, 1.0, 0.0); 
   glRotatef(90, 0.0, 1.0, 0.0); 
-  glRotatef(spinnit(), 0.0, 0.0, 1.0); 
+  glRotatef(spini, 0.0, 0.0, 1.0); 
   glutWireCone(0.02,0.05,4,1);
   glLineWidth(1);
   //  glColor3ub(255,255,0);
@@ -198,9 +199,6 @@ int ship::getLife()
 {
   return life;
 }
-
-
-
 
 
   fire::fire(vector pos,vector sp)
@@ -235,6 +233,7 @@ void fire::move()
   position.increase_vector(speed);  
   life--;
   if(life<1) die();
+  spinnit();
 }
 void fire::draw()
 {
@@ -255,7 +254,7 @@ void fire::draw()
   glRotatef(-90, 1.0, 0.0, 0.0); 
   glRotatef(-57.29578*angle, 0.0, 1.0, 0.0); 
   glRotatef(90, 0.0, 1.0, 0.0); 
-  glRotatef(spinnit(), 0.0, 0.0, 1.0); 
+  glRotatef(spini, 0.0, 0.0, 1.0);
   glutWireCone(0.01,0.03,2,1);
   glPopMatrix(); 
 }
