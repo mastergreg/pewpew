@@ -95,7 +95,7 @@ void level::displayLife()
     GLfloat  mycolor[]={1.0,0.0,0.0};
     glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
     glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
-    glVertex3f(lifeDraw/2000.0-0.9,0.8,0);  
+    glVertex3f(lifeDraw/3000.0-0.9,0.8,0);  
     glEnd();
 }
 void level::collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *> enemies)
