@@ -9,6 +9,7 @@
 #include <algorithm>
 #include "ships.h"
 #define DT 0.01
+#define DIMENSION 2 
 class level
 {
     void *font;
@@ -21,8 +22,7 @@ class level
     std::list<game_ship *> fireList;
     std::list<game_ship *> enemyList;
     std::list<game_object *> drawableList;
-    void output(double x, double y, char *string);
-    void show_score(int score);
+    void show_score(double x,double y,int score);
     void displayLife();
     std::list<game_object*>::iterator drawListErase(std::list<game_object*>::iterator p);
     void collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *> enemies);
@@ -34,12 +34,13 @@ class level
     int time;
     int ftime;
     void start();
-    void drawScene();
     ship playerShip;
     vector startingSpeed;
     int windowX;
     int windowY;
+    void clipArroundShip();
   public:
+    void drawScene();
     void shipExplode(vector position);
     level();
     void play();

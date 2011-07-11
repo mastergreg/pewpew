@@ -31,6 +31,7 @@ void chink::draw()
   double y = position.getY();
   double z = position.getZ();
   int i=0;
+  glPushMatrix();
   glPolygonMode(GL_FRONT_AND_BACK,GL_POINT);
   glBegin(GL_TRIANGLE_FAN);
   GLfloat  mycolor[]={1.0,0.0,0.0};
@@ -41,6 +42,7 @@ void chink::draw()
     glVertex3f(x+sin(i*M_PI/180)*radius,y+cos(i*M_PI/180)*radius,z);
   }
   glEnd();
+  glPopMatrix();
 }
 
   xplosion::xplosion(vector pos)
@@ -55,7 +57,7 @@ void xplosion::move()
   {
     die();
   }
-  radius+=0.005;
+  radius+=0.002;
 }
 void xplosion::die()
 {

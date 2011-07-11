@@ -5,6 +5,7 @@ extern level lv;
   game_ship::game_ship(vector pos,vector sp)
 :game_object(pos)
 {
+  spini=0;
   set_speed(sp);
 }
 double game_ship::spinnit()
@@ -72,15 +73,15 @@ void game_ship::move()
   {
     angle=0;
   }
-  if (px > 0.7 ||px < -0.7) 
+  if (px > (DIMENSION-0.04) ||px < -(DIMENSION-0.04)) 
   {
     x*=-1;
   }
-  if (py > 0.7 ||py < -0.7) 
+  if (py > (DIMENSION-0.04) ||py < -(DIMENSION-0.04)) 
   {
     y*=-1;
   }
-  if (pz > 0.7 ||pz < -0.7) 
+  if (pz > (DIMENSION-0.04) ||pz < -(DIMENSION-0.04)) 
   {
     z*=-1;
   }
@@ -115,8 +116,8 @@ void dummyship::draw()
 
   glPushMatrix();
   GLfloat mycolor[] = {0.0,1.0,0.0}; 
-  GLfloat shiny[]={200.0};
-  GLfloat diff[] = {0.9,0.9,0.9,0};
+  GLfloat shiny[]={0.0};
+  GLfloat diff[] = {0.,0.9,0.,0};
   glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
   glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
   glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
@@ -126,7 +127,6 @@ void dummyship::draw()
   glRotatef(-57.29578*angle, 0.0, 1.0, 0.0); 
   glRotatef(90, 0.0, 1.0, 0.0); 
   glRotatef(spini,spini , spini, 1.0); 
-
   glutWireSphere(0.04,4,3);
   glPopMatrix(); 
 }
@@ -178,9 +178,10 @@ void ship::draw()
   glPushMatrix();
 
   GLfloat  mycolor[]={0.0,0.5,1.0};
-  GLfloat shiny[]={200.0};
+  GLfloat shiny[]={0.0};
   glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
   glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+  glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,mycolor);
   glLineWidth(1);
   glTranslatef(px,py,pz);
   glRotatef(-90, 1.0, 0.0, 0.0); 
@@ -216,15 +217,15 @@ void fire::move()
   double px = position.getX();
   double py = position.getY();
   double pz = position.getZ();
-  if (px > 0.7 || px < -0.7) 
+  if (px > (DIMENSION-0.04) || px < -(DIMENSION-0.04)) 
   {
     die(); 
   }
-  else if (py > 0.7 ||py < -0.7) 
+  else if (py > (DIMENSION-0.04) ||py < -(DIMENSION-0.04)) 
   {
     die();
   }
-  else if (pz > 0.7 ||pz < -0.7) 
+  else if (pz > (DIMENSION-0.04) ||pz < -(DIMENSION-0.04)) 
   {
     die();
   }
@@ -242,12 +243,9 @@ void fire::draw()
   double pz = position.getZ();
 
   glPushMatrix();
-  GLfloat  mycolor[]={1.0,0.5,1.0};
-  GLfloat shiny[]={256.0};
-  GLfloat diff[] = {0.9,0.9,0.9,0};
+  GLfloat diff[] = {1.0,0.0,1.0,0};
   glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
-  glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION, diff);
   glLineWidth(1);
   glTranslatef(px,py,pz);
   glRotatef(-90, 1.0, 0.0, 0.0); 

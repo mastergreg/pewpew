@@ -1,5 +1,5 @@
 LIBS=-lgc -lGLEW -lglut -lGL -lGLU -lm
-EXTRA_FLAGS=-Wall -Wextra -Wuninitialized -std=c++0x
+EXTRA_FLAGS=-g -Wall -Wextra -Wuninitialized -std=c++0x
 PROG=pewpew
 all: ${PROG}
 game_object.o: game_object.cpp game_object.h
