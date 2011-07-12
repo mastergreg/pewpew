@@ -76,8 +76,9 @@ void xplosion::draw()
   double pz = position.getZ();
 
   glPushMatrix();
-  GLfloat mycolor[] = {1.0,0.0,0.0}; 
+  GLfloat mycolor[] = {0.6,0.0,0.0}; 
   GLfloat shiny[]={200.0};
+  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mycolor);
   glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
   glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
   glLineWidth(1);

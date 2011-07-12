@@ -201,6 +201,34 @@ int ship::getLife()
 }
 
 
+fireUpgrade::fireUpgrade(vector pos,vector sp)
+:game_ship(pos,sp)
+{
+}
+void fireUpgrade::die()
+{
+}
+void fireUpgrade::draw()
+{
+
+  double px = position.getX();
+  double py = position.getY();
+  double pz = position.getZ();
+  glPushMatrix();
+  GLfloat mycolor[] = {0.66,0.0,0.0}; 
+  GLfloat shiny[]={0.0};
+  GLfloat diff[] = {0.66,0.0,0.,0};
+  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
+  glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
+  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+  glLineWidth(1);
+  glTranslatef(px,py,pz);
+  glRotatef(90, 0.0, 1.0, 0.0); 
+  glRotatef(spini,0,1, 0.0); 
+  glutWireSphere(0.04,4,3);
+  glPopMatrix(); 
+}
+
   fire::fire(vector pos,vector sp)
 :game_ship(pos,sp)
 {

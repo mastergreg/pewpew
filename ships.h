@@ -45,6 +45,13 @@ class ship : public game_ship
     vector get_pos();
 };
 
+class fireUpgrade : public game_ship
+{
+    void die();
+  public:
+    void draw();
+    fireUpgrade(vector p,vector s);
+};
 
 
 

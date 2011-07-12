@@ -56,7 +56,7 @@ void level::drawScene()
 	//glDisable(GL_CONVOLUTION_2D);
 
   glLineWidth(5);
-  GLfloat  mycolor[]={1.0,0.0,0.0};
+  GLfloat  mycolor[]={0.66,0.0,0.0};
   glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
   glutWireCube(DIMENSION+DIMENSION-0.1);
   glDisable(GL_LINE_STIPPLE);
@@ -93,7 +93,6 @@ void level::displayLife()
     glPushMatrix();
     glLoadIdentity();
     show_score(1.0,1.0,score);
-    glLineWidth(10);
     if (lifeDraw<mlife) 
     {
       lifeDraw+=10;
@@ -103,12 +102,18 @@ void level::displayLife()
       lifeDraw-=10;
     }
     glBegin(GL_LINES);
+    GLfloat  myBcolor[]={0.0,0.0,0.0};
     GLfloat  my1color[]={0.0,1.0,0.0};
     GLfloat shiny[]={10.0};
     glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
+    glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,myBcolor);
+    glLineWidth(30);
+    glVertex3f(-1.0,.999,0);  
+    glVertex3f(1.0,.999,0);  
+    glLineWidth(10);
     glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,my1color);
     glVertex3f(-0.9,1.,0);  
-    GLfloat  mycolor[]={1.0,0.0,0.0};
+    GLfloat  mycolor[]={0.66,0.0,0.0};
     glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
     glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
     glVertex3f(lifeDraw/3000.0-0.9,1.,0);  
@@ -137,7 +142,6 @@ void level::play()
   drawableList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
   enemie_after = (int) enemyList.size();
   enemie_killed+=enemie_before-enemie_after;
-
   if (enemie_killed > 1)
   {
     enemie_killed = 0;
@@ -153,8 +157,8 @@ void level::play()
     if (ftime>=10)
     {
       ftime=0;
-      double firespeed=0.015;
-      double angle = shipMouseAngle();
+      double firespeed=0.025;
+      double angle = playerShip.get_angle();
       vector fspeed(firespeed*cos(angle),firespeed*sin(angle),0,0,0);
       fire * bullet = new fire(playerShip.get_pos(),fspeed);
       fireList.push_back(bullet);
@@ -209,25 +213,41 @@ void level::reshape(int w,int h)
   WINDOW_SIZEX=w;
   WINDOW_SIZEY=h;
 }
-double level::shipMouseAngle()
+void level::myMouseFunction(int x,int y)
 {
+  
   GLsizei minSize=WINDOW_SIZEX > WINDOW_SIZEY ? (GLsizei) WINDOW_SIZEY : (GLsizei) WINDOW_SIZEX;
   minSize-=50;
+  GLsizei startX=((WINDOW_SIZEX-WINDOW_SIZEY)/2.0-100);
+  if (startX>0)
+  {
+    mX=DIMENSION*(double(x)-startX-0.5*minSize)/WINDOW_SIZEX;
+    mY=-DIMENSION*(double(y)-10-0.5*minSize)/WINDOW_SIZEY;
+  }
+  else
+  {
+    mX=DIMENSION*(double(x)-0.5*minSize)/WINDOW_SIZEX;
+    mY=-DIMENSION*(double(y)+startX-10-0.5*minSize)/WINDOW_SIZEY;
+  }
+
+}
+double level::shipMouseAngle()
+{
   vector pos = playerShip.get_pos();
   double x = pos.getX();
   double y = pos.getY();
-  x=x/DIMENSION+mX;
-  y=y/DIMENSION+mY;
+  double ax=mX-x;
+  double ay=mY+y;
   std::cout <<" x y mX mY= --|#>> " << x << " " << y << " " << mX << " " << mY <<std::endl;
-  if(x>0) 
+  if(ax>0) 
   {
-    return atan(y/x);
+    return atan(ay/ax);
   }
-  else if (x<0)
+  else if (ax<0)
   {
-    return atan(y/x)+M_PI;
+    return atan(ay/ax)+M_PI;
   }
-  else if (y>0)
+  else if (ay>0)
   {
     return M_PI/2;
   }
@@ -273,24 +293,6 @@ void level::keyboardReleaseFunction(unsigned char key,int x, int y)
       playerShip.set_speed(current_speed);
       break;
   }
-}
-void level::myMouseFunction(int x,int y)
-{
-  
-  GLsizei minSize=WINDOW_SIZEX > WINDOW_SIZEY ? (GLsizei) WINDOW_SIZEY : (GLsizei) WINDOW_SIZEX;
-  minSize-=50;
-  GLsizei startX=((WINDOW_SIZEX-WINDOW_SIZEY)/2.0-100);
-  if (startX>0)
-  {
-    mX=(double(x)-startX-0.5*minSize)/WINDOW_SIZEX;//*DIMENSION/WINDOW_SIZEX;
-    mY=(double(y)-25-0.5*minSize)/WINDOW_SIZEY;//*DIMENSION/WINDOW_SIZEY;
-  }
-  else
-  {
-    mX=(double(x)-0.5*minSize)/WINDOW_SIZEX;//*DIMENSION/WINDOW_SIZEX;
-    mY=(double(y)+startX-25-0.5*minSize)/WINDOW_SIZEY;//*DIMENSION/WINDOW_SIZEY;
-  }
-
 }
 void level::keyboardFunction(unsigned char key,int x,int y)
 {

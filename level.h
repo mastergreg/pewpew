@@ -9,7 +9,7 @@
 #include <algorithm>
 #include "ships.h"
 #define DT 0.01
-#define DIMENSION 2 
+#define DIMENSION 2
 class level
 {
     void *font;
