@@ -2,6 +2,8 @@
 
 extern level lv;
 
+//Generic game_ship
+
   game_ship::game_ship(vector pos,vector sp)
 :game_object(pos)
 {
@@ -108,6 +110,12 @@ void game_ship::set_speed(vector new_speed)
     angle=atan(y/x)+M_PI;
   }
 }
+bool game_ship::isAlive()
+{
+  return life>1;
+}
+
+//DummyShips "Meteor" type
 void dummyship::draw()
 {
   double px = position.getX();
@@ -134,10 +142,6 @@ void dummyship::die()
 {
   life=-1;
 }
-
-
-
-
   dummyship::dummyship(vector pos,vector sp)
 :game_ship(pos,sp)
 {
@@ -146,14 +150,7 @@ void dummyship::die()
 }
 
 
-
-
-
-
-bool game_ship::isAlive()
-{
-  return life>1;
-}
+//Main Ship. PlayerShip
 void ship::die()
 {
   lv.shipExplode(position);
@@ -199,9 +196,16 @@ int ship::getLife()
 {
   return life;
 }
+fire* ship::shoot()
+{
+  double firespeed=0.025;
+  vector fspeed(firespeed*cos(angle),firespeed*sin(angle),0,0,0);
+  return new fire(position,fspeed);
+}
 
 
-fireUpgrade::fireUpgrade(vector pos,vector sp)
+//Upgrades to playership
+  fireUpgrade::fireUpgrade(vector pos,vector sp)
 :game_ship(pos,sp)
 {
 }
@@ -229,6 +233,9 @@ void fireUpgrade::draw()
   glPopMatrix(); 
 }
 
+
+
+//Bullets for playership
   fire::fire(vector pos,vector sp)
 :game_ship(pos,sp)
 {

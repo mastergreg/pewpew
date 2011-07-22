@@ -7,6 +7,8 @@
 #include <string.h>
 #include <list>
 #include <algorithm>
+#include <time.h>
+
 #include "ships.h"
 #define DT 0.01
 #define DIMENSION 2
@@ -31,7 +33,7 @@ class level
     int enemie_after;
     int enemie_killed;
     int score;
-    int time;
+    int dtime;
     int ftime;
     void start();
     ship playerShip;
@@ -39,6 +41,7 @@ class level
     int windowX;
     int windowY;
     void clipArroundShip();
+    void insertDummyShip();
   public:
     void drawScene();
     void shipExplode(vector position);

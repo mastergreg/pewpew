@@ -35,11 +35,20 @@ class dummyship : public game_ship
     void draw();
     dummyship(vector pos,vector sp);
 };
+class fire : public game_ship
+{
+    void die();
+    void move();
+  public:
+    fire(vector posit,vector sp);
+    void draw();
+};
 class ship : public game_ship
 {
     void die();
   public:
     void draw();
+    fire* shoot();
     int getLife();
     ship();
     vector get_pos();
@@ -56,14 +65,6 @@ class fireUpgrade : public game_ship
 
 
 
-class fire : public game_ship
-{
-    void die();
-    void move();
-  public:
-    fire(vector posit,vector sp);
-    void draw();
-};
 
 
 

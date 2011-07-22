@@ -12,16 +12,29 @@ level::level()
   enemie_before = 0;
   enemie_after = 0;
   score = 0;
-  time = 0;
+  dtime = 0;
   ftime = 0;
   startingSpeed.set_vector(vector(0.001,0.005,0.005,0,0));
   playerShip.set_speed(startingSpeed);
   lifeDraw=playerShip.get_life();
+  srand(time(NULL));
 }
 
 void level::shipExplode(vector position)
 {
   drawableList.push_back(new xplosion(position));
+}
+void level::insertDummyShip()
+{
+  double px = (rand() % 1000)/100000.;
+  double py = (rand() % 1000)/100000.;
+  double pz = 0;
+  vector rpos(px,py,pz,0,0);
+  double sx = (rand() % 1000)/100000.;
+  double sy = (rand() % 1000)/100000.;
+  double sz = 0;
+  vector resp(sx,sy,sz,0,0);
+  enemyList.push_back(new dummyship(rpos,resp));
 }
 void level::drawScene()
 {
@@ -75,15 +88,16 @@ void level::clipArroundShip()
 {
   vector position = playerShip.get_pos();
   vector speed = playerShip.get_speed();
-  double px=fabs(position.getX());
-  double py=fabs(position.getY());
+  double px=position.getX();
+  double py=position.getY();
   //double pz=position.getZ();
   double sx=speed.getX();
   double sy=speed.getY();
-  double sz=speed.getZ();
-  double speedL = sx*sx+sy*sy+sz*sz;
-  double playWindow = SPEED_MAX/(SPEED_MAX-speedL);
-  glOrtho((DIMENSION-px)/DIMENSION*sx-playWindow, (DIMENSION-px)/DIMENSION*sx+playWindow, (DIMENSION-py)/DIMENSION*sy-playWindow, (DIMENSION-py)/DIMENSION*sy+playWindow, -5.0, 5.0); 
+  double speedL = sqrt(sx*sx+sy*sy);
+  double playWindow = 800000*speedL/SPEED_MAX;
+  playWindow =  playWindow < DIMENSION ? playWindow : DIMENSION;
+  glLoadIdentity();
+  glOrtho(px-playWindow, px+playWindow, py-playWindow, py+playWindow, -5.0, 5.0); 
 }
 
 
@@ -157,30 +171,26 @@ void level::play()
     if (ftime>=10)
     {
       ftime=0;
-      double firespeed=0.025;
-      double angle = playerShip.get_angle();
-      vector fspeed(firespeed*cos(angle),firespeed*sin(angle),0,0,0);
-      fire * bullet = new fire(playerShip.get_pos(),fspeed);
-      fireList.push_back(bullet);
+      fireList.push_back(playerShip.shoot());
     }
   }
   else 
   {
     enemie_killed =0 ;
     score = 0;           
-    time = 0;
+    dtime = 0;
     ftime=0;     
   }
   for_each(drawableList.begin(),drawableList.end(),[](game_object *p)->void{p->move();});
   for_each(enemyList.begin(),enemyList.end(),[](game_ship *p)->void{p->move();});
   for_each(fireList.begin(),fireList.end(),[](game_ship *p)->void{p->move();});
   usleep(10000);
-  time++;
+  dtime++;
   ftime++;
-  if (time==100)
+  if (dtime==100)
   {
-    time=0;
-    enemyList.push_back(new dummyship(pos,esp));
+    insertDummyShip();
+    dtime=0;
   }
 }
 
@@ -336,6 +346,7 @@ void level::keyboardFunction(unsigned char key,int x,int y)
     case 'r':
       if (!playerShip.isAlive())
       {
+        glLoadIdentity();
         playerShip = *(new ship);
         vector sp(0.001,0.005,0.005,0,0);
         playerShip.set_speed(sp);
