@@ -96,6 +96,7 @@ void level::clipArroundShip()
   double speedL = sqrt(sx*sx+sy*sy);
   double playWindow = 800000*speedL/SPEED_MAX;
   playWindow =  playWindow < DIMENSION ? playWindow : DIMENSION;
+  playWindow =  playWindow > 0.3 ? playWindow : 0.3;
   glLoadIdentity();
   glOrtho(px-playWindow, px+playWindow, py-playWindow, py+playWindow, -5.0, 5.0); 
 }
@@ -171,7 +172,7 @@ void level::play()
     if (ftime>=10)
     {
       ftime=0;
-      fireList.push_back(playerShip.shoot());
+      fireList.push_back(playerShip.shoot(shipMouseAngle()));
     }
   }
   else 
@@ -214,11 +215,11 @@ void level::reshape(int w,int h)
   GLsizei startX=((w-h)/2.0-100);
   if (startX>0)
   {
-    glViewport(startX,10,minSize,minSize);
+    glViewport(startX,0,minSize,minSize);
   }
   else
   {
-    glViewport(0,10-startX,minSize,minSize);
+    glViewport(0,-startX,minSize,minSize);
   }
   WINDOW_SIZEX=w;
   WINDOW_SIZEY=h;
@@ -227,28 +228,14 @@ void level::myMouseFunction(int x,int y)
 {
   
   GLsizei minSize=WINDOW_SIZEX > WINDOW_SIZEY ? (GLsizei) WINDOW_SIZEY : (GLsizei) WINDOW_SIZEX;
-  minSize-=50;
-  GLsizei startX=((WINDOW_SIZEX-WINDOW_SIZEY)/2.0-100);
-  if (startX>0)
-  {
-    mX=DIMENSION*(double(x)-startX-0.5*minSize)/WINDOW_SIZEX;
-    mY=-DIMENSION*(double(y)-10-0.5*minSize)/WINDOW_SIZEY;
-  }
-  else
-  {
-    mX=DIMENSION*(double(x)-0.5*minSize)/WINDOW_SIZEX;
-    mY=-DIMENSION*(double(y)+startX-10-0.5*minSize)/WINDOW_SIZEY;
-  }
+  mX=DIMENSION*(double(x)-0.5*minSize);
+  mY=-DIMENSION*(double(y)-25-0.5*minSize);
 
 }
 double level::shipMouseAngle()
 {
-  vector pos = playerShip.get_pos();
-  double x = pos.getX();
-  double y = pos.getY();
-  double ax=mX-x;
-  double ay=mY+y;
-  std::cout <<" x y mX mY= --|#>> " << x << " " << y << " " << mX << " " << mY <<std::endl;
+  double ax=mX;
+  double ay=mY;
   if(ax>0) 
   {
     return atan(ay/ax);

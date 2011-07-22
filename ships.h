@@ -49,6 +49,7 @@ class ship : public game_ship
   public:
     void draw();
     fire* shoot();
+    fire* shoot(double ang);
     int getLife();
     ship();
     vector get_pos();

@@ -198,8 +198,12 @@ int ship::getLife()
 }
 fire* ship::shoot()
 {
+  return shoot(angle);
+}
+fire* ship::shoot(double ang)
+{
   double firespeed=0.025;
-  vector fspeed(firespeed*cos(angle),firespeed*sin(angle),0,0,0);
+  vector fspeed(firespeed*cos(ang),firespeed*sin(ang),0,0,0);
   return new fire(position,fspeed);
 }
 
