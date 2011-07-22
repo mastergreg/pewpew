@@ -182,8 +182,10 @@ void level::play()
     playerShip.move(); 
     if (ftime>=10)
     {
+      std::list<fire *> newFireList;
       ftime=0;
-      fireList.push_back(playerShip.shoot(shipMouseAngle()));
+      newFireList = playerShip.shoot(shipMouseAngle());
+      fireList.insert(fireList.end(),newFireList.begin(),newFireList.end());
     }
   }
   else 

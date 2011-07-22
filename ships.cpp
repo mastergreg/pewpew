@@ -217,23 +217,54 @@ void ship::collectFireUpgrades(std::list<game_ship *> upgrades)
   }
 
 }
-fire* ship::shoot()
+std::list<fire *> ship::shoot()
 {
   return shoot(angle);
 }
-fire* ship::shoot(double ang)
+std::list<fire *> ship::shoot(double ang)
 {
+  double firespeed=0.025;
+  std::list<fire *> rls;
+  vector fspeed;
+  double dang;
   switch (WeaponLevel)
   {
     case 1:
-      double firespeed=0.025;
+      fspeed.set_vector(vector(firespeed*cos(ang),firespeed*sin(ang),0,0,0));
+      rls.push_back(new fire(position,fspeed));
       break;
     case 2:
-      double firespeed=0.05;
+      dang=M_PI/8;
+      fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
+      rls.push_back(new fire(position,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0,0));
+      rls.push_back(new fire(position,fspeed));
+      break;
+    case 3:
+      dang=M_PI/6;
+      fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
+      rls.push_back(new fire(position,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0,0));
+      rls.push_back(new fire(position,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang),firespeed*sin(ang),0,0,0));
+      rls.push_back(new fire(position,fspeed));
+      break;
+    default:
+      dang=M_PI/16;
+      fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
+      rls.push_back(new fire(position,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0,0));
+      rls.push_back(new fire(position,fspeed));
+      dang*=2;
+      fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
+      rls.push_back(new fire(position,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0,0));
+      rls.push_back(new fire(position,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang),firespeed*sin(ang),0,0,0));
+      rls.push_back(new fire(position,fspeed));
       break;
   }
-  vector fspeed(firespeed*cos(ang),firespeed*sin(ang),0,0,0);
-  return new fire(position,fspeed);
+  return rls;
 }
 
 
