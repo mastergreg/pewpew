@@ -6,11 +6,9 @@ level::level()
   windowX=0;
   windowY=0;
   font = GLUT_BITMAP_TIMES_ROMAN_24;
-  esp.set_vector(vector(0.001,0.005,0.005,0,0));
-  pos.set_vector(vector(-0.5,0,0.5,0,0));
-  enemie_killed = 0;
-  enemie_before = 0;
-  enemie_after = 0;
+  enemies_killed = 0;
+  enemies_before = 0;
+  enemies_after = 0;
   score = 0;
   dtime = 0;
   ftime = 0;
@@ -24,10 +22,18 @@ void level::shipExplode(vector position)
 {
   drawableList.push_back(new xplosion(position));
 }
+void level::insertFireUpgrade()
+{
+  double px = (rand() % 1000)/1000.;
+  double py = (rand() % 1000)/1000.;
+  double pz = 0;
+  vector rpos(px,py,pz,0,0);
+  fireUpgradeList.push_back(new fireUpgrade(rpos));
+}
 void level::insertDummyShip()
 {
-  double px = (rand() % 1000)/100000.;
-  double py = (rand() % 1000)/100000.;
+  double px = (rand() % 1000)/1000.;
+  double py = (rand() % 1000)/1000.;
   double pz = 0;
   vector rpos(px,py,pz,0,0);
   double sx = (rand() % 1000)/100000.;
@@ -81,6 +87,7 @@ void level::drawScene()
   }
   for_each(drawableList.begin(),drawableList.end(),[](game_object *p)->void{p->draw();});
   for_each(fireList.begin(),fireList.end(),[](game_ship *p)->void{p->draw();});
+  for_each(fireUpgradeList.begin(),fireUpgradeList.end(),[](game_ship *p)->void{p->draw();});
   for_each(enemyList.begin(),enemyList.end(),[](game_ship *p)->void{p->draw();});
   //glutSwapBuffers();
 }
@@ -95,8 +102,8 @@ void level::clipArroundShip()
   double sy=speed.getY();
   double speedL = sqrt(sx*sx+sy*sy);
   double playWindow = 800000*speedL/SPEED_MAX;
-  playWindow =  playWindow < DIMENSION ? playWindow : DIMENSION;
-  playWindow =  playWindow > 0.3 ? playWindow : 0.3;
+  playWindow =  playWindow < 2 ? playWindow : 2;
+  playWindow =  playWindow > 0.5 ? playWindow : 0.5;
   glLoadIdentity();
   glOrtho(px-playWindow, px+playWindow, py-playWindow, py+playWindow, -5.0, 5.0); 
 }
@@ -150,23 +157,27 @@ void level::collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *
 
 void level::play()
 {
-  enemie_before = (int) enemyList.size();
+  enemies_before = (int) enemyList.size();
   collisionDetect(fireList,enemyList);
   fireList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
+  playerShip.collectFireUpgrades(fireUpgradeList);
+  fireUpgradeList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
   enemyList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
   drawableList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
-  enemie_after = (int) enemyList.size();
-  enemie_killed+=enemie_before-enemie_after;
-  if (enemie_killed > 1)
+  enemies_after = (int) enemyList.size();
+  enemies_killed+=enemies_before-enemies_after;
+  if (enemies_killed > 1)
   {
-    enemie_killed = 0;
+    enemies_killed = 0;
     playerShip.set_life(playerShip.get_life()+50);
     score+=10;
+    insertFireUpgrade();
   }
   if (playerShip.isAlive())
   {
     std::list<game_object *> newdrawList;
     newdrawList = playerShip.collisions(enemyList);
+
     drawableList.insert(drawableList.end(),newdrawList.begin(),newdrawList.end());
     playerShip.move(); 
     if (ftime>=10)
@@ -177,7 +188,7 @@ void level::play()
   }
   else 
   {
-    enemie_killed =0 ;
+    enemies_killed =0 ;
     score = 0;           
     dtime = 0;
     ftime=0;     
@@ -185,10 +196,11 @@ void level::play()
   for_each(drawableList.begin(),drawableList.end(),[](game_object *p)->void{p->move();});
   for_each(enemyList.begin(),enemyList.end(),[](game_ship *p)->void{p->move();});
   for_each(fireList.begin(),fireList.end(),[](game_ship *p)->void{p->move();});
+  for_each(fireUpgradeList.begin(),fireUpgradeList.end(),[](game_ship *p)->void{p->move();});
   usleep(10000);
   dtime++;
   ftime++;
-  if (dtime==100)
+  if (dtime==200)
   {
     insertDummyShip();
     dtime=0;

@@ -158,6 +158,7 @@ void ship::die()
   ship::ship()
 :game_ship(vector(0,0,0,0,0),vector(0,0,0,0,0))
 {
+  WeaponLevel=1;
   life=5000;
   radius = 0.04;
 }
@@ -196,25 +197,55 @@ int ship::getLife()
 {
   return life;
 }
+void ship::upgradeWeapons()
+{
+  std::cout << "Upgrading weapons" << std::endl;
+  WeaponLevel++;
+}
+void ship::collectFireUpgrades(std::list<game_ship *> upgrades)
+{
+  std::list<game_ship *>::iterator it=upgrades.begin();
+  while(it!=upgrades.end())
+  {
+    if( collides((game_object *)*it)) 
+    {
+
+      upgradeWeapons(); 
+      (*it)->die();
+    }
+    it++;
+  }
+
+}
 fire* ship::shoot()
 {
   return shoot(angle);
 }
 fire* ship::shoot(double ang)
 {
-  double firespeed=0.025;
+  switch (WeaponLevel)
+  {
+    case 1:
+      double firespeed=0.025;
+      break;
+    case 2:
+      double firespeed=0.05;
+      break;
+  }
   vector fspeed(firespeed*cos(ang),firespeed*sin(ang),0,0,0);
   return new fire(position,fspeed);
 }
 
 
 //Upgrades to playership
-  fireUpgrade::fireUpgrade(vector pos,vector sp)
-:game_ship(pos,sp)
+  fireUpgrade::fireUpgrade(vector pos)
+:game_ship(pos,vector())
 {
+  life=500;
 }
 void fireUpgrade::die()
 {
+  life=-1;
 }
 void fireUpgrade::draw()
 {
@@ -223,18 +254,24 @@ void fireUpgrade::draw()
   double py = position.getY();
   double pz = position.getZ();
   glPushMatrix();
-  GLfloat mycolor[] = {0.66,0.0,0.0}; 
+  GLfloat mycolor[] = {1,0.63,0.06}; 
+  //GLfloat diff[] = {0.,0.,0.}; 
   GLfloat shiny[]={0.0};
-  GLfloat diff[] = {0.66,0.0,0.,0};
-  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
+  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mycolor);
   glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
   glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
   glLineWidth(1);
   glTranslatef(px,py,pz);
-  glRotatef(90, 0.0, 1.0, 0.0); 
-  glRotatef(spini,0,1, 0.0); 
-  glutWireSphere(0.04,4,3);
+  glRotatef(45, 1.0, 1.0, 0.0); 
+  glRotatef(spini,0,1, 1.0); 
+  glutWireSphere(0.02,4,3);
   glPopMatrix(); 
+}
+void fireUpgrade::move()
+
+{
+  spinnit();
+  life--;
 }
 
 

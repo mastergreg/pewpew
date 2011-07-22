@@ -13,9 +13,9 @@ class game_ship : public game_object
     vector speed;
     double spini;
     double spinnit();
-    virtual void die();
   public:
 
+    virtual void die();
     virtual void move();
     double get_angle();
     game_ship(vector pos,vector sp);
@@ -30,23 +30,26 @@ class game_ship : public game_object
 
 class dummyship : public game_ship
 {
-    void die();
   public:
     void draw();
+    void die();
     dummyship(vector pos,vector sp);
 };
 class fire : public game_ship
 {
-    void die();
-    void move();
   public:
+    void move();
+    void die();
     fire(vector posit,vector sp);
     void draw();
 };
 class ship : public game_ship
 {
-    void die();
+    void upgradeWeapons();
+    int WeaponLevel;
   public:
+    void die();
+    void collectFireUpgrades(std::list<game_ship *> upgrades);
     void draw();
     fire* shoot();
     fire* shoot(double ang);
@@ -57,10 +60,11 @@ class ship : public game_ship
 
 class fireUpgrade : public game_ship
 {
-    void die();
   public:
+    void die();
+    void move();
     void draw();
-    fireUpgrade(vector p,vector s);
+    fireUpgrade(vector p);
 };
 
 

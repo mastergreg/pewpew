@@ -11,27 +11,25 @@
 
 #include "ships.h"
 #define DT 0.01
-#define DIMENSION 2
+#define DIMENSION 4
 class level
 {
     void *font;
-    vector esp;
-    vector pos;
     int WINDOW_SIZEX;
     int WINDOW_SIZEY;
     double mX,mY;
     int lifeDraw;
     std::list<game_ship *> fireList;
     std::list<game_ship *> enemyList;
+    std::list<game_ship *> fireUpgradeList;
     std::list<game_object *> drawableList;
     void show_score(double x,double y,int score);
     void displayLife();
-    std::list<game_object*>::iterator drawListErase(std::list<game_object*>::iterator p);
     void collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *> enemies);
     double shipMouseAngle();
-    int enemie_before;
-    int enemie_after;
-    int enemie_killed;
+    int enemies_before;
+    int enemies_after;
+    int enemies_killed;
     int score;
     int dtime;
     int ftime;
@@ -42,6 +40,7 @@ class level
     int windowY;
     void clipArroundShip();
     void insertDummyShip();
+    void insertFireUpgrade();
   public:
     void drawScene();
     void shipExplode(vector position);
