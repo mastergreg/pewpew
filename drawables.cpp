@@ -1,7 +1,5 @@
 #include "drawables.h"
-#include "level.h"
 
-extern level lv;
 
 
 chink::chink(vector pos)
@@ -95,5 +93,59 @@ void xplosion::draw()
 
 
 
+circle::circle(double r, vector pos,GLfloat mycolor[3])
+{
+  radius = r;
+  position.set_vector(pos);
+  color[0]=mycolor[0];
+  color[1]=mycolor[1];
+  color[2]=mycolor[2];
+  angleStep=2*M_PI/256.;
+  for(int i=0;i<32;i++)
+  {
+    //Define points in first quadrant
+    x[i]=radius*cos(i*angleStep);
+    y[i]=radius*sin(i*angleStep);
+    x[64-1-i]=y[i];
+    y[64-1-i]=x[i];
+    
+    //Define points in second quadrant
 
+    x[64+i]=-y[i];
+    y[64+i]=x[i];
+    x[2*64-1-i]=-x[i];
+    y[2*64-1-i]=y[i];
+    //Define points in third quadrant
+    x[2*64+i]=-x[i];
+    y[2*64+i]=-y[i];
+    x[3*64-1-i]=-y[i];
+    y[3*64-1-i]=-x[i];
+    //Define points in fourth quadrant
+    x[3*64+i]=y[i];
+    y[3*64+i]=-x[i];
 
+    x[4*64-1-i]=x[i];
+    y[4*64-1-i]=-y[i];
+   } 
+  
+}
+
+void circle::draw(vector pos)
+{
+  position.set_vector(pos);
+  glPushMatrix();
+  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color);
+  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,color);
+  glTranslatef(position.getX(),position.getY(),position.getZ());
+  glBegin(GL_LINE_LOOP);
+  for (int i=0;i<256;i++)
+  {
+    glVertex3f(x[i],y[i],0);
+  }
+  glEnd();
+  glPopMatrix();
+
+}
+void circle::move()
+{
+}

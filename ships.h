@@ -23,6 +23,7 @@ class game_ship : public game_object
     bool isAlive();
     void set_speed(vector new_speed);
     std::list<game_object *> collisions(std::list<game_ship *> lst);
+    vector get_pos();
     
 };
 
@@ -43,21 +44,6 @@ class fire : public game_ship
     fire(vector posit,vector sp);
     void draw();
 };
-class ship : public game_ship
-{
-    void upgradeWeapons();
-    int WeaponLevel;
-  public:
-    void die();
-    void collectFireUpgrades(std::list<game_ship *> upgrades);
-    void draw();
-    std::list<fire*> shoot();
-    std::list<fire*> shoot(double ang);
-    int getLife();
-    ship();
-    vector get_pos();
-};
-
 class fireUpgrade : public game_ship
 {
   public:
@@ -65,6 +51,23 @@ class fireUpgrade : public game_ship
     void move();
     void draw();
     fireUpgrade(vector p);
+};
+
+class ship : public game_ship
+{
+    void upgradeWeapons();
+    int WeaponLevel;
+    circle* fireUpgradeCirc;
+    void drawFUPArrow(game_ship * upgrade);
+  public:
+    void die();
+    void collectFireUpgrades(std::list<game_ship *> upgrades);
+    void draw();
+    std::list<fire*> shoot();
+    std::list<fire*> shoot(double ang);
+    void drawFireUpgradeRing(std::list<game_ship *> fireUpgradeList);
+    int getLife();
+    ship();
 };
 
 

@@ -83,6 +83,7 @@ void level::drawScene()
   {
     displayLife();
     playerShip.draw();
+    playerShip.drawFireUpgradeRing(fireUpgradeList);
     clipArroundShip();
   }
   for_each(drawableList.begin(),drawableList.end(),[](game_object *p)->void{p->draw();});
@@ -171,7 +172,7 @@ void level::play()
     enemies_killed = 0;
     playerShip.set_life(playerShip.get_life()+50);
     score+=10;
-    insertFireUpgrade();
+    if(score % 50 == 0)insertFireUpgrade();
   }
   if (playerShip.isAlive())
   {

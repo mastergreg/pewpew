@@ -114,6 +114,10 @@ bool game_ship::isAlive()
 {
   return life>1;
 }
+vector game_ship::get_pos()
+{
+  return position;
+}
 
 //DummyShips "Meteor" type
 void dummyship::draw()
@@ -158,13 +162,11 @@ void ship::die()
   ship::ship()
 :game_ship(vector(0,0,0,0,0),vector(0,0,0,0,0))
 {
+  GLfloat mycolor[]={0,0,1.};
+  fireUpgradeCirc = new circle(0.05,position,mycolor);
   WeaponLevel=1;
   life=5000;
   radius = 0.04;
-}
-vector ship::get_pos()
-{
-  return position;
 }
 void ship::draw()
 {
@@ -181,7 +183,7 @@ void ship::draw()
   glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
   glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,mycolor);
   glLineWidth(1);
-  glTranslatef(px,py,pz);
+  glTranslatef(px-0.01*cos(angle),py-0.01*sin(angle),pz);
   glRotatef(-90, 1.0, 0.0, 0.0); 
   glRotatef(-57.29578*angle, 0.0, 1.0, 0.0); 
   glRotatef(90, 0.0, 1.0, 0.0); 
@@ -217,6 +219,59 @@ void ship::collectFireUpgrades(std::list<game_ship *> upgrades)
   }
 
 }
+void ship::drawFUPArrow(game_ship * upgrade)
+{
+  double UX=upgrade->get_pos().getX();
+  double UY=upgrade->get_pos().getY();
+  double X=position.getX();
+  double Y=position.getY();
+  double Z=position.getZ();
+  glPushMatrix();
+  GLfloat  mycolor[]={1.0,0.63,0.06};
+  GLfloat shiny[]={0.0};
+  glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
+  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+  glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,mycolor);
+  glLineWidth(1);
+  //glTranslatef(0.02*cos(angle),0.02*sin(angle),0);
+  //glTranslatef(X,Y,0);
+  double upgradeShipAngle;
+  double ax=(UX-X);
+  double ay=(UY-Y);
+  if(ax>0) 
+  {
+    upgradeShipAngle=atan(ay/ax);
+  }
+  else if (ax<0)
+  {
+    upgradeShipAngle=atan(ay/ax)+M_PI;
+  }
+  else if (ay>0)
+  {
+    upgradeShipAngle=M_PI/2;
+  }
+  else 
+  {
+    upgradeShipAngle=-M_PI/2;
+  }
+  glTranslatef(X,Y,Z);
+  glTranslatef(0.05*cos(upgradeShipAngle),0.05*sin(upgradeShipAngle),0);
+  glRotatef(-90, 1.0, 0.0, 0.0);
+  glRotatef(-57.29578*upgradeShipAngle, 0.0, 1.0, 0.0); 
+  glRotatef(90, 0.0, 1.0, 0.0); 
+  glutWireCone(0.01,0.02,4,1);
+  glPopMatrix(); 
+}
+void ship::drawFireUpgradeRing(std::list<game_ship *> fireUpgradeList)
+{
+  fireUpgradeCirc->draw(position);
+  std::list<game_ship *>::iterator it=fireUpgradeList.begin();
+  while(it!=fireUpgradeList.end())
+  {
+    drawFUPArrow(*it);
+    it++;
+  }
+}
 std::list<fire *> ship::shoot()
 {
   return shoot(angle);
@@ -250,7 +305,7 @@ std::list<fire *> ship::shoot(double ang)
       rls.push_back(new fire(position,fspeed));
       break;
     default:
-      dang=M_PI/16;
+      dang=M_PI/6;
       fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
       rls.push_back(new fire(position,fspeed));
       fspeed.set_vector(vector(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0,0));
