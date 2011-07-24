@@ -22,6 +22,7 @@ class level
     std::list<game_ship *> fireList;
     std::list<game_ship *> enemyList;
     std::list<game_ship *> fireUpgradeList;
+    std::list<game_ship *> lifeUpgradeList;
     std::list<game_object *> drawableList;
     void show_score(double x,double y,int score);
     void displayLife();
@@ -41,6 +42,7 @@ class level
     void clipArroundShip();
     void insertDummyShip();
     void insertFireUpgrade();
+    void insertLifeUpgrade();
   public:
     void drawScene();
     void shipExplode(vector position);

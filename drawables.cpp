@@ -137,6 +137,7 @@ void circle::draw(vector pos)
   glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color);
   glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,color);
   glTranslatef(position.getX(),position.getY(),position.getZ());
+  glLineWidth(2);
   glBegin(GL_LINE_LOOP);
   for (int i=0;i<256;i++)
   {
