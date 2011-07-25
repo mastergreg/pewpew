@@ -41,6 +41,8 @@ class spiralShip : public game_ship
   private:
     std::list<vector *> pattern;
     std::list<game_object *> tail;
+    int Ttime;
+    bool rot;
   public:
     void draw();
     void die();
@@ -78,11 +80,14 @@ class ship : public game_ship
     int WeaponLevel;
     circle* UpgradeCirc;
     void drawUPArrow(game_ship * upgrade,GLfloat color[3]);
+    std::list<game_object *> tail;
+    int Ttime;
   public:
     void die();
     void collectFireUpgrades(std::list<game_ship *> upgrades);
     void collectLifeUpgrades(std::list<game_ship *> upgrades);
     void draw();
+    void move();
     void downgradeWeapons();
     std::list<fire*> shoot();
     std::list<fire*> shoot(double ang);

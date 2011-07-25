@@ -9,12 +9,9 @@ chink::chink(vector pos)
   radius = 0.01;  
 }
 
-
-
-
 void chink::move()
 {
-  if(radius>0.03) die();
+  if(radius>0.05) die();
   radius +=0.0005;
 }
 
@@ -202,4 +199,47 @@ void ship_tail::move()
   life--;
   if (spin > 360.0) spin = spin - 360.0;
   spin+=4;
+}
+
+
+big_ship_tail::big_ship_tail(vector pos,double ang,GLfloat col[3])
+:ship_tail(pos,ang,col)
+{
+}
+
+void big_ship_tail::draw()
+{
+  glPushMatrix();
+  glColor3fv(color);
+  //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,color);
+  glTranslatef(position.getX(),position.getY(),0);
+
+  glRotatef(57.29578*angle-90, 0.0, 0.0, 1.0); 
+  glRotatef(spin, 0.0, 1.0, 0.0); 
+  glLineWidth(1);
+  glBegin(GL_LINE_LOOP);
+    glVertex3f(0,0,0.01);
+    glVertex3f(-0.1,-0.1,0.01);
+    glVertex3f(0,0.1,0.01);
+    glVertex3f(0.1,-0.1,0.01);
+  glEnd();
+  glBegin(GL_LINE_LOOP);
+    glVertex3f(0,0,-0.01);
+    glVertex3f(-0.1,-0.1,-0.01);
+    glVertex3f(0,0.1,-0.01);
+    glVertex3f(0.1,-0.1,-0.01);
+  glEnd();
+  glBegin(GL_LINES);
+    glVertex3f(0,0,0.01);
+    glVertex3f(0,0,-0.01);
+    glVertex3f(-0.1,-0.1,0.01);
+    glVertex3f(-0.1,-0.1,-0.01);
+    glVertex3f(0,0.1,0.01);
+    glVertex3f(0,0.1,-0.01);
+    glVertex3f(0.1,-0.1,0.01);
+    glVertex3f(0.1,-0.1,-0.01);
+  glEnd();
+  glPopMatrix();
+
 }

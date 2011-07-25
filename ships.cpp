@@ -157,6 +157,7 @@ void ship::die()
   UpgradeCirc = new circle(0.05,position,mycolor);
   WeaponLevel=1;
   life=5000;
+  Ttime=0;
   radius = 0.04;
 }
 void ship::draw()
@@ -170,6 +171,13 @@ void ship::draw()
 
   GLfloat  mycolor[]={0.54,0.16,0.86};
   glColor3fv(mycolor);
+  GLfloat tailColor[3]={1,0.,0.};
+  if(Ttime>10)
+  {
+    tail.push_back(new ship_tail(position,angle,tailColor));
+    Ttime=0;
+  }
+  Ttime++;
   //GLfloat shiny[]={0.0};
   //glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
   //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
@@ -186,6 +194,13 @@ void ship::draw()
   glutWireCone(0.03,0.02,4,1);
 
   glPopMatrix(); 
+  for_each(tail.begin(),tail.end(),[](game_object *p)->void{p->draw();});
+}
+void ship::move()
+{
+  game_ship::move();
+  tail.remove_if([](game_object *p)->bool {return p->get_life()<0;});
+  for_each(tail.begin(),tail.end(),[](game_object *p)->void{p->move();});
 }
 void ship::downgradeWeapons()
 {
@@ -378,8 +393,47 @@ std::list<fire *> ship::shoot(double ang)
 spiralShip::spiralShip(vector pos,vector sp)
 :game_ship(pos,sp)
 {
-  life=100000;
+  life=10000;
   radius = 0.2;
+  Ttime=0;
+  rot=true;
+
+  /*
+  double r = 1;
+  double angleStep=2*M_PI/256.;
+  double x[256],y[256];
+  for(int i=0;i<32;i++)
+  {
+    //Define points in first quadrant
+    x[i]=r*cos(i*angleStep);
+    y[i]=r*sin(i*angleStep);
+    x[64-1-i]=y[i];
+    y[64-1-i]=x[i];
+    
+    //Define points in second quadrant
+
+    x[64+i]=-y[i];
+    y[64+i]=x[i];
+    x[2*64-1-i]=-x[i];
+    y[2*64-1-i]=y[i];
+    //Define points in third quadrant
+    x[2*64+i]=-x[i];
+    y[2*64+i]=-y[i];
+    x[3*64-1-i]=-y[i];
+    y[3*64-1-i]=-x[i];
+    //Define points in fourth quadrant
+    x[3*64+i]=y[i];
+    y[3*64+i]=-x[i];
+
+    x[4*64-1-i]=x[i];
+    y[4*64-1-i]=-y[i];
+   } 
+   for(int i=0;i<255;i++)
+   {
+     pattern.push_back(new vector(x[i+1]-x[i],y[i+1]-y[i],0,0,0));
+   }
+   */
+
 }
 void spiralShip::die()
 {
@@ -388,6 +442,13 @@ void spiralShip::die()
 
 void spiralShip::draw()
 {
+  GLfloat tailColor[3]={0,0.5,0.1};
+  if(Ttime>10)
+  {
+    tail.push_back(new big_ship_tail(position,angle,tailColor));
+    Ttime=0;
+  }
+  Ttime++;
   glPushMatrix();
   glLineWidth(1);
   GLfloat spiralShipColor[]={1,0,0};
@@ -418,14 +479,25 @@ void spiralShip::draw()
     glVertex3f(-0.2,-0.2,-0.2);
   glEnd();
   glPopMatrix();
+  for_each(tail.begin(),tail.end(),[](game_object *p)->void{p->draw();});
+
 
 }
 
 
 void spiralShip::move()
 {
+  tail.remove_if([](game_object *p)->bool {return p->get_life()<0;});
+  for_each(tail.begin(),tail.end(),[](game_object *p)->void{p->move();});
   game_ship::move();
-  //speed.rotater();
+  speed.rotate_reset();
+  speed.rotater();
+  double sx=speed.getX();
+  double sy=speed.getY();
+  if((sx*sx+sy*sy)<0.002)
+  {
+    speed.scale(2,2,0);
+  }
 }
 
 

@@ -43,7 +43,7 @@ class circle : public game_object
 
 class ship_tail : public game_object
 {
-  private:
+  protected:
     vector position;
     GLfloat  color[3];
     double angle;
@@ -52,6 +52,12 @@ class ship_tail : public game_object
     ship_tail(vector position,double ang,GLfloat mycolor[3]);
     void draw();
     void move();
+};
+class big_ship_tail : public ship_tail
+{
+  public:
+    big_ship_tail(vector position,double ang,GLfloat mycolor[3]);
+    void draw();
 };
 
 #endif
