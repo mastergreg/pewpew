@@ -22,6 +22,18 @@ void level::shipExplode(vector position)
 {
   drawableList.push_back(new xplosion(position));
 }
+void level::insertSpiralShip()
+{
+  double px = ((rand() % 2000)-1000)*(DIMENSION-0.2)/1000.;
+  double py = ((rand() % 2000)-1000)*(DIMENSION-0.2)/1000.;
+  double pz = 0;
+  vector rpos(px,py,pz,0,0);
+  double sx = ((rand() % 2000)-1000)/100000.;
+  double sy = ((rand() % 2000)-1000)/100000.;
+  double sz = 0;
+  vector resp(sx,sy,sz,0,0);
+  enemyList.push_back(new spiralShip(rpos,resp));
+}
 void level::insertLifeUpgrade()
 {
   double px = ((rand() % 2000)-1000)*(DIMENSION-0.2)/1000.;
@@ -225,7 +237,10 @@ void level::play()
     if(score % 100 == 0)
       insertFireUpgrade();
     if(score % 1000 == 0) 
+    {
+      insertSpiralShip();
       insertLifeUpgrade();
+    }
   }
   if (playerShip.isAlive())
   {

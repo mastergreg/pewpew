@@ -44,6 +44,7 @@ class level
     void insertFireUpgrade();
     void insertLifeUpgrade();
     void drawGrid();
+    void insertSpiralShip();
   public:
     void drawScene();
     void shipExplode(vector position);
