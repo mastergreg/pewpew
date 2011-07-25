@@ -24,7 +24,6 @@ class game_ship : public game_object
     void set_speed(vector new_speed);
     std::list<game_object *> collisions(std::list<game_ship *> lst);
     vector get_pos();
-    int getLife();
     
 };
 
@@ -36,6 +35,13 @@ class dummyship : public game_ship
     void draw();
     void die();
     dummyship(vector pos,vector sp);
+};
+class spiralShip : public game_ship
+{
+  public:
+    void draw();
+    void die();
+    spiralShip(vector pos,vector sp);
 };
 class fire : public game_ship
 {

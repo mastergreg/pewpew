@@ -24,28 +24,28 @@ void level::shipExplode(vector position)
 }
 void level::insertLifeUpgrade()
 {
-  double px = (rand() % 1000)/1000.;
-  double py = (rand() % 1000)/1000.;
+  double px = ((rand() % 2000)-1000)*DIMENSION/1000.;
+  double py = ((rand() % 2000)-1000)*DIMENSION/1000.;
   double pz = 0;
   vector rpos(px,py,pz,0,0);
   lifeUpgradeList.push_back(new lifeUpgrade(rpos));
 }
 void level::insertFireUpgrade()
 {
-  double px = (rand() % 1000)/1000.;
-  double py = (rand() % 1000)/1000.;
+  double px = ((rand() % 2000)-1000)*DIMENSION/1000.;
+  double py = ((rand() % 2000)-1000)*DIMENSION/1000.;
   double pz = 0;
   vector rpos(px,py,pz,0,0);
   fireUpgradeList.push_back(new fireUpgrade(rpos));
 }
 void level::insertDummyShip()
 {
-  double px = (rand() % 1000)/1000.;
-  double py = (rand() % 1000)/1000.;
+  double px = ((rand() % 2000)-1000)*DIMENSION/1000.;
+  double py = ((rand() % 2000)-1000)*DIMENSION/1000.;
   double pz = 0;
   vector rpos(px,py,pz,0,0);
-  double sx = (rand() % 1000)/100000.;
-  double sy = (rand() % 1000)/100000.;
+  double sx = ((rand() % 2000)-1000)/100000.;
+  double sy = ((rand() % 2000)-1000)/100000.;
   double sz = 0;
   vector resp(sx,sy,sz,0,0);
   enemyList.push_back(new dummyship(rpos,resp));
@@ -82,11 +82,7 @@ void level::drawScene()
 	//glDisable(GL_SEPARABLE_2D);
 	//glDisable(GL_CONVOLUTION_2D);
 
-  glLineWidth(5);
-  GLfloat  mycolor[]={0.66,0.0,0.0};
-  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
-  glutWireCube(DIMENSION+DIMENSION-0.1);
-  glDisable(GL_LINE_STIPPLE);
+  drawGrid();
   if (playerShip.isAlive()) 
   {
     displayLife();
@@ -111,17 +107,52 @@ void level::clipArroundShip()
   double sx=speed.getX();
   double sy=speed.getY();
   double speedL = sqrt(sx*sx+sy*sy);
-  double playWindow = 800000*speedL/SPEED_MAX;
-  playWindow =  playWindow < 2 ? playWindow : 2;
+  double playWindow = 900000*speedL/SPEED_MAX;
+  playWindow =  playWindow < 1.5 ? playWindow : 1.5;
   playWindow =  playWindow > 0.5 ? playWindow : 0.5;
   glLoadIdentity();
   glOrtho(px-playWindow, px+playWindow, py-playWindow, py+playWindow, -5.0, 5.0); 
 }
 
 
+void level::drawGrid()
+{
+  double i;
+  for(i=-DIMENSION;i<DIMENSION;i+=0.2)
+  {
+    glPushMatrix();
+    glLineWidth(1);
+    GLfloat  mycolor[]={0.,0.25,0.5};
+    GLfloat shiny[]={0.0};
+    glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
+    glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+    glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,mycolor);
+    glBegin(GL_LINES);
+    glVertex3f(i,-DIMENSION,0);
+    glVertex3f(i,DIMENSION,0);
+    glVertex3f(-DIMENSION,i,0);
+    glVertex3f(DIMENSION,i,0);
+    glEnd();
+    glPopMatrix();
+  }
+  glLineWidth(5);
+  GLfloat  mycolor[]={0.66,0.0,0.0};
+  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+  glBegin(GL_LINES);
+  glVertex3f(DIMENSION-0.2,-DIMENSION,0);
+  glVertex3f(DIMENSION-0.2,DIMENSION,0);
+  glVertex3f(-DIMENSION+0.2,-DIMENSION,0);
+  glVertex3f(-DIMENSION+0.2,-DIMENSION,0);
+  glVertex3f(-DIMENSION,DIMENSION-0.2,0);
+  glVertex3f(DIMENSION,DIMENSION-0.2,0);
+  glVertex3f(-DIMENSION,-DIMENSION+0.2,0);
+  glVertex3f(DIMENSION,-DIMENSION+0.2,0);
+  glEnd();
+
+}
 void level::displayLife()
 {
-    int mlife = playerShip.getLife();
+    int mlife = playerShip.get_life();
     glPushMatrix();
     glLoadIdentity();
     show_score(1.0,1.0,score);
@@ -190,9 +221,9 @@ void level::play()
   if (playerShip.isAlive())
   {
     std::list<game_object *> newdrawList;
-    int prlife = playerShip.getLife();
+    int prlife = playerShip.get_life();
     newdrawList = playerShip.collisions(enemyList);
-    if (prlife>playerShip.getLife()) playerShip.downgradeWeapons();
+    if (prlife>playerShip.get_life()) playerShip.downgradeWeapons();
     drawableList.insert(drawableList.end(),newdrawList.begin(),newdrawList.end());
     playerShip.move(); 
     if (ftime>=10)

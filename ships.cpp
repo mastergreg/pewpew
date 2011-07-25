@@ -73,11 +73,11 @@ void game_ship::move()
   {
     angle=0;
   }
-  if (px > (DIMENSION-0.04) ||px < -(DIMENSION-0.04)) 
+  if (px > (DIMENSION-0.2) ||px < -(DIMENSION-0.2)) 
   {
     x*=-1;
   }
-  if (py > (DIMENSION-0.04) ||py < -(DIMENSION-0.04)) 
+  if (py > (DIMENSION-0.2) ||py < -(DIMENSION-0.2)) 
   {
     y*=-1;
   }
@@ -111,10 +111,6 @@ bool game_ship::isAlive()
 vector game_ship::get_pos()
 {
   return position;
-}
-int game_ship::getLife()
-{
-  return life;
 }
 
 //DummyShips "Meteor" type
@@ -175,7 +171,7 @@ void ship::draw()
   speed.soft_scale();
   glPushMatrix();
 
-  GLfloat  mycolor[]={138./256.0,42./256,222/256.};
+  GLfloat  mycolor[]={0.54,0.16,0.86};
   GLfloat shiny[]={0.0};
   glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
   glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
@@ -199,7 +195,8 @@ void ship::downgradeWeapons()
 }
 void ship::upgradeWeapons()
 {
-  WeaponLevel++;
+  if (WeaponLevel<5)
+    WeaponLevel++;
 }
 void ship::collectFireUpgrades(std::list<game_ship *> upgrades)
 {
@@ -224,7 +221,7 @@ void ship::collectLifeUpgrades(std::list<game_ship *> upgrades)
     if( collides((game_object *)*it)) 
     {
 
-      life+=(*it)->getLife(); 
+      life+=(*it)->get_life(); 
       (*it)->die();
     }
     it++;
@@ -240,9 +237,7 @@ void ship::drawUPArrow(game_ship * upgrade,GLfloat color[])
   double Z=position.getZ();
   glPushMatrix();
   GLfloat  mycolor[3];
-  mycolor[0]=color[0];
-  mycolor[1]=color[1];
-  mycolor[2]=color[2];
+  std::copy(color,color+3,mycolor);
   GLfloat shiny[]={0.0};
   glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
   glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
@@ -314,7 +309,7 @@ std::list<fire *> ship::shoot(double ang)
       rls.push_back(new fire(fpos,fspeed));
       break;
     case 2:
-      dang=M_PI/8;
+      dang=M_PI/16;
       fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
       rls.push_back(new fire(fpos,fspeed));
       fspeed.set_vector(vector(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0,0));
@@ -329,8 +324,32 @@ std::list<fire *> ship::shoot(double ang)
       fspeed.set_vector(vector(firespeed*cos(ang),firespeed*sin(ang),0,0,0));
       rls.push_back(new fire(fpos,fspeed));
       break;
-    default:
+    case 4:
       dang=M_PI/6;
+      fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      dang*=2;
+      fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang),firespeed*sin(ang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      break;
+    default:
+      dang=M_PI/12;
+      fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      dang*=2;
+      fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      dang*=2;
       fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
       rls.push_back(new fire(fpos,fspeed));
       fspeed.set_vector(vector(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0,0));
@@ -388,7 +407,7 @@ void fireUpgrade::move()
   lifeUpgrade::lifeUpgrade(vector pos)
 :game_ship(pos,vector())
 {
-  life=100;
+  life=500;
 }
 void lifeUpgrade::die()
 {
@@ -437,15 +456,15 @@ void fire::move()
   double px = position.getX();
   double py = position.getY();
   double pz = position.getZ();
-  if (px > (DIMENSION-0.04) || px < -(DIMENSION-0.04)) 
+  if (px > (DIMENSION-0.2) || px < -(DIMENSION-0.2)) 
   {
     die(); 
   }
-  else if (py > (DIMENSION-0.04) ||py < -(DIMENSION-0.04)) 
+  else if (py > (DIMENSION-0.2) ||py < -(DIMENSION-0.2)) 
   {
     die();
   }
-  else if (pz > (DIMENSION-0.04) ||pz < -(DIMENSION-0.04)) 
+  else if (pz > (DIMENSION-0.2) ||pz < -(DIMENSION-0.2)) 
   {
     die();
   }
@@ -463,7 +482,7 @@ void fire::draw()
   double pz = position.getZ();
 
   glPushMatrix();
-  GLfloat diff[] = {88.0/256,150.0/256,255.0/256};
+  GLfloat diff[] = {0.34,0.59,1};
   glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
   glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION, diff);
   glLineWidth(1);

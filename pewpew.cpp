@@ -37,7 +37,7 @@ int main(int argc, char** argv)
   glEnable(GL_LIGHTING);
   glEnable(GL_BLEND);
   glShadeModel(GL_SMOOTH);
-  glEnable(GL_LIGHT0);
+  //glEnable(GL_LIGHT0);
   glMatrixMode(GL_PROJECTION);
 
   GLenum err = glewInit();

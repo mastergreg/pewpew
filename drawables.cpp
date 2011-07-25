@@ -97,9 +97,7 @@ circle::circle(double r, vector pos,GLfloat mycolor[3])
 {
   radius = r;
   position.set_vector(pos);
-  color[0]=mycolor[0];
-  color[1]=mycolor[1];
-  color[2]=mycolor[2];
+  std::copy(mycolor,mycolor+3,color);
   angleStep=2*M_PI/256.;
   for(int i=0;i<32;i++)
   {
