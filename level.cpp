@@ -28,8 +28,8 @@ void level::insertSpiralShip()
   double py = ((rand() % 2000)-1000)*(DIMENSION-0.4)/1000.;
   double pz = 0;
   vector rpos(px,py,pz,0,0);
-  double sx = 0.004;
-  double sy = 0.004;
+  double sx = 0.002;
+  double sy = 0.002;
   double sz = 0;
   vector resp(sx,sy,sz,0,0);
   enemyList.push_back(new spiralShip(rpos,resp));
@@ -234,7 +234,7 @@ void level::play()
   {
     score+=10*enemies_killed;
     enemies_killed = 0;
-
+    insertSpiralShip();
     if(score % 100 == 0)
       insertFireUpgrade();
     if(score % 500 == 0) 

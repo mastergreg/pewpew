@@ -491,12 +491,18 @@ void spiralShip::move()
   for_each(tail.begin(),tail.end(),[](game_object *p)->void{p->move();});
   game_ship::move();
   speed.rotate_reset();
-  speed.rotater();
+  if(rot)
+  {
+    speed.rotater();
+    rot=false;
+  }
+  else
+    rot=true;
   double sx=speed.getX();
   double sy=speed.getY();
-  if((sx*sx+sy*sy)<0.002)
+  if((sx*sx+sy*sy)<0.001)
   {
-    speed.scale(2,2,0);
+    speed.scale(3,2,0);
   }
 }
 
