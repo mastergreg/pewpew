@@ -1,5 +1,5 @@
 compiler:
-  -g++ or equivalent
+  -g++ or equivalent compiler with lamda expression handling for c++
   -make (optional)
 libs:
   -libgc-dev
