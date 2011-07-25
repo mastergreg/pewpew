@@ -235,7 +235,6 @@ void level::play()
     score+=10*enemies_killed;
     enemies_killed = 0;
 
-      insertSpiralShip();
     if(score % 100 == 0)
       insertFireUpgrade();
     if(score % 500 == 0) 
