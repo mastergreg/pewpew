@@ -34,7 +34,7 @@ int main(int argc, char** argv)
   glutInitWindowSize(1024,768);
   glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA);
   glutCreateWindow("PewPew");
-  glEnable(GL_LIGHTING);
+  //glEnable(GL_LIGHTING);
   glEnable(GL_BLEND);
   glShadeModel(GL_SMOOTH);
   //glEnable(GL_LIGHT0);

@@ -24,24 +24,24 @@ void level::shipExplode(vector position)
 }
 void level::insertLifeUpgrade()
 {
-  double px = ((rand() % 2000)-1000)*DIMENSION/1000.;
-  double py = ((rand() % 2000)-1000)*DIMENSION/1000.;
+  double px = ((rand() % 2000)-1000)*(DIMENSION-0.2)/1000.;
+  double py = ((rand() % 2000)-1000)*(DIMENSION-0.2)/1000.;
   double pz = 0;
   vector rpos(px,py,pz,0,0);
   lifeUpgradeList.push_back(new lifeUpgrade(rpos));
 }
 void level::insertFireUpgrade()
 {
-  double px = ((rand() % 2000)-1000)*DIMENSION/1000.;
-  double py = ((rand() % 2000)-1000)*DIMENSION/1000.;
+  double px = ((rand() % 2000)-1000)*(DIMENSION-0.2)/1000.;
+  double py = ((rand() % 2000)-1000)*(DIMENSION-0.2)/1000.;
   double pz = 0;
   vector rpos(px,py,pz,0,0);
   fireUpgradeList.push_back(new fireUpgrade(rpos));
 }
 void level::insertDummyShip()
 {
-  double px = ((rand() % 2000)-1000)*DIMENSION/1000.;
-  double py = ((rand() % 2000)-1000)*DIMENSION/1000.;
+  double px = ((rand() % 2000)-1000)*(DIMENSION-0.2)/1000.;
+  double py = ((rand() % 2000)-1000)*(DIMENSION-0.2)/1000.;
   double pz = 0;
   vector rpos(px,py,pz,0,0);
   double sx = ((rand() % 2000)-1000)/100000.;
@@ -118,15 +118,16 @@ void level::clipArroundShip()
 void level::drawGrid()
 {
   double i;
-  for(i=-DIMENSION;i<DIMENSION;i+=0.2)
+  GLfloat  gridColor[]={0.,0.25,0.5};
+  GLfloat  borderColor[]={0.66,0.0,0.0};
+  for(i=-DIMENSION+0.2;i<DIMENSION;i+=0.2)
   {
     glPushMatrix();
     glLineWidth(1);
-    GLfloat  mycolor[]={0.,0.25,0.5};
-    GLfloat shiny[]={0.0};
-    glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-    glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
-    glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,mycolor);
+    //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+
+    //glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,mycolor);
+    glColor3fv(gridColor);
     glBegin(GL_LINES);
     glVertex3f(i,-DIMENSION,0);
     glVertex3f(i,DIMENSION,0);
@@ -136,17 +137,22 @@ void level::drawGrid()
     glPopMatrix();
   }
   glLineWidth(5);
-  GLfloat  mycolor[]={0.66,0.0,0.0};
-  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+  glColor3fv(borderColor);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
   glBegin(GL_LINES);
+
   glVertex3f(DIMENSION-0.2,-DIMENSION,0);
   glVertex3f(DIMENSION-0.2,DIMENSION,0);
+
   glVertex3f(-DIMENSION+0.2,-DIMENSION,0);
-  glVertex3f(-DIMENSION+0.2,-DIMENSION,0);
+  glVertex3f(-DIMENSION+0.2,DIMENSION,0);
+
   glVertex3f(-DIMENSION,DIMENSION-0.2,0);
   glVertex3f(DIMENSION,DIMENSION-0.2,0);
+
   glVertex3f(-DIMENSION,-DIMENSION+0.2,0);
   glVertex3f(DIMENSION,-DIMENSION+0.2,0);
+
   glEnd();
 
 }
@@ -167,18 +173,21 @@ void level::displayLife()
     glBegin(GL_LINES);
     GLfloat  myBcolor[]={0.0,0.0,0.0};
     GLfloat  my1color[]={0.0,1.0,0.0};
-    GLfloat shiny[]={10.0};
-    glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-    glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,myBcolor);
+    //GLfloat shiny[]={10.0};
+    //glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
+    //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,myBcolor);
+    glColor3fv(myBcolor);
     glLineWidth(30);
     glVertex3f(-1.0,.999,0);  
     glVertex3f(1.0,.999,0);  
     glLineWidth(10);
-    glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,my1color);
+    //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,my1color);
+    glColor3fv(my1color);
     glVertex3f(-0.9,1.,0);  
     GLfloat  mycolor[]={0.66,0.0,0.0};
-    glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-    glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+    //glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
+    //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+    glColor3fv(mycolor);
     glVertex3f(lifeDraw/3000.0-0.9,1.,0);  
     glEnd();
     glPopMatrix();

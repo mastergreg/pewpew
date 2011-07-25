@@ -33,7 +33,9 @@ void chink::draw()
   glPolygonMode(GL_FRONT_AND_BACK,GL_POINT);
   glBegin(GL_TRIANGLE_FAN);
   GLfloat  mycolor[]={1.0,0.0,0.0};
-  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+  glColor3fv(mycolor);
+  //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mycolor);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
   glVertex3f(x,y,z);
   for (;i<=360;i+=45)
   {
@@ -75,10 +77,11 @@ void xplosion::draw()
 
   glPushMatrix();
   GLfloat mycolor[] = {0.6,0.0,0.0}; 
-  GLfloat shiny[]={200.0};
-  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mycolor);
-  glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+  glColor3fv(mycolor);
+  //GLfloat shiny[]={200.0};
+  //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mycolor);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
   glLineWidth(1);
   glTranslatef(px,py,pz);
   //glRotatef(-90, 1.0, 0.0, 0.0); 
@@ -132,10 +135,11 @@ void circle::draw(vector pos)
 {
   position.set_vector(pos);
   glPushMatrix();
-  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color);
-  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,color);
+  glColor3fv(color);
+  //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,color);
   glTranslatef(position.getX(),position.getY(),position.getZ());
-  glLineWidth(2);
+  glLineWidth(1);
   glBegin(GL_LINE_LOOP);
   for (int i=0;i<256;i++)
   {

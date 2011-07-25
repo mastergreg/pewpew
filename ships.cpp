@@ -73,11 +73,11 @@ void game_ship::move()
   {
     angle=0;
   }
-  if (px > (DIMENSION-0.2) ||px < -(DIMENSION-0.2)) 
+  if (px > (DIMENSION-0.25) ||px < -(DIMENSION-0.25)) 
   {
     x*=-1;
   }
-  if (py > (DIMENSION-0.2) ||py < -(DIMENSION-0.2)) 
+  if (py > (DIMENSION-0.25) ||py < -(DIMENSION-0.25)) 
   {
     y*=-1;
   }
@@ -122,11 +122,8 @@ void dummyship::draw()
 
   glPushMatrix();
   GLfloat mycolor[] = {0.0,1.0,0.0}; 
-  GLfloat shiny[]={0.0};
-  GLfloat diff[] = {0.,0.9,0.,0};
-  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
-  glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+  glColor3fv(mycolor);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
   glLineWidth(1);
   glTranslatef(px,py,pz);
   glRotatef(-90, 1.0, 0.0, 0.0); 
@@ -156,7 +153,7 @@ void ship::die()
   ship::ship()
 :game_ship(vector(0,0,0,0,0),vector(0,0,0,0,0))
 {
-  GLfloat mycolor[]={0,0,1.};
+  GLfloat mycolor[]={0.,0.26,1.};
   UpgradeCirc = new circle(0.05,position,mycolor);
   WeaponLevel=1;
   life=5000;
@@ -172,10 +169,11 @@ void ship::draw()
   glPushMatrix();
 
   GLfloat  mycolor[]={0.54,0.16,0.86};
-  GLfloat shiny[]={0.0};
-  glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
-  glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,mycolor);
+  glColor3fv(mycolor);
+  //GLfloat shiny[]={0.0};
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,mycolor);
   glLineWidth(1);
   glTranslatef(px-0.02*cos(angle),py-0.02*sin(angle),pz);
   glRotatef(-90, 1.0, 0.0, 0.0); 
@@ -238,10 +236,11 @@ void ship::drawUPArrow(game_ship * upgrade,GLfloat color[])
   glPushMatrix();
   GLfloat  mycolor[3];
   std::copy(color,color+3,mycolor);
-  GLfloat shiny[]={0.0};
-  glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
-  glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,mycolor);
+  //GLfloat shiny[]={0.0};
+  glColor3fv(mycolor);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,mycolor);
   glLineWidth(1);
   //glTranslatef(0.02*cos(angle),0.02*sin(angle),0);
   //glTranslatef(X,Y,0);
@@ -385,11 +384,12 @@ void fireUpgrade::draw()
   double pz = position.getZ();
   glPushMatrix();
   GLfloat mycolor[] = {1,0.63,0.06}; 
+  glColor3fv(mycolor);
   //GLfloat diff[] = {0.,0.,0.}; 
-  GLfloat shiny[]={0.0};
-  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mycolor);
-  glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+  //GLfloat shiny[]={0.0};
+  //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mycolor);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
   glLineWidth(1);
   glTranslatef(px,py,pz);
   glRotatef(45, 1.0, 1.0, 0.0); 
@@ -421,11 +421,12 @@ void lifeUpgrade::draw()
   double pz = position.getZ();
   glPushMatrix();
   GLfloat mycolor[] = {1,0.,0.}; 
+  glColor3fv(mycolor);
   //GLfloat diff[] = {0.,0.,0.}; 
-  GLfloat shiny[]={0.0};
-  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mycolor);
-  glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+  //GLfloat shiny[]={0.0};
+  //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mycolor);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
   glLineWidth(1);
   glTranslatef(px,py,pz);
   glRotatef(45, 1.0, 1.0, 0.0); 
@@ -456,15 +457,15 @@ void fire::move()
   double px = position.getX();
   double py = position.getY();
   double pz = position.getZ();
-  if (px > (DIMENSION-0.2) || px < -(DIMENSION-0.2)) 
+  if (px > (DIMENSION-0.25) || px < -(DIMENSION-0.25)) 
   {
     die(); 
   }
-  else if (py > (DIMENSION-0.2) ||py < -(DIMENSION-0.2)) 
+  else if (py > (DIMENSION-0.25) ||py < -(DIMENSION-0.25)) 
   {
     die();
   }
-  else if (pz > (DIMENSION-0.2) ||pz < -(DIMENSION-0.2)) 
+  else if (pz > (DIMENSION-0.25) ||pz < -(DIMENSION-0.25)) 
   {
     die();
   }
@@ -482,9 +483,10 @@ void fire::draw()
   double pz = position.getZ();
 
   glPushMatrix();
-  GLfloat diff[] = {0.34,0.59,1};
-  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
-  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION, diff);
+  GLfloat diff[] = {1.,1.,0};
+  glColor3fv(diff);
+  //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION, diff);
   glLineWidth(1);
   glTranslatef(px,py,pz);
   glRotatef(-90, 1.0, 0.0, 0.0); 
