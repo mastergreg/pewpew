@@ -41,4 +41,17 @@ class circle : public game_object
     void draw(vector pos);
 };
 
+class ship_tail : public game_object
+{
+  private:
+    vector position;
+    GLfloat  color[3];
+    double angle;
+    int spin;
+  public:
+    ship_tail(vector position,double ang,GLfloat mycolor[3]);
+    void draw();
+    void move();
+};
+
 #endif

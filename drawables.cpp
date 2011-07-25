@@ -152,3 +152,54 @@ void circle::draw(vector pos)
 void circle::move()
 {
 }
+
+ship_tail::ship_tail(vector pos,double ang,GLfloat mycolor[3])
+{
+  angle=ang;
+  spin=0;
+  position.set_vector(pos);
+  std::copy(mycolor,mycolor+3,color);
+  life=100;
+}
+void ship_tail::draw()
+{
+  glPushMatrix();
+  glColor3fv(color);
+  //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,color);
+  glTranslatef(position.getX(),position.getY(),0);
+
+  glRotatef(57.29578*angle-90, 0.0, 0.0, 1.0); 
+  glRotatef(spin, 0.0, 1.0, 0.0); 
+  glLineWidth(1);
+  glBegin(GL_LINE_LOOP);
+    glVertex3f(0,0,0.002);
+    glVertex3f(-0.02,-0.02,0.002);
+    glVertex3f(0,0.02,0.002);
+    glVertex3f(0.02,-0.02,0.002);
+  glEnd();
+  glBegin(GL_LINE_LOOP);
+    glVertex3f(0,0,-0.002);
+    glVertex3f(-0.02,-0.02,-0.002);
+    glVertex3f(0,0.02,-0.002);
+    glVertex3f(0.02,-0.02,-0.002);
+  glEnd();
+  glBegin(GL_LINES);
+    glVertex3f(0,0,0.002);
+    glVertex3f(0,0,-0.002);
+    glVertex3f(-0.02,-0.02,0.002);
+    glVertex3f(-0.02,-0.02,-0.002);
+    glVertex3f(0,0.02,0.002);
+    glVertex3f(0,0.02,-0.002);
+    glVertex3f(0.02,-0.02,0.002);
+    glVertex3f(0.02,-0.02,-0.002);
+  glEnd();
+  glPopMatrix();
+}
+
+void ship_tail::move()
+{
+  life--;
+  if (spin > 360.0) spin = spin - 360.0;
+  spin+=4;
+}

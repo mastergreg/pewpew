@@ -241,6 +241,8 @@ void level::play()
       ftime=0;
       newFireList = playerShip.shoot(shipMouseAngle());
       fireList.insert(fireList.end(),newFireList.begin(),newFireList.end());
+      GLfloat tailColor[3]={1,0,0};
+      drawableList.push_back(new ship_tail(playerShip.get_pos(),playerShip.get_angle(),tailColor));
     }
   }
   else 

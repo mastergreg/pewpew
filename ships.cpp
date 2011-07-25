@@ -366,6 +366,98 @@ std::list<fire *> ship::shoot(double ang)
 }
 
 
+
+
+
+
+
+
+//SpiralShip enemy
+
+
+spiralShip::spiralShip(vector pos,vector sp)
+:game_ship(pos,sp)
+{
+  life=100000;
+  radius = 0.04;
+}
+void spiralShip::die()
+{
+  life=-1;
+}
+
+void spiralShip::draw()
+{
+  glPushMatrix();
+  GLfloat spiralShipColor[]={1,0,0};
+  glColor3fv(spiralShipColor);
+  glTranslatef(position.getX(),position.getY(),0);
+  glRotatef(57.29578*angle-90, 0.0, 0.0, 1.0); 
+  glRotatef(spini, 0.0, 1.0, 0.0); 
+  glBegin(GL_LINE_LOOP);
+    glVertex3f(0,0.02,0);
+    glVertex3f(-0.02,-0.02,0.02);
+    glVertex3f(0,0,0.01);
+    glVertex3f(0.02,-0.02,0.02);
+  glEnd();
+  glBegin(GL_LINE_LOOP);
+    glVertex3f(0,0.02,0);
+    glVertex3f(-0.02,-0.02,-0.02);
+    glVertex3f(0,0,-0.01);
+    glVertex3f(0.02,-0.02,-0.02);
+  glEnd();
+  glBegin(GL_LINE_STRIP);
+    glVertex3f(0.02,-0.02,0.02);
+    glVertex3f(0.01,0,0);
+    glVertex3f(0.02,-0.02,-0.02);
+  glEnd();
+  glBegin(GL_LINE_STRIP);
+    glVertex3f(-0.02,-0.02,0.02);
+    glVertex3f(-0.01,0,0);
+    glVertex3f(-0.02,-0.02,-0.02);
+  glEnd();
+
+}
+
+
+void spiralShip::move()
+{
+  speed.soft_rotate();
+  double x = speed.getX();
+  double y = speed.getY();
+  int rd = speed.getRD(); 
+  int ri = speed.getRI();
+  double px = position.getX();
+  double py = position.getY();
+  if(x>0) 
+  {
+    angle=atan(y/x);
+  }
+  else if (x<0)
+  {
+    angle=atan(y/x)+M_PI;
+  }
+  else
+  {
+    angle=0;
+  }
+  if (px > (DIMENSION-0.25) ||px < -(DIMENSION-0.25)) 
+  {
+    x*=-1;
+  }
+  if (py > (DIMENSION-0.25) ||py < -(DIMENSION-0.25)) 
+  {
+    y*=-1;
+  }
+  speed.set_vector(vector(x,y,0,rd,ri));
+  position.increase_vector(speed);  
+  speed.rotater();
+  spinnit();
+}
+
+
+
+
 //Upgrades to playership
   fireUpgrade::fireUpgrade(vector pos)
 :game_ship(pos,vector())

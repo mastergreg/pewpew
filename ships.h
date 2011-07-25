@@ -38,9 +38,13 @@ class dummyship : public game_ship
 };
 class spiralShip : public game_ship
 {
+  private:
+    std::list<vector *> pattern;
+    std::list<game_object *> tail;
   public:
     void draw();
     void die();
+    void move();
     spiralShip(vector pos,vector sp);
 };
 class fire : public game_ship
@@ -85,7 +89,6 @@ class ship : public game_ship
     void drawUpgradeRing(std::list<game_ship *> fireUpgradeList,std::list<game_ship *> lifeUpgradeList);
     ship();
 };
-
 
 
 
