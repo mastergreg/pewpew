@@ -1,4 +1,4 @@
-LIBS=-lgc -lGLEW -lglut -lGL -lGLU -lm
+LIBS=-lgc -lglut -lGL -lGLU -lm
 EXTRA_FLAGS=-g -Wall -Wextra -Wuninitialized -std=c++0x
 PROG=pewpew
 all: ${PROG}

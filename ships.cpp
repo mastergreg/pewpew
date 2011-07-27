@@ -133,10 +133,6 @@ void dummyship::draw()
   glutWireSphere(0.04,4,3);
   glPopMatrix(); 
 }
-void dummyship::die()
-{
-  life=-1;
-}
   dummyship::dummyship(vector pos,vector sp)
 :game_ship(pos,sp)
 {
@@ -144,12 +140,13 @@ void dummyship::die()
   radius = 0.04;
 }
 
+void dummyship::die()
+{
+  game_ship::die();
+  lv.insertScoreTag(position,1000);
+}
 
 //Main Ship. PlayerShip
-void ship::die()
-{
-  lv.shipExplode(position);
-}
   ship::ship()
 :game_ship(vector(0,0,0,0,0),vector(0,0,0,0,0))
 {
@@ -171,13 +168,6 @@ void ship::draw()
 
   GLfloat  mycolor[]={0.54,0.16,0.86};
   glColor3fv(mycolor);
-  GLfloat tailColor[3]={1,0.,0.};
-  if(Ttime>10)
-  {
-    tail.push_back(new ship_tail(position,angle,tailColor));
-    Ttime=0;
-  }
-  Ttime++;
   //GLfloat shiny[]={0.0};
   //glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
   //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
@@ -199,6 +189,13 @@ void ship::draw()
 void ship::move()
 {
   game_ship::move();
+  GLfloat tailColor[3]={1,0.,0.};
+  if(Ttime>12)
+  {
+    tail.push_back(new ship_tail(position,angle,tailColor));
+    Ttime=0;
+  }
+  Ttime++;
   tail.remove_if([](game_object *p)->bool {return p->get_life()<0;});
   for_each(tail.begin(),tail.end(),[](game_object *p)->void{p->move();});
 }
@@ -352,7 +349,7 @@ std::list<fire *> ship::shoot(double ang)
       fspeed.set_vector(vector(firespeed*cos(ang),firespeed*sin(ang),0,0,0));
       rls.push_back(new fire(fpos,fspeed));
       break;
-    default:
+    case 5:
       dang=M_PI/12;
       fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
       rls.push_back(new fire(fpos,fspeed));
@@ -376,6 +373,40 @@ std::list<fire *> ship::shoot(double ang)
       fspeed.set_vector(vector(firespeed*cos(ang),firespeed*sin(ang),0,0,0));
       rls.push_back(new fire(fpos,fspeed));
       break;
+    default:
+      dang=M_PI/12;
+      firespeed*=2;
+      fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new fire(fpos,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new fire(fpos,fspeed));
+      dang*=2;
+      fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new fire(fpos,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new fire(fpos,fspeed));
+      dang*=2;
+      fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new fire(fpos,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new fire(fpos,fspeed));
+      dang*=2;
+      fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new fire(fpos,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new fire(fpos,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang),firespeed*sin(ang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new fire(fpos,fspeed));
+      break;
   }
   return rls;
 }
@@ -393,7 +424,7 @@ std::list<fire *> ship::shoot(double ang)
 spiralShip::spiralShip(vector pos,vector sp)
 :game_ship(pos,sp)
 {
-  life=10000;
+  life=100000;
   radius = 0.2;
   Ttime=0;
   rot=true;
@@ -438,17 +469,11 @@ spiralShip::spiralShip(vector pos,vector sp)
 void spiralShip::die()
 {
   life=-1;
+  lv.insertScoreTag(position,10000);
 }
 
 void spiralShip::draw()
 {
-  GLfloat tailColor[3]={0,0.5,0.1};
-  if(Ttime>10)
-  {
-    tail.push_back(new big_ship_tail(position,angle,tailColor));
-    Ttime=0;
-  }
-  Ttime++;
   glPushMatrix();
   glLineWidth(1);
   GLfloat spiralShipColor[]={1,0,0};
@@ -487,6 +512,13 @@ void spiralShip::draw()
 
 void spiralShip::move()
 {
+  GLfloat tailColor[3]={0,0.5,0.1};
+  if(Ttime>10)
+  {
+    tail.push_back(new big_ship_tail(position,angle,tailColor));
+    Ttime=0;
+  }
+  Ttime++;
   tail.remove_if([](game_object *p)->bool {return p->get_life()<0;});
   for_each(tail.begin(),tail.end(),[](game_object *p)->void{p->move();});
   game_ship::move();
@@ -514,10 +546,6 @@ void spiralShip::move()
 :game_ship(pos,vector())
 {
   life=500;
-}
-void fireUpgrade::die()
-{
-  life=-1;
 }
 void fireUpgrade::draw()
 {
@@ -551,10 +579,6 @@ void fireUpgrade::move()
 :game_ship(pos,vector())
 {
   life=500;
-}
-void lifeUpgrade::die()
-{
-  life=-1;
 }
 void lifeUpgrade::draw()
 {
@@ -627,7 +651,7 @@ void fire::draw()
 
   glPushMatrix();
   GLfloat diff[] = {1.,1.,0};
-  glColor3fv(diff);
+  glColor3f(diff[0]*life/300.,diff[1]*life/300.,diff[2]*life/300.);
   //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
   //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION, diff);
   glLineWidth(1);
@@ -639,13 +663,4 @@ void fire::draw()
   glutWireCone(0.01,0.03,2,1);
   glPopMatrix(); 
 }
-
-
-
-
-void fire::die()
-{
-  life=-1;
-}
-
 

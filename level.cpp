@@ -6,6 +6,7 @@ level::level()
   windowX=0;
   windowY=0;
   font = GLUT_BITMAP_TIMES_ROMAN_24;
+  tinyFont = GLUT_BITMAP_8_BY_13;
   enemies_killed = 0;
   enemies_before = 0;
   enemies_after = 0;
@@ -15,12 +16,174 @@ level::level()
   startingSpeed.set_vector(vector(0.001,0.005,0.005,0,0));
   playerShip.set_speed(startingSpeed);
   lifeDraw=playerShip.get_life();
+  paused=true;
+  xploded=false;
   srand(time(NULL));
 }
+void level::display()
+{
+  if(!paused)
+  {
+    drawScene();
+    play();
+  }
+  else
+  {
+    drawInfoScreen();
+  }
+  usleep(10000);
+  glutSwapBuffers();
 
+}
+void level::drawInfoScreen()
+{
+  glClearColor(0,0,0,0);
+  glClear(GL_COLOR_BUFFER_BIT);
+  drawGrid();
+  glLoadIdentity();
+  glOrtho(DIMENSION,-DIMENSION,DIMENSION,-DIMENSION,-5,5);
+  glColor3f(0.,0.26,1.);
+
+  std::string message="Press P to start WASD to move ship";
+  glRasterPos2f(2,-1);
+  int len = (int) message.length();
+  for (int i = 0; i < len; i++) 
+  {
+    glutBitmapCharacter(font, message.at(i));
+  }
+  message="Q turbo boost, E e-break Esc to exit";
+  glRasterPos2f(1,0);
+  len = (int) message.length();
+  for (int i = 0; i < len; i++) 
+  {
+    glutBitmapCharacter(font, message.at(i));
+  }
+}
+void level::start()
+{
+  paused=false;
+}
+void level::drawScene()
+{
+  glClearColor(0,0,0,0);
+  glClear(GL_COLOR_BUFFER_BIT);
+  drawAll();
+}
+void level::play()
+{
+  ScoreBasedEvents();
+  TimeBasedEvents();
+  if (playerShip.isAlive())
+  {
+    std::list<game_object *> newdrawList;
+    int prlife = playerShip.get_life();
+    newdrawList = playerShip.collisions(enemyList);
+    if (prlife>playerShip.get_life()) playerShip.downgradeWeapons();
+    drawableList.insert(drawableList.end(),newdrawList.begin(),newdrawList.end());
+  }
+  moveAll();
+}
+void level::drawAll()
+{
+  drawGrid();
+  if (playerShip.isAlive()) 
+  {
+    displayLife();
+    playerShip.draw();
+    playerShip.drawUpgradeRing(fireUpgradeList,lifeUpgradeList);
+    clipArroundShip();
+
+  }
+  else
+  {
+    shipExplode(playerShip.get_pos());
+  }
+  for_each(drawableList.begin(),drawableList.end(),[](game_object *p)->void{p->draw();});
+  for_each(fireList.begin(),fireList.end(),[](game_ship *p)->void{p->draw();});
+  for_each(fireUpgradeList.begin(),fireUpgradeList.end(),[](game_ship *p)->void{p->draw();});
+  for_each(lifeUpgradeList.begin(),lifeUpgradeList.end(),[](game_ship *p)->void{p->draw();});
+  for_each(enemyList.begin(),enemyList.end(),[](game_ship *p)->void{p->draw();});
+}
+
+void level::TimeBasedEvents()
+{
+  dtime++;
+  ftime++;
+  if (dtime==200)
+  {
+    insertDummyShip();
+    dtime=0;
+  }
+  if(playerShip.isAlive() && ftime>=10)
+  {
+    std::list<fire *> newFireList;
+    ftime=0;
+    newFireList = playerShip.shoot(shipMouseAngle());
+    fireList.insert(fireList.end(),newFireList.begin(),newFireList.end());
+  }
+
+}
+void level::moveAll()
+{
+  if(playerShip.isAlive()) 
+  {
+    playerShip.move(); 
+  }
+  for_each(drawableList.begin(),drawableList.end(),[](game_object *p)->void{p->move();});
+  for_each(enemyList.begin(),enemyList.end(),[](game_ship *p)->void{p->move();});
+  for_each(fireList.begin(),fireList.end(),[](game_ship *p)->void{p->move();});
+  for_each(fireUpgradeList.begin(),fireUpgradeList.end(),[](game_ship *p)->void{p->move();});
+  for_each(lifeUpgradeList.begin(),lifeUpgradeList.end(),[](game_ship *p)->void{p->move();});
+}
+void level::reset()
+{
+  glLoadIdentity();
+  enemies_killed =0 ;
+  enemies_before = 0;
+  enemies_after = 0;
+  score = 0;           
+  dtime = 0;
+  ftime=0;     
+  playerShip = *(new ship);
+  playerShip.set_speed(startingSpeed);
+  lifeDraw=playerShip.get_life();
+
+  fireList.clear();
+  enemyList.clear();
+  fireUpgradeList.clear();
+  lifeUpgradeList.clear();
+  drawableList.clear();
+
+  paused=true;
+  xploded=false;
+  srand(time(NULL));
+}
+void level::ScoreBasedEvents()
+{
+  enemies_before = (int) enemyList.size();
+  globalCollisions();
+  clearDead();
+  enemies_after = (int) enemyList.size();
+  enemies_killed+=enemies_before-enemies_after;
+  if (enemies_killed > 0)
+  {
+    enemies_killed = 0;
+    if(score % 10000 == 0)
+      insertFireUpgrade();
+    if(score % 50000 == 0) 
+    {
+      insertSpiralShip();
+    }
+    if(score % 100000 == 0) 
+    {
+      insertLifeUpgrade();
+    }
+  }
+}
 void level::shipExplode(vector position)
 {
-  drawableList.push_back(new xplosion(position));
+  if(!xploded) drawableList.push_back(new xplosion(position));
+  xploded=true;
 }
 void level::insertSpiralShip()
 {
@@ -62,53 +225,6 @@ void level::insertDummyShip()
   vector resp(sx,sy,sz,0,0);
   enemyList.push_back(new dummyship(rpos,resp));
 }
-void level::drawScene()
-{
-  glClearColor(0,0,0,0);
-  glClear(GL_COLOR_BUFFER_BIT);
-  //glPushMatrix();
-
-  //glEnable(GL_CONVOLUTION_2D);
-	//glEnable(GL_SEPARABLE_2D);
-	//GLfloat filter[7][7] = {
-	//	{0.00000067, 0.00002292, 0.00019117, 0.00038771, 0.00019117, 0.00002292, 0.00000067},
-	//	{0.00002292, 0.00078633, 0.00655965, 0.01330373, 0.00655965, 0.00078633, 0.00002292},
-	//	{0.00019117, 0.00655965, 0.05472157, 0.11098164, 0.05472157, 0.00655965, 0.00019117},
-	//	{0.00038771, 0.01330373, 0.11098164, 0.22508352, 0.11098164, 0.01330373, 0.00038771},
-	//	{0.00019117, 0.00655965, 0.05472157, 0.11098164, 0.05472157, 0.00655965, 0.00019117},
-	//	{0.00002292, 0.00078633, 0.00655965, 0.01330373, 0.00655965, 0.00078633, 0.00002292},
-	//	{0.00000067, 0.00002292, 0.00019117, 0.00038771, 0.00019117, 0.00002292, 0.00000067}
-	//};
-	//GLfloat filter[7][7] = {
-	//	{0.00000067, 0.00002292, 0.00019117, 0.00038771, 0.00019117, 0.00002292, 0.00000067},
-	//	{0.00002292, 0.00078633, 0.00655965, 0.01330373, 0.00655965, 0.00078633, 0.00002292},
-	//	{0.00019117, 0.00655965, 0.05472157, 0.11098164, 0.05472157, 0.00655965, 0.00019117},
-	//	{0.00038771, 0.01330373, 0.11098164, 0.22508352, 0.11098164, 0.01330373, 0.00038771},
-	//	{0.00019117, 0.00655965, 0.05472157, 0.11098164, 0.05472157, 0.00655965, 0.00019117},
-	//	{0.00002292, 0.00078633, 0.00655965, 0.01330373, 0.00655965, 0.00078633, 0.00002292},
-	//	{0.00000067, 0.00002292, 0.00019117, 0.00038771, 0.00019117, 0.00002292, 0.00000067}
-	//};
-	//glConvolutionFilter2D(GL_CONVOLUTION_2D, GL_LUMINANCE, 6, 6, GL_LUMINANCE, GL_FLOAT, filter);
-	//glWindowPos2i(0,0);
-	//glCopyPixels(0,0,WINDOW_SIZEX,WINDOW_SIZEY,GL_COLOR);
-	//glDisable(GL_SEPARABLE_2D);
-	//glDisable(GL_CONVOLUTION_2D);
-
-  drawGrid();
-  if (playerShip.isAlive()) 
-  {
-    displayLife();
-    playerShip.draw();
-    playerShip.drawUpgradeRing(fireUpgradeList,lifeUpgradeList);
-    clipArroundShip();
-  }
-  for_each(drawableList.begin(),drawableList.end(),[](game_object *p)->void{p->draw();});
-  for_each(fireList.begin(),fireList.end(),[](game_ship *p)->void{p->draw();});
-  for_each(fireUpgradeList.begin(),fireUpgradeList.end(),[](game_ship *p)->void{p->draw();});
-  for_each(lifeUpgradeList.begin(),lifeUpgradeList.end(),[](game_ship *p)->void{p->draw();});
-  for_each(enemyList.begin(),enemyList.end(),[](game_ship *p)->void{p->draw();});
-  //glutSwapBuffers();
-}
 void level::clipArroundShip()
 {
   vector position = playerShip.get_pos();
@@ -119,8 +235,8 @@ void level::clipArroundShip()
   double sx=speed.getX();
   double sy=speed.getY();
   double speedL = sqrt(sx*sx+sy*sy);
-  double playWindow = 900000*speedL/SPEED_MAX;
-  playWindow =  playWindow < 1.5 ? playWindow : 1.5;
+  double playWindow = 1000000*speedL/SPEED_MAX;
+  playWindow =  playWindow < 2 ? playWindow : 2;
   playWindow =  playWindow > 0.5 ? playWindow : 0.5;
   glLoadIdentity();
   glOrtho(px-playWindow, px+playWindow, py-playWindow, py+playWindow, -5.0, 5.0); 
@@ -170,39 +286,39 @@ void level::drawGrid()
 }
 void level::displayLife()
 {
-    int mlife = playerShip.get_life();
-    glPushMatrix();
-    glLoadIdentity();
-    show_score(1.0,1.0,score);
-    if (lifeDraw<mlife) 
-    {
-      lifeDraw+=10;
-    }
-    else if (lifeDraw > mlife ) 
-    {
-      lifeDraw-=10;
-    }
-    glBegin(GL_LINES);
-    GLfloat  myBcolor[]={0.0,0.0,0.0};
-    GLfloat  my1color[]={0.0,1.0,0.0};
-    //GLfloat shiny[]={10.0};
-    //glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-    //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,myBcolor);
-    glColor3fv(myBcolor);
-    glLineWidth(30);
-    glVertex3f(-1.0,.999,0);  
-    glVertex3f(1.0,.999,0);  
-    glLineWidth(10);
-    //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,my1color);
-    glColor3fv(my1color);
-    glVertex3f(-0.9,1.,0);  
-    GLfloat  mycolor[]={0.66,0.0,0.0};
-    //glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-    //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
-    glColor3fv(mycolor);
-    glVertex3f(lifeDraw/3000.0-0.9,1.,0);  
-    glEnd();
-    glPopMatrix();
+  int mlife = playerShip.get_life();
+  glPushMatrix();
+  glLoadIdentity();
+  show_score(1.0,1.0,score);
+  if (lifeDraw<mlife) 
+  {
+    lifeDraw+=10;
+  }
+  else if (lifeDraw > mlife ) 
+  {
+    lifeDraw-=10;
+  }
+  glBegin(GL_LINES);
+  GLfloat  myBcolor[]={0.0,0.0,0.0};
+  GLfloat  my1color[]={0.0,1.0,0.0};
+  //GLfloat shiny[]={10.0};
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,myBcolor);
+  glColor3fv(myBcolor);
+  glLineWidth(30);
+  glVertex3f(-1.0,.999,0);  
+  glVertex3f(1.0,.999,0);  
+  glLineWidth(10);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,my1color);
+  glColor3fv(my1color);
+  glVertex3f(-0.9,1.,0);  
+  GLfloat  mycolor[]={0.66,0.0,0.0};
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
+  glColor3fv(mycolor);
+  glVertex3f(lifeDraw/3000.0-0.9,1.,0);  
+  glEnd();
+  glPopMatrix();
 }
 void level::collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *> enemies)
 {
@@ -217,72 +333,39 @@ void level::collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *
   }
 }
 
-void level::play()
+void level::pauseResume()
 {
-  enemies_before = (int) enemyList.size();
+  paused=!paused;
+}
+void level::globalCollisions()
+{
   collisionDetect(fireList,enemyList);
-  fireList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
   playerShip.collectFireUpgrades(fireUpgradeList);
   playerShip.collectLifeUpgrades(lifeUpgradeList);
+}
+void level::clearDead()
+{
+  fireList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
   fireUpgradeList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
   lifeUpgradeList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
   enemyList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
   drawableList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
-  enemies_after = (int) enemyList.size();
-  enemies_killed+=enemies_before-enemies_after;
-  if (enemies_killed > 0)
-  {
-    score+=10*enemies_killed;
-    enemies_killed = 0;
-    insertSpiralShip();
-    if(score % 100 == 0)
-      insertFireUpgrade();
-    if(score % 500 == 0) 
-    {
-      insertSpiralShip();
-    }
-    if(score % 1000 == 0) 
-    {
-      insertLifeUpgrade();
-    }
-  }
-  if (playerShip.isAlive())
-  {
-    std::list<game_object *> newdrawList;
-    int prlife = playerShip.get_life();
-    newdrawList = playerShip.collisions(enemyList);
-    if (prlife>playerShip.get_life()) playerShip.downgradeWeapons();
-    drawableList.insert(drawableList.end(),newdrawList.begin(),newdrawList.end());
-    playerShip.move(); 
-    if (ftime>=10)
-    {
-      std::list<fire *> newFireList;
-      ftime=0;
-      newFireList = playerShip.shoot(shipMouseAngle());
-      fireList.insert(fireList.end(),newFireList.begin(),newFireList.end());
-    }
-  }
-  else 
-  {
-    enemies_killed =0 ;
-    score = 0;           
-    dtime = 0;
-    ftime=0;     
-  }
-  for_each(drawableList.begin(),drawableList.end(),[](game_object *p)->void{p->move();});
-  for_each(enemyList.begin(),enemyList.end(),[](game_ship *p)->void{p->move();});
-  for_each(fireList.begin(),fireList.end(),[](game_ship *p)->void{p->move();});
-  for_each(fireUpgradeList.begin(),fireUpgradeList.end(),[](game_ship *p)->void{p->move();});
-  for_each(lifeUpgradeList.begin(),lifeUpgradeList.end(),[](game_ship *p)->void{p->move();});
-  usleep(10000);
-  dtime++;
-  ftime++;
-  if (dtime==200)
-  {
-    insertDummyShip();
-    dtime=0;
-  }
 }
+
+
+void level::insertScoreTag(vector pos,int points)
+{
+  drawableList.push_back(new score_tag(pos,points));
+  increaseScore(points);
+}
+
+
+
+void level::increaseScore(int points)
+{
+  score+=points;
+}
+
 
 
 void level::show_score(double x,double y,int score)
@@ -315,7 +398,7 @@ void level::reshape(int w,int h)
 }
 void level::myMouseFunction(int x,int y)
 {
-  
+
   GLsizei minSize=WINDOW_SIZEX > WINDOW_SIZEY ? (GLsizei) WINDOW_SIZEY : (GLsizei) WINDOW_SIZEX;
   mX=DIMENSION*(double(x)-0.5*minSize);
   mY=-DIMENSION*(double(y)-25-0.5*minSize);
@@ -384,50 +467,67 @@ void level::keyboardFunction(unsigned char key,int x,int y)
 {
   vector current_speed;
   current_speed.set_vector(playerShip.get_speed());
-  switch (key)
+  if(!paused)
   {
-    case 27:
-      exit (0);
-      break;
-    case 'w':
-      //current_speed.increase_vector(0,0.001,0);
-      current_speed.vincrease();//scale(1.2,1.2,1.2);
-      playerShip.set_speed(current_speed);
-      break;
-    case 'a':
-      //current_speed.increase_vector(-0.001,0,0);
-      current_speed.rotatel();
-      current_speed.scale(1.01,1.01,1.01);
-      playerShip.set_speed(current_speed);
-      break;
-    case 's':
-      //current_speed.increase_vector(0,-0.001,0);
-      current_speed.vdecrease();//scale(0.8,0.8,0.8);
-      playerShip.set_speed(current_speed);
-      break;
-    case 'd':
-      //current_speed.increase_vector(0.001,0,0);
-      current_speed.rotater();
-      current_speed.scale(1.01,1.01,1.01);
-      playerShip.set_speed(current_speed);
-      break;
-    case 'q':
-      current_speed.scale(4,4,4);
-      playerShip.set_speed(current_speed);
-      break;
-    case 'e':
-      current_speed.scale(0.25,0.25,0.25);
-      playerShip.set_speed(current_speed);
-      break;
-    case 'r':
-      if (!playerShip.isAlive())
-      {
-        glLoadIdentity();
-        playerShip = *(new ship);
-        vector sp(0.001,0.005,0.005,0,0);
-        playerShip.set_speed(sp);
-      }
-      break;
+    switch (key)
+    {
+      case 27:
+        pauseResume();
+        break;
+      case 'w':
+        //current_speed.increase_vector(0,0.001,0);
+        current_speed.vincrease();//scale(1.2,1.2,1.2);
+        playerShip.set_speed(current_speed);
+        break;
+      case 'a':
+        //current_speed.increase_vector(-0.001,0,0);
+        current_speed.rotatel();
+        current_speed.scale(1.01,1.01,1.01);
+        playerShip.set_speed(current_speed);
+        break;
+      case 's':
+        //current_speed.increase_vector(0,-0.001,0);
+        current_speed.vdecrease();//scale(0.8,0.8,0.8);
+        playerShip.set_speed(current_speed);
+        break;
+      case 'd':
+        //current_speed.increase_vector(0.001,0,0);
+        current_speed.rotater();
+        current_speed.scale(1.01,1.01,1.01);
+        playerShip.set_speed(current_speed);
+        break;
+      case 'q':
+        current_speed.scale(4,4,4);
+        playerShip.set_speed(current_speed);
+        break;
+      case 'e':
+        current_speed.scale(0.25,0.25,0.25);
+        playerShip.set_speed(current_speed);
+        break;
+      case 'p':
+        pauseResume();
+        break;
+      case 'r':
+        if (!playerShip.isAlive())
+        {
+          reset();
+        }
+        break;
+    }
+  }
+  else
+  {
+    switch (key)
+    {
+      case 27:
+        exit(0);
+        break;
+      case 'p':
+        pauseResume();
+        break;
+    }
+
+
   }
 }
 

@@ -161,7 +161,7 @@ ship_tail::ship_tail(vector pos,double ang,GLfloat mycolor[3])
 void ship_tail::draw()
 {
   glPushMatrix();
-  glColor3fv(color);
+  glColor3f(color[0]*life/100.,color[1]*life/100.,color[2]*life/100.);
   //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color);
   //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,color);
   glTranslatef(position.getX(),position.getY(),0);
@@ -210,7 +210,7 @@ big_ship_tail::big_ship_tail(vector pos,double ang,GLfloat col[3])
 void big_ship_tail::draw()
 {
   glPushMatrix();
-  glColor3fv(color);
+  glColor3f(color[0]*life/100.,color[1]*life/100.,color[2]*life/100.);
   //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color);
   //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,color);
   glTranslatef(position.getX(),position.getY(),0);
@@ -242,4 +242,33 @@ void big_ship_tail::draw()
   glEnd();
   glPopMatrix();
 
+}
+
+
+
+
+
+score_tag::score_tag(vector pos,int pts)
+:game_object(pos)
+{
+  font = GLUT_BITMAP_8_BY_13;
+  sprintf(c_points,"%d",pts);
+  len = (int) strlen(c_points);
+  life=100;
+}
+void score_tag::draw()
+{
+  glPushMatrix();
+  double c = life/100.;
+  glColor3f(c,c,c);
+  glRasterPos2f(position.getX()-0.03,position.getY()-0.02);
+  for (int i = 0; i < len; i++) 
+  {
+    glutBitmapCharacter(font, c_points[i]);
+  }
+  glPopMatrix();
+}
+void score_tag::move()
+{
+  life--;
 }

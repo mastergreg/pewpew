@@ -2,6 +2,7 @@
 #define DRAWABLES_H
 
 #include "game_object.h"
+#include <string.h>
 #include <algorithm>
 #include <GL/glut.h>
 //#include "level.h"
@@ -39,6 +40,17 @@ class circle : public game_object
   public:
     circle(double radius,vector position,GLfloat mycolor[3]);
     void draw(vector pos);
+};
+class score_tag : public game_object
+{
+  private:
+    void *font;
+    char c_points[20];
+    int len;
+  public:
+    score_tag(vector pos,int pts);
+    void draw();
+    void move();
 };
 
 class ship_tail : public game_object

@@ -5,9 +5,7 @@ level lv;
 void display()
 {
   //Draw();
-  lv.drawScene();
-  glutSwapBuffers();
-  lv.play();
+  lv.display();
 }
 void reshape(int w,int h)
 {
@@ -36,16 +34,10 @@ int main(int argc, char** argv)
   glutCreateWindow("PewPew");
   //glEnable(GL_LIGHTING);
   glEnable(GL_BLEND);
-  glShadeModel(GL_SMOOTH);
+  //glShadeModel(GL_SMOOTH);
   //glEnable(GL_LIGHT0);
   glMatrixMode(GL_PROJECTION);
 
-  GLenum err = glewInit();
-  if (GLEW_OK != err)
-  {
-    std::cout << "Error: " << glewGetErrorString(err) << std::endl;
-    exit(EXIT_FAILURE);
-  }
   //GLfloat filter[11] = {0.3,0.28,0.26,0.24,0.22,0.20,0.22,0.24,0.26,0.28,0.3};	//GOOD
   //glSeparableFilter2D(GL_SEPARABLE_2D, GL_LUMINANCE, 11, 11, GL_LUMINANCE, GL_FLOAT, filter,filter); //<< segfault !!!
 

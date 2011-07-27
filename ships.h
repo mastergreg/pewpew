@@ -53,14 +53,12 @@ class fire : public game_ship
 {
   public:
     void move();
-    void die();
     fire(vector posit,vector sp);
     void draw();
 };
 class fireUpgrade : public game_ship
 {
   public:
-    void die();
     void move();
     void draw();
     fireUpgrade(vector p);
@@ -68,7 +66,6 @@ class fireUpgrade : public game_ship
 class lifeUpgrade : public game_ship
 {
   public:
-    void die();
     void move();
     void draw();
     lifeUpgrade(vector p);
@@ -83,7 +80,6 @@ class ship : public game_ship
     std::list<game_object *> tail;
     int Ttime;
   public:
-    void die();
     void collectFireUpgrades(std::list<game_ship *> upgrades);
     void collectLifeUpgrades(std::list<game_ship *> upgrades);
     void draw();
