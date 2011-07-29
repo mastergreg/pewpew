@@ -18,6 +18,7 @@ level::level()
   lifeDraw=playerShip.get_life();
   paused=true;
   xploded=false;
+  MenuChoice=0;
   srand(time(NULL));
 }
 void level::display()
@@ -29,16 +30,100 @@ void level::display()
   }
   else
   {
-    drawInfoScreen();
+    if(drawInfo) drawInfoScreen();
+    else drawMenu(MenuChoice);
+    
   }
   usleep(10000);
   glutSwapBuffers();
 
 }
+void level::drawMenu(int choice)
+{
+  GLfloat color[4][3];
+  GLfloat defaultC[3]={0.,0.26,1.};
+  GLfloat selectionC[3]={1.,0.,0.};
+  int i;
+  for (i=0;i<4;i++)
+  {
+    color[i][0]=defaultC[0];
+    color[i][1]=defaultC[1];
+    color[i][2]=defaultC[2];
+  }
+    color[choice][0]=selectionC[0];
+    color[choice][1]=selectionC[1];
+    color[choice][2]=selectionC[2];
+
+  glClearColor(0,0,0,0);
+  glClear(GL_COLOR_BUFFER_BIT);
+  drawGrid();
+  glLoadIdentity();
+  glOrtho(DIMENSION,-DIMENSION,DIMENSION,-DIMENSION,-5,5);
+
+  glColor3fv(color[0]);
+  std::string message="Info Screen";
+  glRasterPos2f(2,-2);
+  int len = (int) message.length();
+  for (int i = 0; i < len; i++) 
+  {
+    glutBitmapCharacter(font, message.at(i));
+  }
+
+  glColor3fv(color[1]);
+  message="Start";
+  glRasterPos2f(1,-1);
+  len = (int) message.length();
+  for (int i = 0; i < len; i++) 
+  {
+    glutBitmapCharacter(font, message.at(i));
+  }
+
+  glColor3fv(color[2]);
+  message="Resume";
+  glRasterPos2f(0,0);
+  len = (int) message.length();
+  for (int i = 0; i < len; i++) 
+  {
+    glutBitmapCharacter(font, message.at(i));
+  }
+
+  glColor3fv(color[3]);
+  message="Exit";
+  glRasterPos2f(-1,1);
+  len = (int) message.length();
+  for (int i = 0; i < len; i++) 
+  {
+    glutBitmapCharacter(font, message.at(i));
+  }
+
+
+}
+
+void level::launchAction(int choice)
+{
+
+  switch(choice)
+  {
+    case 0:
+      drawInfoScreen();
+      break;
+    case 1:
+      reset();
+      start();
+      break;
+    case 2:
+      start();
+      break;
+    case 3:
+      exit(0);
+      break;
+  }
+}
 void level::drawInfoScreen()
 {
   glClearColor(0,0,0,0);
   glClear(GL_COLOR_BUFFER_BIT);
+  drawInfo=true;
   drawGrid();
   glLoadIdentity();
   glOrtho(DIMENSION,-DIMENSION,DIMENSION,-DIMENSION,-5,5);
@@ -61,6 +146,7 @@ void level::drawInfoScreen()
 }
 void level::start()
 {
+  drawInfo=false;
   paused=false;
 }
 void level::drawScene()
@@ -336,6 +422,7 @@ void level::collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *
 void level::pauseResume()
 {
   paused=!paused;
+  drawInfo=false;
 }
 void level::globalCollisions()
 {
@@ -519,8 +606,12 @@ void level::keyboardFunction(unsigned char key,int x,int y)
   {
     switch (key)
     {
+      case 13:
+        launchAction(MenuChoice);
+        break;
       case 27:
-        exit(0);
+        if(drawInfo) drawInfo=false;
+        else exit(0);
         break;
       case 'p':
         pauseResume();
@@ -528,6 +619,29 @@ void level::keyboardFunction(unsigned char key,int x,int y)
     }
 
 
+  }
+}
+void level::specialKeyboardFunction(int key,int x, int y)
+{
+
+  if(paused)
+  {
+    switch (key)
+    {
+      case GLUT_KEY_DOWN:
+        MenuChoice=(MenuChoice+1)%4;
+        break;
+      case GLUT_KEY_UP:
+        if(MenuChoice==0)
+        {
+          MenuChoice+=3;
+        }
+        else
+        {
+          MenuChoice--;
+        }
+        break;
+    }
   }
 }
 

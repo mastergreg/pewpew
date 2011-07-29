@@ -19,6 +19,10 @@ void kbF(unsigned char key, int x, int y)
 {
   lv.keyboardFunction(key,x,y);
 }
+void skbF(int key, int x, int y)
+{
+  lv.specialKeyboardFunction(key,x,y);
+}
 void mF(int x, int y)
 {
   lv.myMouseFunction(x,y);
@@ -29,7 +33,7 @@ int main(int argc, char** argv)
 {
   glutInit(&argc,argv);
   glutInitWindowPosition(0,0);
-  glutInitWindowSize(1024,768);
+  glutInitWindowSize(800,600);
   glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA);
   glutCreateWindow("PewPew");
   //glEnable(GL_LIGHTING);
@@ -46,6 +50,7 @@ int main(int argc, char** argv)
   glutDisplayFunc(display);
   glutIdleFunc(glutPostRedisplay);
   glutKeyboardUpFunc(kbRelF);
+  glutSpecialFunc(skbF);
   glutKeyboardFunc(kbF);
   glutPassiveMotionFunc(mF);
   glutMainLoop();

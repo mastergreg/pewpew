@@ -25,12 +25,14 @@ class level
     int dtime;
     int ftime;
     int lifeDraw;
+    int MenuChoice;
     double mX,mY;
     ship playerShip;
     vector startingSpeed;
     int windowX;
     int windowY;
     bool paused;
+    bool drawInfo;
     bool firstLaunch;
     bool xploded;
     std::list<game_ship *> fireList;
@@ -58,7 +60,9 @@ class level
     void ScoreBasedEvents();
     void TimeBasedEvents();
     void drawScene();
+    void launchAction(int choice);
     void play();
+    void drawMenu(int choice);
     void drawInfoScreen();
     void shipExplode(vector position);
   public:
@@ -67,6 +71,7 @@ class level
     void increaseScore(int points);
     void display();
     void keyboardReleaseFunction(unsigned char key,int x, int y);
+    void specialKeyboardFunction(int key,int x,int y);
     void keyboardFunction(unsigned char key,int x,int y);
     void myMouseFunction(int x,int y);
     void reshape(int w,int h);
