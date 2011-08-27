@@ -2,7 +2,7 @@
 
 
 
-chink::chink(vector pos)
+  chink::chink(vector pos)
 :game_object(pos)
 {
   life=10;
@@ -106,7 +106,7 @@ circle::circle(double r, vector pos,GLfloat mycolor[3])
     y[i]=radius*sin(i*angleStep);
     x[64-1-i]=y[i];
     y[64-1-i]=x[i];
-    
+
     //Define points in second quadrant
 
     x[64+i]=-y[i];
@@ -124,8 +124,8 @@ circle::circle(double r, vector pos,GLfloat mycolor[3])
 
     x[4*64-1-i]=x[i];
     y[4*64-1-i]=-y[i];
-   } 
-  
+  } 
+
 }
 
 void circle::draw(vector pos)
@@ -170,26 +170,26 @@ void ship_tail::draw()
   glRotatef(spin, 0.0, 1.0, 0.0); 
   glLineWidth(1);
   glBegin(GL_LINE_LOOP);
-    glVertex3f(0,0,0.002);
-    glVertex3f(-0.02,-0.02,0.002);
-    glVertex3f(0,0.02,0.002);
-    glVertex3f(0.02,-0.02,0.002);
+  glVertex3f(0,0,0.002);
+  glVertex3f(-0.02,-0.02,0.002);
+  glVertex3f(0,0.02,0.002);
+  glVertex3f(0.02,-0.02,0.002);
   glEnd();
   glBegin(GL_LINE_LOOP);
-    glVertex3f(0,0,-0.002);
-    glVertex3f(-0.02,-0.02,-0.002);
-    glVertex3f(0,0.02,-0.002);
-    glVertex3f(0.02,-0.02,-0.002);
+  glVertex3f(0,0,-0.002);
+  glVertex3f(-0.02,-0.02,-0.002);
+  glVertex3f(0,0.02,-0.002);
+  glVertex3f(0.02,-0.02,-0.002);
   glEnd();
   glBegin(GL_LINES);
-    glVertex3f(0,0,0.002);
-    glVertex3f(0,0,-0.002);
-    glVertex3f(-0.02,-0.02,0.002);
-    glVertex3f(-0.02,-0.02,-0.002);
-    glVertex3f(0,0.02,0.002);
-    glVertex3f(0,0.02,-0.002);
-    glVertex3f(0.02,-0.02,0.002);
-    glVertex3f(0.02,-0.02,-0.002);
+  glVertex3f(0,0,0.002);
+  glVertex3f(0,0,-0.002);
+  glVertex3f(-0.02,-0.02,0.002);
+  glVertex3f(-0.02,-0.02,-0.002);
+  glVertex3f(0,0.02,0.002);
+  glVertex3f(0,0.02,-0.002);
+  glVertex3f(0.02,-0.02,0.002);
+  glVertex3f(0.02,-0.02,-0.002);
   glEnd();
   glPopMatrix();
 }
@@ -202,7 +202,7 @@ void ship_tail::move()
 }
 
 
-big_ship_tail::big_ship_tail(vector pos,double ang,GLfloat col[3])
+  big_ship_tail::big_ship_tail(vector pos,double ang,GLfloat col[3])
 :ship_tail(pos,ang,col)
 {
 }
@@ -219,26 +219,26 @@ void big_ship_tail::draw()
   glRotatef(spin, 0.0, 1.0, 0.0); 
   glLineWidth(1);
   glBegin(GL_LINE_LOOP);
-    glVertex3f(0,0,0.01);
-    glVertex3f(-0.1,-0.1,0.01);
-    glVertex3f(0,0.1,0.01);
-    glVertex3f(0.1,-0.1,0.01);
+  glVertex3f(0,0,0.01);
+  glVertex3f(-0.1,-0.1,0.01);
+  glVertex3f(0,0.1,0.01);
+  glVertex3f(0.1,-0.1,0.01);
   glEnd();
   glBegin(GL_LINE_LOOP);
-    glVertex3f(0,0,-0.01);
-    glVertex3f(-0.1,-0.1,-0.01);
-    glVertex3f(0,0.1,-0.01);
-    glVertex3f(0.1,-0.1,-0.01);
+  glVertex3f(0,0,-0.01);
+  glVertex3f(-0.1,-0.1,-0.01);
+  glVertex3f(0,0.1,-0.01);
+  glVertex3f(0.1,-0.1,-0.01);
   glEnd();
   glBegin(GL_LINES);
-    glVertex3f(0,0,0.01);
-    glVertex3f(0,0,-0.01);
-    glVertex3f(-0.1,-0.1,0.01);
-    glVertex3f(-0.1,-0.1,-0.01);
-    glVertex3f(0,0.1,0.01);
-    glVertex3f(0,0.1,-0.01);
-    glVertex3f(0.1,-0.1,0.01);
-    glVertex3f(0.1,-0.1,-0.01);
+  glVertex3f(0,0,0.01);
+  glVertex3f(0,0,-0.01);
+  glVertex3f(-0.1,-0.1,0.01);
+  glVertex3f(-0.1,-0.1,-0.01);
+  glVertex3f(0,0.1,0.01);
+  glVertex3f(0,0.1,-0.01);
+  glVertex3f(0.1,-0.1,0.01);
+  glVertex3f(0.1,-0.1,-0.01);
   glEnd();
   glPopMatrix();
 
@@ -248,7 +248,7 @@ void big_ship_tail::draw()
 
 
 
-score_tag::score_tag(vector pos,int pts)
+  score_tag::score_tag(vector pos,int pts)
 :game_object(pos)
 {
   font = GLUT_BITMAP_8_BY_13;
@@ -272,3 +272,16 @@ void score_tag::move()
 {
   life--;
 }
+
+minimap::minimap(vector position)
+:game_object(position)
+{
+}
+void minimap::draw()
+{
+  GLfloat x = position.getX();
+  GLfloat y = position.getY();
+  glViewport(x-0.1,0.2,y-0.1,0.2,1,1);
+  glOrtho();
+}
+

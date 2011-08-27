@@ -72,4 +72,11 @@ class big_ship_tail : public ship_tail
     void draw();
 };
 
+class minimap : public game_object
+{
+  private:
+  public:
+    minimap(vector position);
+    draw();
+}
 #endif

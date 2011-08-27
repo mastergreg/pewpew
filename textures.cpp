@@ -51,7 +51,7 @@ GLuint EmptyTexture()             // Create An Empty Texture
 void RenderToTexture()              // Renders To A Texture
 {
   glViewport(0,0,128,128);          // Set Our Viewport (Match Texture Size)
-  lv.drawScene();             // Render The Helix
+  lv.display();             // Render The Helix
   glBindTexture(GL_TEXTURE_2D,BlurTexture);     // Bind To The Blur Texture
   // Copy Our ViewPort To The Blur Texture (From 0,0 To 128,128... No Border)
   glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, 0, 0, 128, 128, 0);
@@ -112,7 +112,7 @@ void Draw (void)              // Draw The Scene
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    // Clear Screen And Depth Buffer
   glLoadIdentity();           // Reset The View
   RenderToTexture();            // Render To A Texture
-  lv.drawScene();             // Draw Our Helix
+  lv.display();             // Draw Our Helix
   DrawBlur(25,0.02f);           // Draw The Blur Effect
   glFlush ();             // Flush The GL Rendering Pipeline
 }

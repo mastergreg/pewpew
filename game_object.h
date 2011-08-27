@@ -18,7 +18,7 @@ class game_object
     int get_life();
     //Pure virtual function 
     //to make it an abstract class
-    virtual ~game_object(){}
+    virtual ~game_object(){};
     virtual void die();
     virtual void move()=0;
     virtual void draw();

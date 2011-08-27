@@ -37,3 +37,4 @@ bool game_object::collides(game_object *test)
     return false;
   }
 }
+

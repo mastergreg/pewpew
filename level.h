@@ -31,6 +31,7 @@ class level
     vector startingSpeed;
     int windowX;
     int windowY;
+    int ZoomLevel;
     bool paused;
     bool drawInfo;
     bool firstLaunch;
@@ -64,6 +65,7 @@ class level
     void play();
     void drawMenu(int choice);
     void drawInfoScreen();
+    void ZooMStart();
     void shipExplode(vector position);
   public:
     level();

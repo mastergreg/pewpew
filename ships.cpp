@@ -529,7 +529,9 @@ void spiralShip::move()
     rot=false;
   }
   else
+  {
     rot=true;
+  }
   double sx=speed.getX();
   double sy=speed.getY();
   if((sx*sx+sy*sy)<0.001)

@@ -19,6 +19,7 @@ level::level()
   paused=true;
   xploded=false;
   MenuChoice=0;
+  ZoomLevel=100;
   srand(time(NULL));
 }
 void level::display()
@@ -30,7 +31,10 @@ void level::display()
   }
   else
   {
-    if(drawInfo) drawInfoScreen();
+    if(drawInfo)
+    {
+      drawInfoScreen();
+    }
     else drawMenu(MenuChoice);
     
   }
@@ -38,6 +42,10 @@ void level::display()
   glutSwapBuffers();
 
 }
+void level::ZooMStart()
+{
+}
+
 void level::drawMenu(int choice)
 {
   GLfloat color[4][3];
@@ -242,6 +250,7 @@ void level::reset()
 
   paused=true;
   xploded=false;
+  ZoomLevel=100;
   srand(time(NULL));
 }
 void level::ScoreBasedEvents()
@@ -277,8 +286,8 @@ void level::insertSpiralShip()
   double py = ((rand() % 2000)-1000)*(DIMENSION-0.4)/1000.;
   double pz = 0;
   vector rpos(px,py,pz,0,0);
-  double sx = 0.002;
-  double sy = 0.002;
+  double sx = 0.001;
+  double sy = 0.001;
   double sz = 0;
   vector resp(sx,sy,sz,0,0);
   enemyList.push_back(new spiralShip(rpos,resp));
@@ -321,11 +330,22 @@ void level::clipArroundShip()
   double sx=speed.getX();
   double sy=speed.getY();
   double speedL = sqrt(sx*sx+sy*sy);
-  double playWindow = 1000000*speedL/SPEED_MAX;
-  playWindow =  playWindow < 2 ? playWindow : 2;
+  double playWindow = 1300000*speedL/SPEED_MAX;
+  playWindow =  playWindow < 3 ? playWindow : 3;
   playWindow =  playWindow > 0.5 ? playWindow : 0.5;
-  glLoadIdentity();
-  glOrtho(px-playWindow, px+playWindow, py-playWindow, py+playWindow, -5.0, 5.0); 
+  double initZoom = DIMENSION*ZoomLevel/100.;
+  if(initZoom>playWindow)
+  {
+    glLoadIdentity();
+    glOrtho(px-initZoom,px+initZoom,py-initZoom,py+initZoom,-5,5);
+    ZoomLevel--;
+  }
+  else
+  {
+    glLoadIdentity();
+    glOrtho(px-playWindow, px+playWindow, py-playWindow, py+playWindow, -5.0, 5.0); 
+  }
+
 }
 
 

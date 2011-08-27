@@ -24,4 +24,5 @@ clean:
 
 
 tar:
-	tar -czvf ${PROG}.tar *
+	tar -uzvf ${PROG}.tar *.cpp
+	tar -uzvf ${PROG}.tar *.h
