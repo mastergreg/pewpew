@@ -14,7 +14,6 @@ class game_ship : public game_object
     double spini;
     double spinnit();
   public:
-
     virtual void die();
     virtual void move();
     double get_angle();
@@ -24,7 +23,6 @@ class game_ship : public game_object
     void set_speed(vector new_speed);
     std::list<game_object *> collisions(std::list<game_ship *> lst);
     vector get_pos();
-    
 };
 
 

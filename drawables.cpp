@@ -281,7 +281,7 @@ void minimap::draw()
 {
   GLfloat x = position.getX();
   GLfloat y = position.getY();
-  glViewport(x-0.1,0.2,y-0.1,0.2,1,1);
-  glOrtho();
+  //glViewport(x-0.1,0.2,y-0.1,0.2,1,1);
+  //glOrtho();
 }
 

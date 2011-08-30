@@ -77,6 +77,6 @@ class minimap : public game_object
   private:
   public:
     minimap(vector position);
-    draw();
-}
+    void draw();
+};
 #endif
