@@ -10,6 +10,7 @@
 #include <time.h>
 
 #include "ships.h"
+#include "joystick.h"
 #define DT 0.01
 #define DIMENSION 6
 class level
@@ -26,7 +27,7 @@ class level
     int ftime;
     int lifeDraw;
     int MenuChoice;
-    double mX,mY;
+    double mX,mY,jX,jY;
     ship *playerShip;
     vector startingSpeed;
     int windowX;
@@ -43,6 +44,7 @@ class level
     std::list<game_object *> drawableList;
     double shipMouseAngle();
     void start();
+    void playStick();
     void pauseResume();
     void reset();
     void clipArroundShip();

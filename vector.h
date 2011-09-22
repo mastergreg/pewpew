@@ -27,6 +27,7 @@ class vector
     void rotate_reset();
     void rotater();
     void rotatel();
+    double length();
     double distance(vector );
     double getX();
     double getY();

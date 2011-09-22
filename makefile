@@ -2,8 +2,10 @@ LIBS=-lgc -lglut -lGL -lGLU -lm
 EXTRA_FLAGS=-g -Wall -Wextra -Wuninitialized -std=c++0x
 PROG=pewpew
 all: ${PROG}
+joystick.o: joystick.cpp joystick.h
+	g++ -c joystick.cpp ${EXTRA_FLAGS}
 game_object.o: game_object.cpp game_object.h
-	gcc -c game_object.cpp ${EXTRA_FLAGS}
+	g++ -c game_object.cpp ${EXTRA_FLAGS}
 vector.o: vector.h vector.cpp
 	g++ -c vector.cpp -lm ${EXTRA_FLAGS}
 ships.o: ships.h ships.cpp	
@@ -15,7 +17,7 @@ peripherals.o:	peripherals.cpp peripherals.h
 level.o:  level.cpp level.h
 	g++ ${LIBS} -c 	level.cpp ${EXTRA_FLAGS}
 
-OBJECTS=game_object.o ships.o vector.o drawables.o level.o
+OBJECTS=game_object.o ships.o vector.o drawables.o level.o joystick.o
 ${PROG}:	${PROG}.cpp ${OBJECTS}
 	g++ ${LIBS}  ${PROG}.cpp ${OBJECTS} -o ${PROG} ${EXTRA_FLAGS}
 clean:

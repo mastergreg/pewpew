@@ -51,6 +51,16 @@ double game_ship::get_angle()
   return angle;
 }
 
+void game_ship::set_angle(double newAngle)
+{
+  double length = speed.length();
+  double newX = length*cos(newAngle);
+  double newY = length*sin(newAngle);
+  double newZ = speed.getZ();
+  speed = vector(newX,newY,newZ,speed.getRD(),speed.getRI());
+  angle = newAngle;
+}
+
 
 void game_ship::move()
 {

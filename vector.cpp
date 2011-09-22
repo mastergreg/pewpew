@@ -38,11 +38,11 @@ void vector::scale(double a,double b, double c)
 }
 void vector::vincrease()
 {
-  remaining_inc+=100;
+  remaining_inc+=50;
 }
 void vector::vdecrease()
 {
-  remaining_inc-=100;
+  remaining_inc-=50;
 }
 void vector::soft_scale()
 {
@@ -114,6 +114,10 @@ int vector::getRI()
 int vector::getRD()
 {
   return remaining_deg;
+}
+double vector::length()
+{
+  return sqrt(x*x+y*y);
 }
 double vector::distance(vector b)
 {

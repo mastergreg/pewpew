@@ -17,6 +17,7 @@ class game_ship : public game_object
     virtual void die();
     virtual void move();
     double get_angle();
+    void set_angle(double newAngle);
     game_ship(vector pos,vector sp);
     vector get_speed();
     bool isAlive();
