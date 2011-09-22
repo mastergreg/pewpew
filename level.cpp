@@ -14,8 +14,9 @@ level::level()
   dtime = 0;
   ftime = 0;
   startingSpeed.set_vector(vector(0.001,0.005,0.005,0,0));
-  playerShip.set_speed(startingSpeed);
-  lifeDraw=playerShip.get_life();
+  playerShip = new ship();
+  playerShip->set_speed(startingSpeed);
+  lifeDraw=playerShip->get_life();
   paused=true;
   xploded=false;
   MenuChoice=0;
@@ -167,12 +168,12 @@ void level::play()
 {
   ScoreBasedEvents();
   TimeBasedEvents();
-  if (playerShip.isAlive())
+  if (playerShip->isAlive())
   {
     std::list<game_object *> newdrawList;
-    int prlife = playerShip.get_life();
-    newdrawList = playerShip.collisions(enemyList);
-    if (prlife>playerShip.get_life()) playerShip.downgradeWeapons();
+    int prlife = playerShip->get_life();
+    newdrawList = playerShip->collisions(enemyList);
+    if (prlife>playerShip->get_life()) playerShip->downgradeWeapons();
     drawableList.insert(drawableList.end(),newdrawList.begin(),newdrawList.end());
   }
   moveAll();
@@ -180,17 +181,17 @@ void level::play()
 void level::drawAll()
 {
   drawGrid();
-  if (playerShip.isAlive()) 
+  if (playerShip->isAlive()) 
   {
     displayLife();
-    playerShip.draw();
-    playerShip.drawUpgradeRing(fireUpgradeList,lifeUpgradeList);
+    playerShip->draw();
+    playerShip->drawUpgradeRing(fireUpgradeList,lifeUpgradeList);
     clipArroundShip();
 
   }
   else
   {
-    shipExplode(playerShip.get_pos());
+    shipExplode(playerShip->get_pos());
   }
   for_each(drawableList.begin(),drawableList.end(),[](game_object *p)->void{p->draw();});
   for_each(fireList.begin(),fireList.end(),[](game_ship *p)->void{p->draw();});
@@ -208,20 +209,20 @@ void level::TimeBasedEvents()
     insertDummyShip();
     dtime=0;
   }
-  if(playerShip.isAlive() && ftime>=10)
+  if(playerShip->isAlive() && ftime>=10)
   {
     std::list<fire *> newFireList;
     ftime=0;
-    newFireList = playerShip.shoot(shipMouseAngle());
+    newFireList = playerShip->shoot(shipMouseAngle());
     fireList.insert(fireList.end(),newFireList.begin(),newFireList.end());
   }
 
 }
 void level::moveAll()
 {
-  if(playerShip.isAlive()) 
+  if(playerShip->isAlive()) 
   {
-    playerShip.move(); 
+    playerShip->move(); 
   }
   for_each(drawableList.begin(),drawableList.end(),[](game_object *p)->void{p->move();});
   for_each(enemyList.begin(),enemyList.end(),[](game_ship *p)->void{p->move();});
@@ -238,9 +239,11 @@ void level::reset()
   score = 0;           
   dtime = 0;
   ftime=0;     
-  playerShip = *(new ship);
-  playerShip.set_speed(startingSpeed);
-  lifeDraw=playerShip.get_life();
+  delete playerShip;
+
+  playerShip = new ship;
+  playerShip->set_speed(startingSpeed);
+  lifeDraw=playerShip->get_life();
 
   fireList.clear();
   enemyList.clear();
@@ -322,8 +325,8 @@ void level::insertDummyShip()
 }
 void level::clipArroundShip()
 {
-  vector position = playerShip.get_pos();
-  vector speed = playerShip.get_speed();
+  vector position = playerShip->get_pos();
+  vector speed = playerShip->get_speed();
   double px=position.getX();
   double py=position.getY();
   //double pz=position.getZ();
@@ -392,7 +395,7 @@ void level::drawGrid()
 }
 void level::displayLife()
 {
-  int mlife = playerShip.get_life();
+  int mlife = playerShip->get_life();
   glPushMatrix();
   glLoadIdentity();
   show_score(1.0,1.0,score);
@@ -447,8 +450,8 @@ void level::pauseResume()
 void level::globalCollisions()
 {
   collisionDetect(fireList,enemyList);
-  playerShip.collectFireUpgrades(fireUpgradeList);
-  playerShip.collectLifeUpgrades(lifeUpgradeList);
+  playerShip->collectFireUpgrades(fireUpgradeList);
+  playerShip->collectLifeUpgrades(lifeUpgradeList);
 }
 void level::clearDead()
 {
@@ -535,45 +538,45 @@ double level::shipMouseAngle()
 void level::keyboardReleaseFunction(unsigned char key,int x, int y)
 {
   vector current_speed;
-  current_speed.set_vector(playerShip.get_speed());
+  current_speed.set_vector(playerShip->get_speed());
   switch (key)
   {
     case 'w':
       //current_speed.increase_vector(0,0.001,0);
       current_speed.increase_reset();//scale(1.2,1.2,1.2);
-      playerShip.set_speed(current_speed);
+      playerShip->set_speed(current_speed);
       break;
 
     case 'a':
       //current_speed.increase_vector(-0.001,0,0);
       current_speed.rotate_reset();
-      playerShip.set_speed(current_speed);
+      playerShip->set_speed(current_speed);
       break;
     case 's':
       //current_speed.increase_vector(0,-0.001,0);
       current_speed.increase_reset();//scale(1.2,1.2,1.2);
-      playerShip.set_speed(current_speed);
+      playerShip->set_speed(current_speed);
       break;
 
     case 'd':
       //current_speed.increase_vector(0.001,0,0);
       current_speed.rotate_reset();
-      playerShip.set_speed(current_speed);
+      playerShip->set_speed(current_speed);
       break;
     case 'q':
       current_speed.scale(0.25,0.25,0.25);
-      playerShip.set_speed(current_speed);
+      playerShip->set_speed(current_speed);
       break;
     case 'e':
       current_speed.scale(4,4,4);
-      playerShip.set_speed(current_speed);
+      playerShip->set_speed(current_speed);
       break;
   }
 }
 void level::keyboardFunction(unsigned char key,int x,int y)
 {
   vector current_speed;
-  current_speed.set_vector(playerShip.get_speed());
+  current_speed.set_vector(playerShip->get_speed());
   if(!paused)
   {
     switch (key)
@@ -584,38 +587,38 @@ void level::keyboardFunction(unsigned char key,int x,int y)
       case 'w':
         //current_speed.increase_vector(0,0.001,0);
         current_speed.vincrease();//scale(1.2,1.2,1.2);
-        playerShip.set_speed(current_speed);
+        playerShip->set_speed(current_speed);
         break;
       case 'a':
         //current_speed.increase_vector(-0.001,0,0);
         current_speed.rotatel();
         current_speed.scale(1.01,1.01,1.01);
-        playerShip.set_speed(current_speed);
+        playerShip->set_speed(current_speed);
         break;
       case 's':
         //current_speed.increase_vector(0,-0.001,0);
         current_speed.vdecrease();//scale(0.8,0.8,0.8);
-        playerShip.set_speed(current_speed);
+        playerShip->set_speed(current_speed);
         break;
       case 'd':
         //current_speed.increase_vector(0.001,0,0);
         current_speed.rotater();
         current_speed.scale(1.01,1.01,1.01);
-        playerShip.set_speed(current_speed);
+        playerShip->set_speed(current_speed);
         break;
       case 'q':
         current_speed.scale(4,4,4);
-        playerShip.set_speed(current_speed);
+        playerShip->set_speed(current_speed);
         break;
       case 'e':
         current_speed.scale(0.25,0.25,0.25);
-        playerShip.set_speed(current_speed);
+        playerShip->set_speed(current_speed);
         break;
       case 'p':
         pauseResume();
         break;
       case 'r':
-        if (!playerShip.isAlive())
+        if (!playerShip->isAlive())
         {
           reset();
         }

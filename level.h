@@ -27,7 +27,7 @@ class level
     int lifeDraw;
     int MenuChoice;
     double mX,mY;
-    ship playerShip;
+    ship *playerShip;
     vector startingSpeed;
     int windowX;
     int windowY;
