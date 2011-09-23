@@ -14,6 +14,7 @@
 #define DT 0.01
 #define DIMENSION 6
 
+
 class level
 {
     void *font;
@@ -61,6 +62,8 @@ class level
     void clearDead();
     void moveAll();
     void drawAll();
+    void clean_dead(std::list<game_ship *>*);
+    void clean_dead(std::list<game_object *>*);
     void ScoreBasedEvents();
     void TimeBasedEvents();
     void drawScene();

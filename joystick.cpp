@@ -12,7 +12,7 @@ static int joystick_fd = -1;
 static int joystick_fd_ff = -1;
 static wwvi_js_event js_state;
 static struct ff_effect feedback;
-static struct input_event play, stop;
+static struct input_event play;
 
 int open_joystick()
 {
@@ -58,6 +58,7 @@ int rumble()
     perror("Error in FF");
     exit(42);
   }
+  return 0;
 }
 int read_joystick_event(js_event *jse)
 {

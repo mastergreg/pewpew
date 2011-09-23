@@ -88,6 +88,7 @@ class ship : public game_ship
     std::list<fire*> shoot(double ang);
     void drawUpgradeRing(std::list<game_ship *> fireUpgradeList,std::list<game_ship *> lifeUpgradeList);
     ship();
+    ~ship();
 };
 
 

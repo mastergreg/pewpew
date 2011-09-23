@@ -462,13 +462,41 @@ void level::globalCollisions()
 }
 void level::clearDead()
 {
-  fireList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
-  fireUpgradeList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
-  lifeUpgradeList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
-  enemyList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
-  drawableList.remove_if([](game_object *p)->bool {return p->get_life()<0;});
+  clean_dead(&fireList);
+  clean_dead(&fireUpgradeList);
+  clean_dead(&lifeUpgradeList);
+  clean_dead(&enemyList);
+  clean_dead(&drawableList);
 }
 
+void level::clean_dead(std::list<game_ship *> *ls)
+{
+  std::list<game_ship *>::iterator iter = ls->begin();
+  for(;iter!=ls->end();iter++)
+  {
+    if ((*iter)->get_life()<0)
+    {
+      delete *iter;
+      *iter = NULL;
+    }
+  }
+  ls->remove(NULL);
+
+}
+void level::clean_dead(std::list<game_object *> *ls)
+{
+  std::list<game_object *>::iterator iter = ls->begin();
+  for(;iter!=ls->end();iter++)
+  {
+    if ((*iter)->get_life()<0)
+    {
+      delete *iter;
+      *iter = NULL;
+    }
+  }
+  ls->remove(NULL);
+
+}
 
 void level::insertScoreTag(vector pos,int points)
 {
@@ -584,7 +612,8 @@ void level::playStick()
 {
   vector current_speed;
   current_speed.set_vector(playerShip->get_speed());
-  wwvi_js_event *js_state = (wwvi_js_event *) calloc(1,sizeof(wwvi_js_event));
+  wwvi_js_event *js_state = new wwvi_js_event;
+  memset(js_state,0,sizeof(wwvi_js_event));
   if (get_joystick_status(js_state)==0)
   {
     if(!paused)
@@ -656,6 +685,7 @@ void level::playStick()
       }
     }
   }
+  delete js_state;
 }
   void level::keyboardFunction(unsigned char key,int x,int y)
   {
