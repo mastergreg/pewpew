@@ -50,9 +50,9 @@ int get_joystick_status(wwvi_js_event *my_js_out)
   struct js_event jse;
   if (joystick_fd < 0)
     return -1;
-  for(int i =0;i< 32;i++)
+  //for(int i =0;i< 32;i++)
   {
-    js_state.button[i]=0;
+    //js_state.button[i]=0;
     //need to clear buttons state
   }
   // memset(wjse, 0, sizeof(*wjse));
@@ -76,15 +76,8 @@ int get_joystick_status(wwvi_js_event *my_js_out)
       }
     } else if (jse.type == JS_EVENT_BUTTON) {
       if (jse.number < 32) {
-        switch (jse.value) {
-          case 0:
-          case 1: 
-            my_js_out->button[jse.number] = jse.value;
-            js_state.button[jse.number] = jse.value;
-            break;
-          default:
-            break;
-        }
+          my_js_out->button[jse.number] = jse.value;
+          js_state.button[jse.number] = jse.value;
       }
     }
   }
