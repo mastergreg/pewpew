@@ -6,7 +6,7 @@
 
  * Creation Date : 22-09-2011
 
- * Last Modified : Fri 23 Sep 2011 12:31:58 AM EEST
+ * Last Modified : Fri 23 Sep 2011 04:12:11 AM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -41,7 +41,6 @@ struct js_event
 
 typedef struct js_event js_event;
 
-#define JS_EVENT_BUTTON         0x01
 struct wwvi_js_event 
 {
   int button[32];
@@ -59,6 +58,6 @@ extern int read_joystick_event(struct js_event *jse);
 extern void set_joystick_y_axis(int axis);
 extern void set_joystick_x_axis(int axis);
 extern void close_joystick();
-extern int get_joystick_status(struct wwvi_js_event *wjse);
+extern int get_joystick_status(wwvi_js_event *);
 
 #endif

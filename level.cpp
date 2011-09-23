@@ -580,72 +580,77 @@ void level::playStick()
 {
   vector current_speed;
   current_speed.set_vector(playerShip->get_speed());
-  wwvi_js_event *wwvi_js = (wwvi_js_event *) calloc(1,sizeof(wwvi_js_event));
-  get_joystick_status(wwvi_js);
-  double out = 0;
+  wwvi_js_event *js_state = (wwvi_js_event *) calloc(1,sizeof(wwvi_js_event));
+  if (get_joystick_status(js_state)==0)
+  {
+    double out = 0;
 
-  if (wwvi_js->button[7]==1)
-  {
-    current_speed.vincrease();//scale(1.2,1.2,1.2);
-    playerShip->set_speed(current_speed);
-  }
-  if (wwvi_js->button[6]==1)
-  {
-    current_speed.vdecrease();//scale(0.8,0.8,0.8);
-    playerShip->set_speed(current_speed);
-  }
-  if (wwvi_js->button[5]==1)
-  {
-    current_speed.scale(4,4,4);
-    playerShip->set_speed(current_speed);
-  }
-  if (wwvi_js->button[4]==1)
-  {
-    current_speed.scale(0.25,0.25,0.25);
-    playerShip->set_speed(current_speed);
-  }
-  double newAngle=playerShip->get_angle();
-  double newX = (double) wwvi_js->stick1_x;
-  double newY = (double) wwvi_js->stick1_y;
-  if (abs(newX)>0)
-  {
-    jX = newX;
-  }
-  if (abs(newY)>0)
-  {
-    jY = -newY;
-  }
-  
-  if  (jX > 0)
-  {
-    newAngle = atan(jY/jX);
-    std::cout << "x < 0 " <<  jY <<" "<< jX << " " << newAngle << std::endl;
-    playerShip->set_angle(newAngle);
-  }
-  else if (jX < 0 )
-  {
-    newAngle = M_PI+atan(jY/jX);
-    std::cout << "x > 0 " <<   jY <<" "<< jX << " " << newAngle << std::endl;
-    playerShip->set_angle(newAngle);
+    if (js_state->button[7]==1)
+    {
+      current_speed.vincrease();//scale(1.2,1.2,1.2);
+      playerShip->set_speed(current_speed);
+    }
+    if (js_state->button[6]==1)
+    {
+      current_speed.vdecrease();//scale(0.8,0.8,0.8);
+      playerShip->set_speed(current_speed);
+    }
+    if (js_state->button[5]==1)
+    {
+      current_speed.scale(4,4,4);
+      playerShip->set_speed(current_speed);
+    }
+    if (js_state->button[4]==1)
+    {
+      current_speed.scale(0.25,0.25,0.25);
+      playerShip->set_speed(current_speed);
+    }
+    double newAngle=playerShip->get_angle();
+    double newX = (double) js_state->stick1_x;
+    double newY = (double) js_state->stick1_y;
+    if (abs(newX)>0)
+    {
+      jX = newX;
+    }
+    if (abs(newY)>0)
+    {
+      jY = -newY;
+    }
+
+    if  (jX > 0)
+    {
+      newAngle = atan(jY/jX);
+      std::cout << "x < 0 " <<  jY <<" "<< jX << " " << newAngle << std::endl;
+      playerShip->set_angle(newAngle);
+    }
+    else if (jX < 0 )
+    {
+      newAngle = M_PI+atan(jY/jX);
+      std::cout << "x > 0 " <<   jY <<" "<< jX << " " << newAngle << std::endl;
+      playerShip->set_angle(newAngle);
+    }
+    else
+    {
+      if (jY != 0)
+      {
+        newAngle = ((jY > 0) ? -1 : ((jY < 0) ? 1 : 0) )*atan(M_PI/2);
+        std::cout << "x = 0 " <<  jY <<" "<< jX << " " << newAngle << std::endl;
+        playerShip->set_angle(newAngle);
+      }
+    }
+    out = (double) js_state->stick2_x;
+    if  (out != 0)
+    {
+      mY = -out;
+    }
+    out = (double) js_state->stick2_y;
+    if  (out != 0)
+    {
+      mX = out;
+    }
   }
   else
   {
-    if (jY != 0)
-    {
-      newAngle = ((jY > 0) ? -1 : ((jY < 0) ? 1 : 0) )*atan(M_PI/2);
-      std::cout << "x = 0 " <<  jY <<" "<< jX << " " << newAngle << std::endl;
-      playerShip->set_angle(newAngle);
-    }
-  }
-  out = (double) wwvi_js->stick2_x;
-  if  (out != 0)
-  {
-    mY = -out;
-  }
-  out = (double) wwvi_js->stick2_y;
-  if  (out != 0)
-  {
-    mX = out;
   }
 
 
