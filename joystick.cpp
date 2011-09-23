@@ -106,9 +106,9 @@ int get_joystick_status(wwvi_js_event *my_js_out)
                 break;
         case 1: js_state.stick1_y = jse.value;
                 break;
-        case 2: js_state.stick2_x = jse.value;
+        case 3: js_state.stick2_x = jse.value;
                 break;
-        case 3: js_state.stick2_y = jse.value;
+        case 4: js_state.stick2_y = jse.value;
                 break;
         default:
                 break;

@@ -676,12 +676,12 @@ void level::playStick()
       out = (double) js_state->stick2_x;
       if  (out != 0)
       {
-        mY = -out;
+        mX = out;
       }
       out = (double) js_state->stick2_y;
       if  (out != 0)
       {
-        mX = out;
+        mY = -out;
       }
     }
   }

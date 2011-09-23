@@ -228,7 +228,7 @@ void ship::downgradeWeapons()
 }
 void ship::upgradeWeapons()
 {
-  if (WeaponLevel<5)
+  if (WeaponLevel<6)
     WeaponLevel++;
 }
 void ship::collectFireUpgrades(std::list<game_ship *> upgrades)
@@ -396,9 +396,43 @@ std::list<fire *> ship::shoot(double ang)
       fspeed.set_vector(vector(firespeed*cos(ang),firespeed*sin(ang),0,0,0));
       rls.push_back(new fire(fpos,fspeed));
       break;
-    default:
+    case 6:
       dang=M_PI/12;
       firespeed*=2;
+      fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new fire(fpos,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new fire(fpos,fspeed));
+      dang*=2;
+      fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new fire(fpos,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new fire(fpos,fspeed));
+      dang*=2;
+      fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new fire(fpos,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new fire(fpos,fspeed));
+      dang*=2;
+      fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new fire(fpos,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new fire(fpos,fspeed));
+      fspeed.set_vector(vector(firespeed*cos(ang),firespeed*sin(ang),0,0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new fire(fpos,fspeed));
+      break;
+    default:
+      dang=M_PI/12;
+      firespeed*=8;
       fspeed.set_vector(vector(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0,0));
       rls.push_back(new fire(fpos,fspeed));
       rls.push_back(new fire(fpos,fspeed));
