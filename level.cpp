@@ -175,7 +175,11 @@ void level::play()
     std::list<game_object *> newdrawList;
     int prlife = playerShip->get_life();
     newdrawList = playerShip->collisions(enemyList);
-    if (prlife>playerShip->get_life()) playerShip->downgradeWeapons();
+    if (prlife>playerShip->get_life()) 
+    {
+      playerShip->downgradeWeapons();
+      rumble();
+    }
     drawableList.insert(drawableList.end(),newdrawList.begin(),newdrawList.end());
   }
   playStick();
@@ -651,15 +655,6 @@ void level::playStick()
         mX = out;
       }
     }
-    else
-    {
-      if(js_state->button[9]==1)
-      {
-        reset();
-      }
-    }
-
-
   }
 }
   void level::keyboardFunction(unsigned char key,int x,int y)

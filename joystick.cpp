@@ -9,7 +9,10 @@
 #include "joystick.h"
 
 static int joystick_fd = -1;
+static int joystick_fd_ff = -1;
 static wwvi_js_event js_state;
+static struct ff_effect feedback;
+static struct input_event play, stop;
 
 int open_joystick()
 {
@@ -19,10 +22,44 @@ int open_joystick()
 
   /* maybe ioctls to interrogate features here? */
 
+	joystick_fd_ff = open(JOYSTICK_DEVNAME_FF, O_RDWR);
+  //set sine effect
+	feedback.type = FF_PERIODIC;
+	feedback.id = -1;
+	feedback.u.periodic.waveform = FF_SINE;
+	feedback.u.periodic.period = 0.1*0x100;	/* 0.1 second */
+	feedback.u.periodic.magnitude = 0x4000;	/* 0.5 * Maximum magnitude */
+	feedback.u.periodic.offset = 0;
+	feedback.u.periodic.phase = 0;
+	feedback.direction = 0x4000;	/* Along X axis */
+	feedback.u.periodic.envelope.attack_length = 0x100;
+	feedback.u.periodic.envelope.attack_level = 0;
+	feedback.u.periodic.envelope.fade_length = 0x100;
+	feedback.u.periodic.envelope.fade_level = 0;
+	feedback.trigger.button = 0;
+	feedback.trigger.interval = 0;
+	feedback.replay.length = 1000;  /* 1 seconds */
+	feedback.replay.delay = 0;
+
+
   return joystick_fd;
 }
 
-int read_joystick_event(struct js_event *jse)
+int rumble()
+{
+	if (ioctl(joystick_fd_ff, EVIOCSFF, &feedback) == -1) {
+		perror("Upload effects[0]");
+	}
+  play.type = EV_FF;
+  play.code = feedback.id;
+  play.value = 1;
+  if (write(joystick_fd_ff,(const void*) &play,sizeof(play)) == -1)
+  {
+    perror("Error in FF");
+    exit(42);
+  }
+}
+int read_joystick_event(js_event *jse)
 {
   int bytes;
 
@@ -40,6 +77,7 @@ int read_joystick_event(struct js_event *jse)
 }
 void close_joystick()
 {
+  close(joystick_fd_ff);
   close(joystick_fd);
 }
 
@@ -47,7 +85,7 @@ void close_joystick()
 int get_joystick_status(wwvi_js_event *my_js_out)
 {
   int rc;
-  struct js_event jse;
+  js_event jse;
   if (joystick_fd < 0)
     return -1;
   //for(int i =0;i< 32;i++)
@@ -61,7 +99,7 @@ int get_joystick_status(wwvi_js_event *my_js_out)
     jse.type &= ~JS_EVENT_INIT; /* ignore synthetic events */
     if (jse.type == JS_EVENT_AXIS) 
     {
-      switch (jse.number) 
+      switch (jse.code) 
       {
         case 0: js_state.stick1_x = jse.value;
                 break;
@@ -75,9 +113,9 @@ int get_joystick_status(wwvi_js_event *my_js_out)
                 break;
       }
     } else if (jse.type == JS_EVENT_BUTTON) {
-      if (jse.number < 32) {
-          my_js_out->button[jse.number] = jse.value;
-          js_state.button[jse.number] = jse.value;
+      if (jse.code < 32) {
+          my_js_out->button[jse.code] = jse.value;
+          js_state.button[jse.code] = jse.value;
       }
     }
   }

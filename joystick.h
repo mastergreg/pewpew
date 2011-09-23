@@ -6,7 +6,7 @@
 
  * Creation Date : 22-09-2011
 
- * Last Modified : Fri 23 Sep 2011 04:12:11 AM EEST
+ * Last Modified : Fri 23 Sep 2011 09:21:36 AM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -21,24 +21,26 @@
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <linux/input.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
 
 #define JOYSTICK_DEVNAME "/dev/input/js0"
+#define JOYSTICK_DEVNAME_FF "/dev/input/event7"
 
 #define JS_EVENT_BUTTON         0x01
 #define JS_EVENT_AXIS           0x02    /* joystick moved */
 #define JS_EVENT_INIT           0x80  
-struct js_event 
-{
-  uint32_t time;     /* event timestamp in milliseconds */
-  int16_t value;    /* value */
-  uint8_t type;      /* event type */
-  uint8_t number;    /* axis/button number */
-};
 
+
+struct js_event {
+    unsigned int time; /* event timestamp in milliseconds */
+    short value; /* value */
+    unsigned char type; /* event type */
+    unsigned char code; /* axis/button number */
+    };
 typedef struct js_event js_event;
 
 struct wwvi_js_event 
@@ -53,8 +55,13 @@ struct wwvi_js_event
 typedef struct wwvi_js_event wwvi_js_event;
 
 
+
+
+
+
+extern int rumble();
 extern int open_joystick();
-extern int read_joystick_event(struct js_event *jse);
+extern int read_joystick_event(js_event *jse);
 extern void set_joystick_y_axis(int axis);
 extern void set_joystick_x_axis(int axis);
 extern void close_joystick();
