@@ -6,7 +6,7 @@ game_object::game_object()
   life=10;
 }
 
-game_object::game_object(vector pos)
+game_object::game_object(vector2D pos)
 :position(pos)
 {
   radius=0;

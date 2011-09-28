@@ -10,7 +10,7 @@ class game_ship : public game_object
 {
   protected:
     double angle;
-    vector speed;
+    vector2D speed;
     double spini;
     double spinnit();
   public:
@@ -18,12 +18,12 @@ class game_ship : public game_object
     virtual void move();
     double get_angle();
     void set_angle(double newAngle);
-    game_ship(vector pos,vector sp);
-    vector get_speed();
+    game_ship(vector2D pos,vector2D sp);
+    vector2D get_speed();
     bool isAlive();
-    void set_speed(vector new_speed);
+    void set_speed(vector2D new_speed);
     std::list<game_object *> collisions(std::list<game_ship *> lst);
-    vector get_pos();
+    vector2D get_pos();
 };
 
 
@@ -33,12 +33,12 @@ class dummyship : public game_ship
   public:
     void draw();
     void die();
-    dummyship(vector pos,vector sp);
+    dummyship(vector2D pos,vector2D sp);
 };
 class spiralShip : public game_ship
 {
   private:
-    std::list<vector *> pattern;
+    std::list<vector2D *> pattern;
     std::list<game_object *> tail;
     int Ttime;
     bool rot;
@@ -46,13 +46,13 @@ class spiralShip : public game_ship
     void draw();
     void die();
     void move();
-    spiralShip(vector pos,vector sp);
+    spiralShip(vector2D pos,vector2D sp);
 };
 class fire : public game_ship
 {
   public:
     void move();
-    fire(vector posit,vector sp);
+    fire(vector2D posit,vector2D sp);
     void draw();
 };
 class fireUpgrade : public game_ship
@@ -60,14 +60,14 @@ class fireUpgrade : public game_ship
   public:
     void move();
     void draw();
-    fireUpgrade(vector p);
+    fireUpgrade(vector2D p);
 };
 class lifeUpgrade : public game_ship
 {
   public:
     void move();
     void draw();
-    lifeUpgrade(vector p);
+    lifeUpgrade(vector2D p);
 };
 
 class ship : public game_ship

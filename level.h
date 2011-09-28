@@ -31,7 +31,7 @@ class level
     int MenuChoice;
     double mX,mY,jX,jY;
     ship *playerShip;
-    vector startingSpeed;
+    vector2D startingSpeed;
     int windowX;
     int windowY;
     int ZoomLevel;
@@ -72,10 +72,10 @@ class level
     void drawMenu(int choice);
     void drawInfoScreen();
     void ZooMStart();
-    void shipExplode(vector position);
+    void shipExplode(vector2D position);
   public:
     level();
-    void insertScoreTag(vector position, int points);
+    void insertScoreTag(vector2D position, int points);
     void increaseScore(int points);
     void display();
     void keyboardReleaseFunction(unsigned char key,int x, int y);

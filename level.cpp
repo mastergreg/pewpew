@@ -13,7 +13,7 @@ level::level()
   score = 0;
   dtime = 0;
   ftime = 0;
-  startingSpeed.set_vector(vector(0.001,0.005,0,0));
+  startingSpeed.set_vector(vector2D(0.001,0.005,0,0));
   playerShip = new ship();
   playerShip->set_speed(startingSpeed);
   lifeDraw=playerShip->get_life();
@@ -285,7 +285,7 @@ void level::ScoreBasedEvents()
     }
   }
 }
-void level::shipExplode(vector position)
+void level::shipExplode(vector2D position)
 {
   if(!xploded) drawableList.push_back(new xplosion(position));
   xploded=true;
@@ -294,40 +294,40 @@ void level::insertSpiralShip()
 {
   double px = ((rand() % 2000)-1000)*(DIMENSION-0.4)/1000.;
   double py = ((rand() % 2000)-1000)*(DIMENSION-0.4)/1000.;
-  vector rpos(px,py,0,0);
+  vector2D rpos(px,py,0,0);
   double sx = 0.001;
   double sy = 0.001;
-  vector resp(sx,sy,0,0);
+  vector2D resp(sx,sy,0,0);
   enemyList.push_back(new spiralShip(rpos,resp));
 }
 void level::insertLifeUpgrade()
 {
   double px = ((rand() % 2000)-1000)*(DIMENSION-0.25)/1000.;
   double py = ((rand() % 2000)-1000)*(DIMENSION-0.25)/1000.;
-  vector rpos(px,py,0,0);
+  vector2D rpos(px,py,0,0);
   lifeUpgradeList.push_back(new lifeUpgrade(rpos));
 }
 void level::insertFireUpgrade()
 {
   double px = ((rand() % 2000)-1000)*(DIMENSION-0.25)/1000.;
   double py = ((rand() % 2000)-1000)*(DIMENSION-0.25)/1000.;
-  vector rpos(px,py,0,0);
+  vector2D rpos(px,py,0,0);
   fireUpgradeList.push_back(new fireUpgrade(rpos));
 }
 void level::insertDummyShip()
 {
   double px = ((rand() % 2000)-1000)*(DIMENSION-0.25)/1000.;
   double py = ((rand() % 2000)-1000)*(DIMENSION-0.25)/1000.;
-  vector rpos(px,py,0,0);
+  vector2D rpos(px,py,0,0);
   double sx = ((rand() % 2000)-1000)/100000.;
   double sy = ((rand() % 2000)-1000)/100000.;
-  vector resp(sx,sy,0,0);
+  vector2D resp(sx,sy,0,0);
   enemyList.push_back(new dummyship(rpos,resp));
 }
 void level::clipArroundShip()
 {
-  vector position = playerShip->get_pos();
-  vector speed = playerShip->get_speed();
+  vector2D position = playerShip->get_pos();
+  vector2D speed = playerShip->get_speed();
   double px=position.getX();
   double py=position.getY();
   //double pz=position.getZ();
@@ -492,7 +492,7 @@ void level::clean_dead(std::list<game_object *> *ls)
 
 }
 
-void level::insertScoreTag(vector pos,int points)
+void level::insertScoreTag(vector2D pos,int points)
 {
   drawableList.push_back(new score_tag(pos,points));
   increaseScore(points);
@@ -566,7 +566,7 @@ double level::shipMouseAngle()
 }
 void level::keyboardReleaseFunction(unsigned char key,int x, int y)
 {
-  vector current_speed;
+  vector2D current_speed;
   current_speed.set_vector(playerShip->get_speed());
   switch (key)
   {
@@ -604,7 +604,7 @@ void level::keyboardReleaseFunction(unsigned char key,int x, int y)
 }
 void level::playStick()
 {
-  vector current_speed;
+  vector2D current_speed;
   current_speed.set_vector(playerShip->get_speed());
   wwvi_js_event *js_state = new wwvi_js_event;
   memset(js_state,0,sizeof(wwvi_js_event));
@@ -683,7 +683,7 @@ void level::playStick()
 }
   void level::keyboardFunction(unsigned char key,int x,int y)
   {
-    vector current_speed;
+    vector2D current_speed;
     current_speed.set_vector(playerShip->get_speed());
     if(!paused)
     {

@@ -12,7 +12,7 @@ class chink : public game_object
     void die();
     void move();
   public:
-    chink(vector position);
+    chink(vector2D position);
     void draw();
 };
 
@@ -23,7 +23,7 @@ class xplosion : public game_object
     double spini;
     double spinnit();
   public:
-    xplosion(vector position);
+    xplosion(vector2D position);
     void draw();
 };
  
@@ -31,15 +31,15 @@ class circle : public game_object
 {
   private:
     double radius;
-    vector position;
+    vector2D position;
     GLfloat  color[3];
     double angleStep;
     double x[256];
     double y[256];
     void move();
   public:
-    circle(double radius,vector position,GLfloat mycolor[3]);
-    void draw(vector pos);
+    circle(double radius,vector2D position,GLfloat mycolor[3]);
+    void draw(vector2D pos);
 };
 class score_tag : public game_object
 {
@@ -48,7 +48,7 @@ class score_tag : public game_object
     char c_points[20];
     int len;
   public:
-    score_tag(vector pos,int pts);
+    score_tag(vector2D pos,int pts);
     void draw();
     void move();
 };
@@ -56,19 +56,19 @@ class score_tag : public game_object
 class ship_tail : public game_object
 {
   protected:
-    vector position;
+    vector2D position;
     GLfloat  color[3];
     double angle;
     int spin;
   public:
-    ship_tail(vector position,double ang,GLfloat mycolor[3]);
+    ship_tail(vector2D position,double ang,GLfloat mycolor[3]);
     void draw();
     void move();
 };
 class big_ship_tail : public ship_tail
 {
   public:
-    big_ship_tail(vector position,double ang,GLfloat mycolor[3]);
+    big_ship_tail(vector2D position,double ang,GLfloat mycolor[3]);
     void draw();
 };
 
@@ -76,7 +76,7 @@ class minimap : public game_object
 {
   private:
   public:
-    minimap(vector position);
+    minimap(vector2D position);
     void draw();
 };
 #endif

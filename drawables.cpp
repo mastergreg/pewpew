@@ -2,7 +2,7 @@
 
 
 
-  chink::chink(vector pos)
+  chink::chink(vector2D pos)
 :game_object(pos)
 {
   life=10;
@@ -41,7 +41,7 @@ void chink::draw()
   glPopMatrix();
 }
 
-  xplosion::xplosion(vector pos)
+  xplosion::xplosion(vector2D pos)
 :game_object(pos)
 {
   life=10;
@@ -91,7 +91,7 @@ void xplosion::draw()
 
 
 
-circle::circle(double r, vector pos,GLfloat mycolor[3])
+circle::circle(double r, vector2D pos,GLfloat mycolor[3])
 {
   radius = r;
   position.set_vector(pos);
@@ -126,7 +126,7 @@ circle::circle(double r, vector pos,GLfloat mycolor[3])
 
 }
 
-void circle::draw(vector pos)
+void circle::draw(vector2D pos)
 {
   position.set_vector(pos);
   glPushMatrix();
@@ -148,7 +148,7 @@ void circle::move()
 {
 }
 
-ship_tail::ship_tail(vector pos,double ang,GLfloat mycolor[3])
+ship_tail::ship_tail(vector2D pos,double ang,GLfloat mycolor[3])
 {
   angle=ang;
   spin=0;
@@ -200,7 +200,7 @@ void ship_tail::move()
 }
 
 
-  big_ship_tail::big_ship_tail(vector pos,double ang,GLfloat col[3])
+  big_ship_tail::big_ship_tail(vector2D pos,double ang,GLfloat col[3])
 :ship_tail(pos,ang,col)
 {
 }
@@ -246,7 +246,7 @@ void big_ship_tail::draw()
 
 
 
-  score_tag::score_tag(vector pos,int pts)
+  score_tag::score_tag(vector2D pos,int pts)
 :game_object(pos)
 {
   font = GLUT_BITMAP_8_BY_13;
@@ -271,7 +271,7 @@ void score_tag::move()
   life--;
 }
 
-minimap::minimap(vector position)
+minimap::minimap(vector2D position)
 :game_object(position)
 {
 }
