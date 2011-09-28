@@ -4,7 +4,6 @@ void vector::set_vector(vector v)
 {
   x=v.x;
   y=v.y;
-  z=v.z;
   remaining_deg=v.remaining_deg;
   remaining_inc=v.remaining_inc;
 }
@@ -12,29 +11,25 @@ void vector::increase_vector(vector v)
 {
   x+=v.x;
   y+=v.y;
-  z+=v.z;
 }
 vector::vector()
 {
   x=0;
   y=0;
-  z=0;
   remaining_deg =0;
   remaining_inc = 0;
 }
-vector::vector(double a,double b,double c,int rd,int ri)
+vector::vector(double a,double b,int rd,int ri)
 {
   x=a;
   y=b;
-  z=c;
   remaining_deg = rd;
   remaining_inc = ri;
 }
-void vector::scale(double a,double b, double c)
+void vector::scale(double a,double b)
 {
   x=x*a;
   y=y*b;
-  z=z*c;
 }
 void vector::vincrease()
 {
@@ -60,7 +55,7 @@ void vector::soft_scale()
       factor = fabs(1-10/fx);
       remaining_inc++;
     }
-    scale(factor,factor,factor);
+    scale(factor,factor);
   }
 }
 void vector::increase_reset()
@@ -102,10 +97,6 @@ double vector::getX()
 double vector::getY()
 {
   return y;
-}
-double vector::getZ()
-{
-  return z;
 }
 int vector::getRI()
 {

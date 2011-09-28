@@ -13,7 +13,7 @@ level::level()
   score = 0;
   dtime = 0;
   ftime = 0;
-  startingSpeed.set_vector(vector(0.001,0.005,0.005,0,0));
+  startingSpeed.set_vector(vector(0.001,0.005,0,0));
   playerShip = new ship();
   playerShip->set_speed(startingSpeed);
   lifeDraw=playerShip->get_life();
@@ -294,40 +294,34 @@ void level::insertSpiralShip()
 {
   double px = ((rand() % 2000)-1000)*(DIMENSION-0.4)/1000.;
   double py = ((rand() % 2000)-1000)*(DIMENSION-0.4)/1000.;
-  double pz = 0;
-  vector rpos(px,py,pz,0,0);
+  vector rpos(px,py,0,0);
   double sx = 0.001;
   double sy = 0.001;
-  double sz = 0;
-  vector resp(sx,sy,sz,0,0);
+  vector resp(sx,sy,0,0);
   enemyList.push_back(new spiralShip(rpos,resp));
 }
 void level::insertLifeUpgrade()
 {
   double px = ((rand() % 2000)-1000)*(DIMENSION-0.25)/1000.;
   double py = ((rand() % 2000)-1000)*(DIMENSION-0.25)/1000.;
-  double pz = 0;
-  vector rpos(px,py,pz,0,0);
+  vector rpos(px,py,0,0);
   lifeUpgradeList.push_back(new lifeUpgrade(rpos));
 }
 void level::insertFireUpgrade()
 {
   double px = ((rand() % 2000)-1000)*(DIMENSION-0.25)/1000.;
   double py = ((rand() % 2000)-1000)*(DIMENSION-0.25)/1000.;
-  double pz = 0;
-  vector rpos(px,py,pz,0,0);
+  vector rpos(px,py,0,0);
   fireUpgradeList.push_back(new fireUpgrade(rpos));
 }
 void level::insertDummyShip()
 {
   double px = ((rand() % 2000)-1000)*(DIMENSION-0.25)/1000.;
   double py = ((rand() % 2000)-1000)*(DIMENSION-0.25)/1000.;
-  double pz = 0;
-  vector rpos(px,py,pz,0,0);
+  vector rpos(px,py,0,0);
   double sx = ((rand() % 2000)-1000)/100000.;
   double sy = ((rand() % 2000)-1000)/100000.;
-  double sz = 0;
-  vector resp(sx,sy,sz,0,0);
+  vector resp(sx,sy,0,0);
   enemyList.push_back(new dummyship(rpos,resp));
 }
 void level::clipArroundShip()
@@ -340,7 +334,7 @@ void level::clipArroundShip()
   double sx=speed.getX();
   double sy=speed.getY();
   double speedL = sqrt(sx*sx+sy*sy);
-  double playWindow = 1300000*speedL/SPEED_MAX;
+  double playWindow = 900000*speedL/SPEED_MAX;
   playWindow =  playWindow < 3 ? playWindow : 3;
   playWindow =  playWindow > 0.5 ? playWindow : 0.5;
   double initZoom = DIMENSION*ZoomLevel/100.;
@@ -599,11 +593,11 @@ void level::keyboardReleaseFunction(unsigned char key,int x, int y)
       playerShip->set_speed(current_speed);
       break;
     case 'q':
-      current_speed.scale(0.25,0.25,0.25);
+      current_speed.scale(0.25,0.25);
       playerShip->set_speed(current_speed);
       break;
     case 'e':
-      current_speed.scale(4,4,4);
+      current_speed.scale(4,4);
       playerShip->set_speed(current_speed);
       break;
   }
@@ -635,12 +629,12 @@ void level::playStick()
       }
       if (js_state->button[5]==1)
       {
-        current_speed.scale(4,4,4);
+        current_speed.scale(4,4);
         playerShip->set_speed(current_speed);
       }
       if (js_state->button[4]==1)
       {
-        current_speed.scale(0.25,0.25,0.25);
+        current_speed.scale(0.25,0.25);
         playerShip->set_speed(current_speed);
       }
       double newAngle=playerShip->get_angle();
@@ -706,7 +700,7 @@ void level::playStick()
         case 'a':
           //current_speed.increase_vector(-0.001,0,0);
           current_speed.rotatel();
-          current_speed.scale(1.01,1.01,1.01);
+          current_speed.scale(1.01,1.01);
           playerShip->set_speed(current_speed);
           break;
         case 's':
@@ -717,15 +711,15 @@ void level::playStick()
         case 'd':
           //current_speed.increase_vector(0.001,0,0);
           current_speed.rotater();
-          current_speed.scale(1.01,1.01,1.01);
+          current_speed.scale(1.01,1.01);
           playerShip->set_speed(current_speed);
           break;
         case 'q':
-          current_speed.scale(4,4,4);
+          current_speed.scale(4,4);
           playerShip->set_speed(current_speed);
           break;
         case 'e':
-          current_speed.scale(0.25,0.25,0.25);
+          current_speed.scale(0.25,0.25);
           playerShip->set_speed(current_speed);
           break;
         case 'p':

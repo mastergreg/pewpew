@@ -1,6 +1,6 @@
 #include "game_object.h"
 game_object::game_object()
-:position(0,0,0,0,0)
+:position(0,0,0,0)
 {
   radius=0;
   life=10;

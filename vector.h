@@ -10,15 +10,14 @@ class vector
   private:
     double x;
     double y;
-    double z;
     int remaining_deg;
     int remaining_inc;
   public:
     vector();
-    vector(double a,double b,double c,int rd,int ri);
+    vector(double a,double b,int rd,int ri);
     void increase_vector(vector v);
     void set_vector(vector v);
-    void scale(double a,double b, double c);
+    void scale(double a,double b);
     void vincrease();
     void vdecrease();
     void soft_scale();
@@ -31,7 +30,6 @@ class vector
     double distance(vector );
     double getX();
     double getY();
-    double getZ();
     int getRD();
     int getRI();
 
