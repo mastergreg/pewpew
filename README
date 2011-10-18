@@ -1,5 +1,4 @@
-compiler:
-  -g++ or equivalent compiler
-  -make (optional)
+compiler-IDE:
+  Dev-C++ project
 libs:
-  -libglut-dev or libglut3-dev
+  glutdevpack
