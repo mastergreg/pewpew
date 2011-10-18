@@ -195,7 +195,7 @@ void ship_tail::draw()
 void ship_tail::move()
 {
   life--;
-  if (spin > 360.0) spin = spin - 360.0;
+  if (spin > 360) spin = spin - 360;
   spin+=4;
 }
 

@@ -22,7 +22,6 @@ level::level()
   MenuChoice=0;
   ZoomLevel=100;
   srand(time(NULL));
-  open_joystick();
 }
 void level::display()
 {
@@ -40,7 +39,6 @@ void level::display()
     else drawMenu(MenuChoice);
 
   }
-  usleep(10000);
   glutSwapBuffers();
 
 }
@@ -125,7 +123,6 @@ void level::launchAction(int choice)
       start();
       break;
     case 3:
-      close_joystick();
       exit(0);
       break;
   }
@@ -178,7 +175,6 @@ void level::play()
     if (prlife>playerShip->get_life()) 
     {
       playerShip->downgradeWeapons();
-      rumble();
     }
     drawableList.insert(drawableList.end(),newdrawList.begin(),newdrawList.end());
   }
@@ -523,7 +519,7 @@ void level::reshape(int w,int h)
 {
   GLsizei minSize=w>h ? (GLsizei) h : (GLsizei) w;
   minSize-=50;
-  GLsizei startX=((w-h)/2.0-100);
+  GLsizei startX=(GLsizei) ((w-h)/2.0-100);
   if (startX>0)
   {
     glViewport(startX,0,minSize,minSize);
@@ -604,82 +600,6 @@ void level::keyboardReleaseFunction(unsigned char key,int x, int y)
 }
 void level::playStick()
 {
-  vector2D current_speed;
-  current_speed.set_vector(playerShip->get_speed());
-  wwvi_js_event *js_state = new wwvi_js_event;
-  memset(js_state,0,sizeof(wwvi_js_event));
-  if (get_joystick_status(js_state)==0)
-  {
-    if(!paused)
-    {
-      double out = 0;
-      if (js_state->button[9]==1)
-      {
-        pauseResume();
-      }
-      if (js_state->button[7]==1)
-      {
-        current_speed.vincrease();//scale(1.2,1.2,1.2);
-        playerShip->set_speed(current_speed);
-      }
-      if (js_state->button[6]==1)
-      {
-        current_speed.vdecrease();//scale(0.8,0.8,0.8);
-        playerShip->set_speed(current_speed);
-      }
-      if (js_state->button[5]==1)
-      {
-        current_speed.scale(4,4);
-        playerShip->set_speed(current_speed);
-      }
-      if (js_state->button[4]==1)
-      {
-        current_speed.scale(0.25,0.25);
-        playerShip->set_speed(current_speed);
-      }
-      double newAngle=playerShip->get_angle();
-      double newX = (double) js_state->stick1_x;
-      double newY = (double) js_state->stick1_y;
-      if (abs(newX)>0)
-      {
-        jX = newX;
-      }
-      if (abs(newY)>0)
-      {
-        jY = -newY;
-      }
-
-      if  (jX > 0)
-      {
-        newAngle = atan(jY/jX);
-        playerShip->set_angle(newAngle);
-      }
-      else if (jX < 0 )
-      {
-        newAngle = M_PI+atan(jY/jX);
-        playerShip->set_angle(newAngle);
-      }
-      else
-      {
-        if (jY != 0)
-        {
-          newAngle = ((jY > 0) ? -1 : ((jY < 0) ? 1 : 0) )*atan(M_PI/2);
-          playerShip->set_angle(newAngle);
-        }
-      }
-      out = (double) js_state->stick2_x;
-      if  (out != 0)
-      {
-        mX = out;
-      }
-      out = (double) js_state->stick2_y;
-      if  (out != 0)
-      {
-        mY = -out;
-      }
-    }
-  }
-  delete js_state;
 }
   void level::keyboardFunction(unsigned char key,int x,int y)
   {
@@ -744,7 +664,6 @@ void level::playStick()
           if(drawInfo) drawInfo=false;
           else 
           {
-            close_joystick();
             exit(0);
           }
           break;

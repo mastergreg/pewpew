@@ -9,8 +9,8 @@
 #include <algorithm>
 #include <time.h>
 
+
 #include "ships.h"
-#include "joystick.h"
 #define DT 0.01
 #define DIMENSION 6
 
