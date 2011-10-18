@@ -39,6 +39,7 @@ void level::display()
     else drawMenu(MenuChoice);
 
   }
+  Sleep(1);
   glutSwapBuffers();
 
 }

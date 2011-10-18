@@ -8,7 +8,7 @@
 #include <list>
 #include <algorithm>
 #include <time.h>
-
+#include <windows.h>
 
 #include "ships.h"
 #define DT 0.01
