@@ -1,6 +1,6 @@
 #ifndef VECTOR_H
 #define VECTOR_H
-#include <math.h>
+#include <cmath>
 #define COS_THETA 0.997564050259824247613162680
 #define SIN_THETA 0.069756473744125300775958835
 #define SPEED_MAX 5000 

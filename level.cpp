@@ -200,11 +200,11 @@ void level::drawAll()
   {
     shipExplode(playerShip->get_pos());
   }
-  for_each(drawableList.begin(),drawableList.end(),[](game_object *p)->void{p->draw();});
-  for_each(fireList.begin(),fireList.end(),[](game_ship *p)->void{p->draw();});
-  for_each(fireUpgradeList.begin(),fireUpgradeList.end(),[](game_ship *p)->void{p->draw();});
-  for_each(lifeUpgradeList.begin(),lifeUpgradeList.end(),[](game_ship *p)->void{p->draw();});
-  for_each(enemyList.begin(),enemyList.end(),[](game_ship *p)->void{p->draw();});
+  for_each(drawableList.begin(),drawableList.end(),draw_all);
+  for_each(fireList.begin(),fireList.end(),draw_all);
+  for_each(fireUpgradeList.begin(),fireUpgradeList.end(),draw_all);
+  for_each(lifeUpgradeList.begin(),lifeUpgradeList.end(),draw_all);
+  for_each(enemyList.begin(),enemyList.end(),draw_all);
 }
 
 void level::TimeBasedEvents()
@@ -231,11 +231,11 @@ void level::moveAll()
   {
     playerShip->move(); 
   }
-  for_each(drawableList.begin(),drawableList.end(),[](game_object *p)->void{p->move();});
-  for_each(enemyList.begin(),enemyList.end(),[](game_ship *p)->void{p->move();});
-  for_each(fireList.begin(),fireList.end(),[](game_ship *p)->void{p->move();});
-  for_each(fireUpgradeList.begin(),fireUpgradeList.end(),[](game_ship *p)->void{p->move();});
-  for_each(lifeUpgradeList.begin(),lifeUpgradeList.end(),[](game_ship *p)->void{p->move();});
+  for_each(drawableList.begin(),drawableList.end(),move_all);
+  for_each(enemyList.begin(),enemyList.end(),move_all);
+  for_each(fireList.begin(),fireList.end(),move_all);
+  for_each(fireUpgradeList.begin(),fireUpgradeList.end(),move_all);
+  for_each(lifeUpgradeList.begin(),lifeUpgradeList.end(),move_all);
 }
 void level::reset()
 {

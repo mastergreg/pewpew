@@ -6,7 +6,7 @@
 
  * Creation Date : 22-09-2011
 
- * Last Modified : Fri 23 Sep 2011 09:21:36 AM EEST
+ * Last Modified : Tue 18 Oct 2011 01:31:41 PM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -15,20 +15,20 @@
 #ifndef __JOYSTICK_H__
 #define __JOYSTICK_H__
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <stdint.h>
-#include <stdio.h>
+#include <cstdio>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <linux/input.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <string.h>
-#include <math.h>
+#include <cstring>
+#include <cmath>
 
 #define JOYSTICK_DEVNAME "/dev/input/js0"
-#define JOYSTICK_DEVNAME_FF "/dev/input/event7"
+#define JOYSTICK_DEVNAME_FF "/dev/input/event12"
 
 #define JS_EVENT_BUTTON         0x01
 #define JS_EVENT_AXIS           0x02    /* joystick moved */

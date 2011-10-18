@@ -195,7 +195,7 @@ void ship::draw()
   glutWireCone(0.03,0.02,4,1);
 
   glPopMatrix(); 
-  for_each(tail.begin(),tail.end(),[](game_object *p)->void{p->draw();});
+  for_each(tail.begin(),tail.end(),draw_all);
 }
 void ship::move()
 {
@@ -217,7 +217,7 @@ void ship::move()
     }
   }
   tail.remove(NULL);
-  for_each(tail.begin(),tail.end(),[](game_object *p)->void{p->move();});
+  for_each(tail.begin(),tail.end(),move_all);
 }
 void ship::downgradeWeapons()
 {
@@ -557,7 +557,7 @@ void spiralShip::draw()
     glVertex3f(-0.2,-0.2,-0.2);
   glEnd();
   glPopMatrix();
-  for_each(tail.begin(),tail.end(),[](game_object *p)->void{p->draw();});
+  for_each(tail.begin(),tail.end(),draw_all);
 
 
 }
@@ -572,8 +572,17 @@ void spiralShip::move()
     Ttime=0;
   }
   Ttime++;
-  tail.remove_if([](game_object *p)->bool {return p->get_life()<0;});
-  for_each(tail.begin(),tail.end(),[](game_object *p)->void{p->move();});
+  std::list<game_object *>::iterator iter = tail.begin();
+  for(;iter!=tail.end();iter++)
+  {
+    if ((*iter)->get_life()<0)
+    {
+      delete *iter;
+      *iter = NULL;
+    }
+  }
+  tail.remove(NULL);
+  for_each(tail.begin(),tail.end(),move_all);
   game_ship::move();
   speed.rotate_reset();
   if(rot)

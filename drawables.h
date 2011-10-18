@@ -2,10 +2,13 @@
 #define DRAWABLES_H
 
 #include "game_object.h"
-#include <string.h>
+#include <cstring>
 #include <algorithm>
 #include <GL/glut.h>
+#include <cstdio>
 //#include "level.h"
+
+
 
 class chink : public game_object
 {

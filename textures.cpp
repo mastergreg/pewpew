@@ -1,6 +1,6 @@
 #define ZeroMemory(p, sz) memset((p), 0, (sz))
 //accumulator buffer
-#include <math.h>             // We'll Need Some Math
+#include <cmath>             // We'll Need Some Math
 
 float   angle;              // Used To Rotate The Helix
 float   vertexes[4][3];           // Holds Float Info For 4 Sets Of Vertices

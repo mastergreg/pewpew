@@ -38,3 +38,11 @@ bool game_object::collides(game_object *test)
   }
 }
 
+void draw_all(game_object * p)
+{
+  p->draw();
+}
+void move_all(game_object * p)
+{
+  p->move();
+}

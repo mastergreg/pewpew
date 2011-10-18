@@ -1,6 +1,6 @@
 #-lgc -ggdb
-LIBS=-lglut -lGL -lGLU -lm
-EXTRA_FLAGS=-Wall -Wextra -Wuninitialized -std=c++0x -O2
+LIBS=-lglut -lGL -lGLU
+EXTRA_FLAGS=-Wall -Wextra -Wuninitialized -O2
 PROG=pewpew
 all: ${PROG}
 joystick.o: joystick.cpp joystick.h

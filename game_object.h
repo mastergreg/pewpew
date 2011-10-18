@@ -23,4 +23,6 @@ class game_object
     virtual void move()=0;
     virtual void draw();
 };
+void draw_all(game_object * p);
+void move_all(game_object * p);
 #endif
