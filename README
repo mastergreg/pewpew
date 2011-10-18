@@ -1,6 +1,5 @@
 compiler:
-  -g++ or equivalent compiler with lamda expression handling for c++
+  -g++ or equivalent compiler
   -make (optional)
 libs:
-  -libgc-dev
   -libglut-dev or libglut3-dev
