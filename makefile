@@ -10,17 +10,17 @@ game_object.o: game_object.cpp game_object.h
 vector2D.o: vector2D.h vector2D.cpp
 	g++ -c vector2D.cpp -lm ${EXTRA_FLAGS}
 ships.o: ships.h ships.cpp	
-	g++ ${LIBS} -c ships.cpp ${EXTRA_FLAGS}
+	g++ -c ships.cpp ${LIBS} ${EXTRA_FLAGS}
 drawables.o: drawables.cpp drawables.h
-	g++ ${LIBS} -c drawables.cpp ${EXTRA_FLAGS}
+	g++ -c drawables.cpp ${LIBS} ${EXTRA_FLAGS}
 peripherals.o:	peripherals.cpp peripherals.h
-	g++ ${LIBS} -c peripherals.cpp -o peripherals.o ${EXTRA_FLAGS}
+	g++ -c peripherals.cpp ${LIBS} -o peripherals.o ${EXTRA_FLAGS}
 level.o:  level.cpp level.h
-	g++ ${LIBS} -c 	level.cpp ${EXTRA_FLAGS}
+	g++ -c 	level.cpp ${LIBS} ${EXTRA_FLAGS}  
 
 OBJECTS=game_object.o ships.o vector2D.o drawables.o level.o joystick.o
 ${PROG}:	${PROG}.cpp ${OBJECTS}
-	g++ ${LIBS}  ${PROG}.cpp ${OBJECTS} -o ${PROG} ${EXTRA_FLAGS}
+	g++  ${PROG}.cpp ${OBJECTS} ${LIBS}-o ${PROG} ${EXTRA_FLAGS}  
 clean:
 	rm *.o ${PROG}.tar
 
