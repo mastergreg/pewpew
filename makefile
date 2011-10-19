@@ -20,7 +20,7 @@ level.o:  level.cpp level.h
 
 OBJECTS=game_object.o ships.o vector2D.o drawables.o level.o joystick.o
 ${PROG}:	${PROG}.cpp ${OBJECTS}
-	g++  ${PROG}.cpp ${OBJECTS} ${LIBS}-o ${PROG} ${EXTRA_FLAGS}  
+	g++  ${PROG}.cpp ${OBJECTS} ${LIBS} -o ${PROG} ${EXTRA_FLAGS}  
 clean:
 	rm *.o ${PROG}.tar
 
