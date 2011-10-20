@@ -3,13 +3,14 @@
 #include <stdio.h>
 #include <GL/glut.h>
 #include <iostream>
-#include <string.h>
+#include <cstring>
 #include <string>
 #include <list>
 #include <algorithm>
 #include <time.h>
 
 #include "ships.h"
+#include "pewpew.h"
 #include "joystick.h"
 #define DT 0.01
 #define DIMENSION 6
