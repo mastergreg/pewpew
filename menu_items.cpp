@@ -6,7 +6,7 @@
 
 * Creation Date : 20-10-2011
 
-* Last Modified : Thu 20 Oct 2011 03:51:28 PM EEST
+* Last Modified : Fri 21 Oct 2011 05:53:52 PM EEST
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -51,6 +51,13 @@ void button::draw()
     glVertex2f(X+sizeX,Y-sizeY/2);
     glVertex2f(X+(sizeX-sizeY/2),Y);
     glVertex2f(X,Y);
+  glEnd();
+  glBegin(GL_LINE_STRIP);
+    glVertex2f(X,Y);
+    glVertex2f(X,Y-sizeY/2-sizeY/8);
+    glVertex2f(X+sizeY/2,Y-sizeY-sizeY/8);
+    glVertex2f(X+sizeX,Y-sizeY-sizeY/8);
+    glVertex2f(X+sizeX,Y-sizeY);
   glEnd();
   glRasterPos2f(X+sizeX/4, Y-sizeY/2);
   for (i=0;i<text.size();i++)
