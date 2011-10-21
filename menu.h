@@ -6,7 +6,7 @@
 
 * Creation Date : 19-10-2011
 
-* Last Modified : Thu 20 Oct 2011 04:54:06 PM EEST
+* Last Modified : Fri 21 Oct 2011 05:05:23 PM EEST
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -21,18 +21,22 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 class menu
 {
   private:
-//    int WINDOW_SIZEY;
-//    int WINDOW_SIZEX;
+    int WINDOW_SIZEY;
+    int WINDOW_SIZEX;
     GLfloat nextX,nextY;
     void *font;
     void *tinyFont;
     std::vector<button *> options;
     int Mchoice;
+    void playStick();
   protected:
     void drawGrid();
   public:
     menu();
     void display();
+    void reshape(int w,int h);
+    void myIdleMouseFunction(int x,int y);
+    void myMouseFunction(int btn,int state,int x,int y);
     void keyboardFunction(unsigned char key,int x, int y);
     void specialKeyboardFunction(int key,int x, int y);
     void drawMenu(int choice);

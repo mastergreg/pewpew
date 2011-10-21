@@ -6,7 +6,7 @@
 
  * Creation Date : 19-10-2011
 
- * Last Modified : Thu 20 Oct 2011 04:55:10 PM EEST
+ * Last Modified : Fri 21 Oct 2011 05:12:07 PM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -26,6 +26,7 @@ menu::menu()
 
 void menu::display()
 {
+  playStick();
   drawMenu(Mchoice);
 }
 void menu::drawMenu(int choice)
@@ -129,8 +130,73 @@ void menu::specialKeyboardFunction(int key,int x, int y)
       break;
   }
 }
+void menu::myIdleMouseFunction(int x,int y)
+{
+  unsigned int area;
+
+  GLint viewport[4];
+  GLdouble mvmatrix[16], projmatrix[16];
+  GLint realy;  /*  OpenGL y coordinate position  */
+  GLdouble wx, wy, wz;  /*  returned world x, y, z coords  */
+
+  glGetIntegerv (GL_VIEWPORT, viewport);
+  glGetDoublev (GL_MODELVIEW_MATRIX, mvmatrix);
+  glGetDoublev (GL_PROJECTION_MATRIX, projmatrix);
+  /*  note viewport[3] is height of window in pixels  */
+  realy = viewport[3] - (GLint) y - 1;
+  gluUnProject ((GLdouble) x, (GLdouble) realy, 0.0,
+      mvmatrix, projmatrix, viewport, &wx, &wy, &wz);
+  area = abs(DIMENSION/2 - 1 -  wy);
+
+  Mchoice = area < options.size()-1 ? area : options.size()-1;
+}
+void menu::myMouseFunction(int butn,int state,int x,int y)
+{
+ std::cout << state << std::endl;
+ if (state == GLUT_DOWN)
+ {
+   options[Mchoice]->activate();
+ }
+}
+void menu::reshape(int w,int h)
+  /*  note viewport[3] is height of window in pixels  */
+{
+  GLsizei minSize=w>h ? (GLsizei) h : (GLsizei) w;
+  minSize-=50;
+  GLsizei startX=((w-h)/2.0-100);
+  if (startX>0)
+  {
+    glViewport(startX,0,minSize,minSize);
+  }
+  else
+  {
+    glViewport(0,-startX,minSize,minSize);
+  }
+  WINDOW_SIZEX=w;
+  WINDOW_SIZEY=h;
+}
 
 
+void menu::playStick()
+{
+  wwvi_js_event *js_state = new wwvi_js_event;
+  memset(js_state,0,sizeof(wwvi_js_event));
+  if (get_joystick_status(js_state)==0)
+  {
+    if (js_state->button[5]>0)
+    {
+      Mchoice = (Mchoice+1)%options.size();
+    }
+    else if (js_state->button[4]>0)
+    {
+      Mchoice = (Mchoice-1)%options.size();
+    }
+    else if (js_state->button[2]>0)
+    {
+      options[Mchoice]->activate();
+    }
+  }
+}
 
 infoscreen::infoscreen(std::string t)
 {

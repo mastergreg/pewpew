@@ -36,8 +36,6 @@ class level
     int windowX;
     int windowY;
     int ZoomLevel;
-    bool paused;
-    bool drawInfo;
     bool firstLaunch;
     bool xploded;
     std::list<game_ship *> fireList;

@@ -1,16 +1,16 @@
 /* -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
 
-* File Name : pewpew.cpp
+ * File Name : pewpew.cpp
 
-* Purpose :
+ * Purpose :
 
-* Creation Date : 20-12-2008
+ * Creation Date : 20-12-2008
 
-* Last Modified : Thu 20 Oct 2011 04:53:15 PM EEST
+ * Last Modified : Fri 21 Oct 2011 04:59:35 PM EEST
 
-* Created By : Greg Liras <gregliras@gmail.com>
+ * Created By : Greg Liras <gregliras@gmail.com>
 
-_._._._._._._._._._._._._._._._._._._._._.*/
+ _._._._._._._._._._._._._._._._._._._._._.*/
 
 #include "pewpew.h"
 
@@ -40,7 +40,15 @@ void display()
 }
 void reshape(int w,int h)
 {
-  lv.reshape(w,h);
+
+  if (paused == 1)
+  {
+    mn.reshape(w,h);
+  }
+  else
+  {
+    lv.reshape(w,h);
+  }
 }
 void kbRelF(unsigned char key, int x, int y)
 {
@@ -68,9 +76,23 @@ void skbF(int key, int x, int y)
     lv.specialKeyboardFunction(key,x,y);
   }
 }
-void mF(int x, int y)
+void mIdleF(int x, int y)
 {
-  lv.myMouseFunction(x,y);
+  if (paused == 1)
+  {
+    mn.myIdleMouseFunction(x,y);
+  }
+  else
+  {
+    lv.myMouseFunction(x,y);
+  }
+}
+void mF(int btn,int state,int x, int y)
+{
+  if (paused == 1)
+  {
+    mn.myMouseFunction(btn,state,x,y);
+  }
 }
 
 
@@ -87,8 +109,12 @@ int main(int argc, char** argv)
   //glShadeModel(GL_SMOOTH);
   //glEnable(GL_LIGHT0);
   glMatrixMode(GL_PROJECTION);
+
+  open_joystick();
+
   mn.add_option(std::string("INFO"),(&info_action));
   mn.add_option(std::string("PLAY"),(&run));
+  //mn.add_option(std::string("OPTIONS"),(&end));
   //mn.add_option(std::string("OPTIONS"),(&end));
   mn.add_option(std::string("QUIT"),(&end_0));
 
@@ -102,7 +128,8 @@ int main(int argc, char** argv)
   glutKeyboardUpFunc(kbRelF);
   glutSpecialFunc(skbF);
   glutKeyboardFunc(kbF);
-  glutPassiveMotionFunc(mF);
+  glutPassiveMotionFunc(mIdleF);
+  glutMouseFunc(mF);
   glutMainLoop();
 
   return 0;
@@ -114,6 +141,7 @@ void end(void)
 }
 void end_0(void)
 {
+  close_joystick();
   exit(0);
 }
 void run(void)

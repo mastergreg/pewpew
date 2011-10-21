@@ -17,12 +17,11 @@ level::level()
   playerShip = new ship();
   playerShip->set_speed(startingSpeed);
   lifeDraw=playerShip->get_life();
-  paused=true;
+  //paused=true;
   xploded=false;
   MenuChoice=0;
   ZoomLevel=100;
   srand(time(NULL));
-  open_joystick();
 }
 void level::display()
 {
@@ -36,7 +35,6 @@ void level::ZooMStart()
 
 void level::start()
 {
-  paused=false;
 }
 void level::drawScene()
 {
@@ -134,7 +132,7 @@ void level::reset()
   lifeUpgradeList.clear();
   drawableList.clear();
 
-  paused=true;
+  //paused=true;
   xploded=false;
   ZoomLevel=100;
   srand(time(NULL));
@@ -408,15 +406,28 @@ void level::reshape(int w,int h)
 }
 void level::myMouseFunction(int x,int y)
 {
+  vector2D pos = playerShip->get_pos();
+  GLint viewport[4];
+  GLdouble mvmatrix[16], projmatrix[16];
+  GLint realy;  /*  OpenGL y coordinate position  */
+  GLdouble wx, wy, wz;  /*  returned world x, y, z coords  */
 
-  GLsizei minSize=WINDOW_SIZEX > WINDOW_SIZEY ? (GLsizei) WINDOW_SIZEY : (GLsizei) WINDOW_SIZEX;
-  mX=DIMENSION*(double(x)-0.5*minSize);
-  mY=-DIMENSION*(double(y)-25-0.5*minSize);
+  glGetIntegerv (GL_VIEWPORT, viewport);
+  glGetDoublev (GL_MODELVIEW_MATRIX, mvmatrix);
+  glGetDoublev (GL_PROJECTION_MATRIX, projmatrix);
+  /*  note viewport[3] is height of window in pixels  */
+  realy = viewport[3] - (GLint) y - 1;
+  gluUnProject ((GLdouble) x, (GLdouble) realy, 0.0,
+      mvmatrix, projmatrix, viewport, &wx, &wy, &wz);
+
+  mX=wx-pos.getX();
+  mY=wy-pos.getY();
 
 }
 double level::shipMouseAngle()
 {
   double ax=mX;
+
   double ay=mY;
   if(ax>0) 
   {
@@ -481,149 +492,126 @@ void level::playStick()
   memset(js_state,0,sizeof(wwvi_js_event));
   if (get_joystick_status(js_state)==0)
   {
-    if(!paused)
+    double out = 0;
+    if (js_state->button[9]==1)
     {
-      double out = 0;
-      if (js_state->button[9]==1)
-      {
-        pauseResume();
-      }
-      if (js_state->button[7]==1)
-      {
-        current_speed.vincrease();//scale(1.2,1.2,1.2);
-        playerShip->set_speed(current_speed);
-      }
-      if (js_state->button[6]==1)
-      {
-        current_speed.vdecrease();//scale(0.8,0.8,0.8);
-        playerShip->set_speed(current_speed);
-      }
-      if (js_state->button[5]==1)
-      {
-        current_speed.scale(4,4);
-        playerShip->set_speed(current_speed);
-      }
-      if (js_state->button[4]==1)
-      {
-        current_speed.scale(0.25,0.25);
-        playerShip->set_speed(current_speed);
-      }
-      double newAngle=playerShip->get_angle();
-      double newX = (double) js_state->stick1_x;
-      double newY = (double) js_state->stick1_y;
-      if (abs(newX)>0)
-      {
-        jX = newX;
-      }
-      if (abs(newY)>0)
-      {
-        jY = -newY;
-      }
+      pauseResume();
+    }
+    if (js_state->button[7]==1)
+    {
+      current_speed.vincrease();//scale(1.2,1.2,1.2);
+      playerShip->set_speed(current_speed);
+    }
+    if (js_state->button[6]==1)
+    {
+      current_speed.vdecrease();//scale(0.8,0.8,0.8);
+      playerShip->set_speed(current_speed);
+    }
+    if (js_state->button[5]==1)
+    {
+      current_speed.scale(2,2);
+      playerShip->set_speed(current_speed);
+    }
+    if (js_state->button[4]==1)
+    {
+      current_speed.scale(0.5,0.5);
+      playerShip->set_speed(current_speed);
+    }
+    double newAngle=playerShip->get_angle();
+    double newX = (double) js_state->stick1_x;
+    double newY = (double) js_state->stick1_y;
+    if (abs(newX)>0)
+    {
+      jX = newX;
+    }
+    if (abs(newY)>0)
+    {
+      jY = -newY;
+    }
 
-      if  (jX > 0)
+    if  (jX > 0)
+    {
+      newAngle = atan(jY/jX);
+      playerShip->set_angle(newAngle);
+    }
+    else if (jX < 0 )
+    {
+      newAngle = M_PI+atan(jY/jX);
+      playerShip->set_angle(newAngle);
+    }
+    else
+    {
+      if (jY != 0)
       {
-        newAngle = atan(jY/jX);
+        newAngle = ((jY > 0) ? -1 : ((jY < 0) ? 1 : 0) )*atan(M_PI/2);
         playerShip->set_angle(newAngle);
       }
-      else if (jX < 0 )
-      {
-        newAngle = M_PI+atan(jY/jX);
-        playerShip->set_angle(newAngle);
-      }
-      else
-      {
-        if (jY != 0)
-        {
-          newAngle = ((jY > 0) ? -1 : ((jY < 0) ? 1 : 0) )*atan(M_PI/2);
-          playerShip->set_angle(newAngle);
-        }
-      }
-      out = (double) js_state->stick2_x;
-      if  (out != 0)
-      {
-        mX = out;
-      }
-      out = (double) js_state->stick2_y;
-      if  (out != 0)
-      {
-        mY = -out;
-      }
+    }
+    out = (double) js_state->stick2_x;
+    if  (out != 0)
+    {
+      mX = out;
+    }
+    out = (double) js_state->stick2_y;
+    if  (out != 0)
+    {
+      mY = -out;
     }
   }
   delete js_state;
 }
-  void level::keyboardFunction(unsigned char key,int x,int y)
+void level::keyboardFunction(unsigned char key,int x,int y)
+{
+  vector2D current_speed;
+  current_speed.set_vector(playerShip->get_speed());
+  switch (key)
   {
-    vector2D current_speed;
-    current_speed.set_vector(playerShip->get_speed());
-    switch (key)
-    {
-      case 27:
-        pauseResume();
-        break;
-      case 'w':
-        //current_speed.increase_vector(0,0.001,0);
-        current_speed.vincrease();//scale(1.2,1.2,1.2);
-        playerShip->set_speed(current_speed);
-        break;
-      case 'a':
-        //current_speed.increase_vector(-0.001,0,0);
-        current_speed.rotatel();
-        current_speed.scale(1.01,1.01);
-        playerShip->set_speed(current_speed);
-        break;
-      case 's':
-        //current_speed.increase_vector(0,-0.001,0);
-        current_speed.vdecrease();//scale(0.8,0.8,0.8);
-        playerShip->set_speed(current_speed);
-        break;
-      case 'd':
-        //current_speed.increase_vector(0.001,0,0);
-        current_speed.rotater();
-        current_speed.scale(1.01,1.01);
-        playerShip->set_speed(current_speed);
-        break;
-      case 'q':
-        current_speed.scale(4,4);
-        playerShip->set_speed(current_speed);
-        break;
-      case 'e':
-        current_speed.scale(0.25,0.25);
-        playerShip->set_speed(current_speed);
-        break;
-      case 'p':
-        pauseResume();
-        break;
-      case 'r':
-        if (!playerShip->isAlive())
-        {
-          reset();
-        }
-        break;
-    }
-
-  }
-  void level::specialKeyboardFunction(int key,int x, int y)
-  {
-
-    if(paused)
-    {
-      switch (key)
+    case 27:
+      pauseResume();
+      break;
+    case 'w':
+      //current_speed.increase_vector(0,0.001,0);
+      current_speed.vincrease();//scale(1.2,1.2,1.2);
+      playerShip->set_speed(current_speed);
+      break;
+    case 'a':
+      //current_speed.increase_vector(-0.001,0,0);
+      current_speed.rotatel();
+      current_speed.scale(1.01,1.01);
+      playerShip->set_speed(current_speed);
+      break;
+    case 's':
+      //current_speed.increase_vector(0,-0.001,0);
+      current_speed.vdecrease();//scale(0.8,0.8,0.8);
+      playerShip->set_speed(current_speed);
+      break;
+    case 'd':
+      //current_speed.increase_vector(0.001,0,0);
+      current_speed.rotater();
+      current_speed.scale(1.01,1.01);
+      playerShip->set_speed(current_speed);
+      break;
+    case 'q':
+      current_speed.scale(4,4);
+      playerShip->set_speed(current_speed);
+      break;
+    case 'e':
+      current_speed.scale(0.25,0.25);
+      playerShip->set_speed(current_speed);
+      break;
+    case 'p':
+      pauseResume();
+      break;
+    case 'r':
+      if (!playerShip->isAlive())
       {
-        case GLUT_KEY_DOWN:
-          MenuChoice=(MenuChoice+1)%4;
-          break;
-        case GLUT_KEY_UP:
-          if(MenuChoice==0)
-          {
-            MenuChoice+=3;
-          }
-          else
-          {
-            MenuChoice--;
-          }
-          break;
+        reset();
       }
-    }
+      break;
   }
+
+}
+void level::specialKeyboardFunction(int key,int x, int y)
+{
+}
 
