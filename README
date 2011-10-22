@@ -1,5 +1,14 @@
+== DEPENDENCIES
+
 compiler:
   -g++ or equivalent compiler
   -make (optional)
 libs:
   -libglut-dev or libglut3-dev
+
+
+== LICENSE:
+
+(The MIT License)
+
+Copyright (c) 
