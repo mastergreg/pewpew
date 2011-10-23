@@ -6,7 +6,7 @@
 
 * Creation Date : 20-10-2011
 
-* Last Modified : Sun 23 Oct 2011 02:16:30 PM EEST
+* Last Modified : Sun 23 Oct 2011 04:09:51 PM EEST
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -47,12 +47,7 @@ class toogle_button: public button
   public:
     toogle_button(GLfloat x,GLfloat y,std::string txt_on,void (*action_on)(void),std::string txt_off,void (*action_off)(void),GLfloat sizex = 4.4,GLfloat sizey = 0.4);
     void draw();
-    //void onhoover();
-    //void unhoover();
     void activate();
-
-  
-
 };
 
 
