@@ -6,7 +6,7 @@
 
  * Creation Date : 20-12-2008
 
- * Last Modified : Sun 23 Oct 2011 11:44:09 AM EEST
+ * Last Modified : Sun 23 Oct 2011 11:48:24 AM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -131,7 +131,7 @@ void skbF(int key, int x, int y)
   }
   else if (state == 3)
   {
-    opt.keyboardFunction(key,x,y);
+    opt.specialKeyboardFunction(key,x,y);
   }
 }
 void mIdleF(int x, int y)

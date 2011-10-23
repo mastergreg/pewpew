@@ -488,31 +488,32 @@ void level::playStick()
 {
   vector2D current_speed;
   current_speed.set_vector(playerShip->get_speed());
-  wwvi_js_event *js_state = new wwvi_js_event;
-  memset(js_state,0,sizeof(wwvi_js_event));
-  if (get_joystick_status(js_state)==0)
+  //wwvi_js_event *js_state = new wwvi_js_event;
+  static wwvi_js_event js_state;// = new wwvi_js_event;
+  //memset(js_state,0,sizeof(wwvi_js_event));
+  if (get_joystick_status(&js_state)==0)
   {
     double out = 0;
-    if (js_state->button[9]==1)
+    if (js_state.button[9]==1)
     {
       pauseResume();
     }
-    if (js_state->button[7]==1)
+    if (js_state.button[7]==1)
     {
       current_speed.vincrease();//scale(1.2,1.2,1.2);
       playerShip->set_speed(current_speed);
     }
-    else if (js_state->button[6]==1)
+    else if (js_state.button[6]==1)
     {
       current_speed.vdecrease();//scale(0.8,0.8,0.8);
       playerShip->set_speed(current_speed);
     }
-    else if (js_state->button[5]==1)
+    else if (js_state.button[5]==1)
     {
       current_speed.scale(2,2);
       playerShip->set_speed(current_speed);
     }
-    else if (js_state->button[4]==1)
+    else if (js_state.button[4]==1)
     {
       current_speed.scale(0.5,0.5);
       playerShip->set_speed(current_speed);
@@ -523,8 +524,8 @@ void level::playStick()
       playerShip->set_speed(current_speed);
     }
     double newAngle=playerShip->get_angle();
-    double newX = (double) js_state->stick1_x;
-    double newY = (double) js_state->stick1_y;
+    double newX = (double) js_state.stick1_x;
+    double newY = (double) js_state.stick1_y;
     if (abs(newX)>0)
     {
       jX = newX;
@@ -552,18 +553,18 @@ void level::playStick()
         playerShip->set_angle(newAngle);
       }
     }
-    out = (double) js_state->stick2_x;
+    out = (double) js_state.stick2_x;
     if  (out != 0)
     {
       mX = out;
     }
-    out = (double) js_state->stick2_y;
+    out = (double) js_state.stick2_y;
     if  (out != 0)
     {
       mY = -out;
     }
   }
-  delete js_state;
+  //delete js_state;
 }
 void level::keyboardFunction(unsigned char key,int x,int y)
 {
