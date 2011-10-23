@@ -16,7 +16,7 @@ drawables.o: drawables.cpp drawables.h
 peripherals.o:	peripherals.cpp peripherals.h
 	g++ -c peripherals.cpp ${LIBS} -o peripherals.o ${EXTRA_FLAGS}
 level.o:  level.cpp level.h
-	g++ -c 	level.cpp ${LIBS} ${EXTRA_FLAGS}  
+	g++ -c level.cpp ${LIBS} ${EXTRA_FLAGS}  
 menu_items.o: menu_items.cpp menu_items.h
 	g++ -c menu_items.cpp ${LIBS} ${EXTRA_FLAGS}
 menu.o: menu.cpp menu.h menu_items.o
