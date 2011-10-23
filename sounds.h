@@ -6,7 +6,7 @@
 
 * Creation Date : 23-10-2011
 
-* Last Modified : Sun 23 Oct 2011 08:03:09 PM EEST
+* Last Modified : Sun 23 Oct 2011 10:13:09 PM EEST
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -27,8 +27,7 @@ enum {PEW,BLAST};
 class sound_player
 {
   private:
-    ALuint pew_buffer,pew_source;
-    ALuint blast_buffer,blast_source;
+    ALuint buffers[SOUNDS];
     ALuint sources[SOUNDS];
   public:
     void play(int sound);

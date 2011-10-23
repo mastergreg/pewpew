@@ -6,7 +6,7 @@
 
  * Creation Date : 20-12-2008
 
- * Last Modified : Sun 23 Oct 2011 07:53:55 PM EEST
+ * Last Modified : Sun 23 Oct 2011 10:18:11 PM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -45,7 +45,6 @@ int main(int argc, char** argv)
 
   opt.add_option(std::string("BACK"),(&gpause));
   opt.add_option(std::string("SOUNDS ON"),(&sound_off),std::string("SOUNDS OFF"),(&sound_on));
-  opt.add_option(std::string("LOL"),(&end));
 
   //GLfloat filter[11] = {0.3,0.28,0.26,0.24,0.22,0.20,0.22,0.24,0.26,0.28,0.3};	//GOOD
   //glSeparableFilter2D(GL_SEPARABLE_2D, GL_LUMINANCE, 11, 11, GL_LUMINANCE, GL_FLOAT, filter,filter); //<< segfault !!!

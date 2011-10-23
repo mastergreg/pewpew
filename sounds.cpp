@@ -6,7 +6,7 @@
 
 * Creation Date : 23-10-2011
 
-* Last Modified : Sun 23 Oct 2011 10:00:34 PM EEST
+* Last Modified : Sun 23 Oct 2011 10:13:37 PM EEST
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -18,16 +18,16 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 sound_player::sound_player()
 {
   alutInit(NULL,NULL);
-  pew_buffer = alutCreateBufferFromFile("sounds/pew.wav");
-  blast_buffer = pew_buffer = alutCreateBufferFromFile("sounds/blast.wav");
+  buffers[PEW] = alutCreateBufferFromFile("sounds/pew.wav");
+  buffers[BLAST] = alutCreateBufferFromFile("sounds/blast.wav");
 
-  alGenSources(1,&pew_source);
-  alGenSources(1,&blast_source);
+  //alGenSources(1,&source);
+  alGenSources(SOUNDS,sources);
 
-  alSourcei(sources[PEW],AL_BUFFER,pew_buffer);
+  alSourcei(sources[PEW],AL_BUFFER,buffers[PEW]);
   alSourcei(sources[PEW],AL_LOOPING,AL_FALSE);
 
-  alSourcei(sources[BLAST],AL_BUFFER,blast_buffer);
+  alSourcei(sources[BLAST],AL_BUFFER,buffers[BLAST]);
   alSourcei(sources[BLAST],AL_LOOPING,AL_FALSE);
 }
 
@@ -39,6 +39,7 @@ void sound_player::play(int sound)
     {
       case PEW:
         alSourcePlay(sources[PEW]);
+        break;
       case BLAST:
         alSourcePlay(sources[BLAST]);
         break;
