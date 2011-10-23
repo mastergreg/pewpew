@@ -1,4 +1,4 @@
-## **DEPENDENCIES**
+## DEPENDENCIES
 
 * compiler:
   1. g++ or equivalent compiler
@@ -8,7 +8,7 @@
   2. libalut-dev
 
 
-## **LICENSE_**
+## LICENSE_
 
 
 (The MIT License)
