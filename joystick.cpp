@@ -1,5 +1,5 @@
 #include "joystick.h"
-
+#ifdef __linux__
 static int joystick_fd = -1;
 //static int joystick_fd_ff = -1;
 static wwvi_js_event js_state;
@@ -113,4 +113,29 @@ int get_joystick_status(wwvi_js_event *my_js_out)
   // printf("%d\n", wjse->stick1_y);
   return 0;
 }
+#endif
+#ifdef _WIN32
+int open_joystick()
+{
+  return 0;
+}
 
+int rumble()
+{
+  return 0;
+}
+int read_joystick_event(js_event *jse)
+{
+    return 0;
+}
+void close_joystick()
+{
+}
+
+
+int get_joystick_status(wwvi_js_event *my_js_out)
+{
+
+  return 0;
+}
+#endif

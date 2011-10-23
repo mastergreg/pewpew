@@ -15,6 +15,8 @@
 #ifndef __JOYSTICK_H__
 #define __JOYSTICK_H__
 
+#ifdef __linux__
+
 #include <cstdlib>
 #include <stdint.h>
 #include <cstdio>
@@ -34,6 +36,7 @@
 #define JS_EVENT_AXIS           0x02    /* joystick moved */
 #define JS_EVENT_INIT           0x80  
 
+#endif //ifdef linux
 
 struct js_event {
     unsigned int time; /* event timestamp in milliseconds */
