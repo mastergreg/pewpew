@@ -6,7 +6,7 @@
 
 * Creation Date : 23-10-2011
 
-* Last Modified : Sun 23 Oct 2011 08:15:49 PM EEST
+* Last Modified : Sun 23 Oct 2011 10:00:34 PM EEST
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -24,17 +24,11 @@ sound_player::sound_player()
   alGenSources(1,&pew_source);
   alGenSources(1,&blast_source);
 
-  alSourcei(pew_source,AL_BUFFER,pew_buffer);
-  alSourcei(pew_source,AL_LOOPING,AL_TRUE);
+  alSourcei(sources[PEW],AL_BUFFER,pew_buffer);
+  alSourcei(sources[PEW],AL_LOOPING,AL_FALSE);
 
-  alSourcei(blast_source,AL_BUFFER,blast_buffer);
-  alSourcei(blast_source,AL_LOOPING,AL_FALSE);
-  sources[PEW]=pew_source;
-  sources[BLAST]=blast_source;
-  if (sounds_on == 1)
-  {
-    alSourcePlay(sources[PEW]);
-  }
+  alSourcei(sources[BLAST],AL_BUFFER,blast_buffer);
+  alSourcei(sources[BLAST],AL_LOOPING,AL_FALSE);
 }
 
 void sound_player::play(int sound)
@@ -43,8 +37,9 @@ void sound_player::play(int sound)
   {
     switch(sound)
     {
+      case PEW:
+        alSourcePlay(sources[PEW]);
       case BLAST:
-        alSourceStop(sources[PEW]);
         alSourcePlay(sources[BLAST]);
         break;
       default:
