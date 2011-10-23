@@ -502,19 +502,24 @@ void level::playStick()
       current_speed.vincrease();//scale(1.2,1.2,1.2);
       playerShip->set_speed(current_speed);
     }
-    if (js_state->button[6]==1)
+    else if (js_state->button[6]==1)
     {
       current_speed.vdecrease();//scale(0.8,0.8,0.8);
       playerShip->set_speed(current_speed);
     }
-    if (js_state->button[5]==1)
+    else if (js_state->button[5]==1)
     {
       current_speed.scale(2,2);
       playerShip->set_speed(current_speed);
     }
-    if (js_state->button[4]==1)
+    else if (js_state->button[4]==1)
     {
       current_speed.scale(0.5,0.5);
+      playerShip->set_speed(current_speed);
+    }
+    else
+    {
+      current_speed.increase_reset();//scale(1.2,1.2,1.2);
       playerShip->set_speed(current_speed);
     }
     double newAngle=playerShip->get_angle();

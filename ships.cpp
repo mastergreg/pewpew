@@ -179,10 +179,6 @@ void ship::draw()
 
   GLfloat  mycolor[]={0.54,0.16,0.86};
   glColor3fv(mycolor);
-  //GLfloat shiny[]={0.0};
-  //glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
-  //glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,mycolor);
   glLineWidth(1);
   glTranslatef(px-0.02*cos(angle),py-0.02*sin(angle),0);
   glRotatef(-90, 1.0, 0.0, 0.0); 
@@ -190,8 +186,6 @@ void ship::draw()
   glRotatef(90, 0.0, 1.0, 0.0); 
   glRotatef(spini, 0.0, 0.0, 1.0); 
   glutWireCone(0.02,0.05,4,1);
-  glLineWidth(1);
-  //  glColor3ub(255,255,0);
   glutWireCone(0.03,0.02,4,1);
 
   glPopMatrix(); 

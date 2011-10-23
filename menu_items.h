@@ -6,7 +6,7 @@
 
 * Creation Date : 20-10-2011
 
-* Last Modified : Thu 20 Oct 2011 03:50:48 PM EEST
+* Last Modified : Sun 23 Oct 2011 11:02:52 AM EEST
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -24,6 +24,7 @@ class button
     void (*btn_action)(void);
     GLfloat X,Y,sizeX,sizeY;
     void *font;
+    GLuint theButton;
 
   public:
     button(GLfloat x,GLfloat y,std::string txt,void (*action)(void),GLfloat sizex = 4.4,GLfloat sizey = 0.4);
