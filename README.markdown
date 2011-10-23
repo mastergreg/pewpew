@@ -1,19 +1,21 @@
-== DEPENDENCIES
+## **DEPENDENCIES**
 
-compiler:
-  -g++ or equivalent compiler
-  -make (optional)
-libs:
-  -libglut-dev or libglut3-dev
+* compiler:
+  1. g++ or equivalent compiler
+  2. make (optional)
+* libs:
+  1. freeglut3-dev
+  2. libalut-dev
 
 
-== LICENSE:
+## **LICENSE_**
+
 
 (The MIT License)
 
 Copyright (c) 2011 Gregory Liras
 
-Permission is hereby granted, free of charge, to any person obtaining
+_Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
 'Software'), to deal in the Software without restriction, including
 without limitation the rights to use, copy, modify, merge, publish,
@@ -30,4 +32,4 @@ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE._
