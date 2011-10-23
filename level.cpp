@@ -491,6 +491,8 @@ void level::playStick()
   //wwvi_js_event *js_state = new wwvi_js_event;
   static wwvi_js_event js_state;// = new wwvi_js_event;
   //memset(js_state,0,sizeof(wwvi_js_event));
+  js_state.button[4]=0;
+  js_state.button[5]=0;
   if (get_joystick_status(&js_state)==0)
   {
     double out = 0;
