@@ -5,8 +5,8 @@ CPP  = g++.exe
 CC   = gcc.exe
 WINDRES = windres.exe
 RES  = 
-OBJ  = drawables.o game_object.o level.o pewpew.o ships.o vector2D.o $(RES)
-LINKOBJ  = drawables.o game_object.o level.o pewpew.o ships.o vector2D.o $(RES)
+OBJ  = drawables.o game_object.o level.o pewpew.o ships.o vector2D.o joystick.o menu.o menu_items.o $(RES)
+LINKOBJ  = drawables.o game_object.o level.o pewpew.o ships.o vector2D.o joystick.o menu.o menu_items.o $(RES)
 LIBS =  -L"C:/Dev-Cpp/lib" -lglut32 -lglu32 -lopengl32 -lwinmm -lgdi32  
 INCS =  -I"C:/Dev-Cpp/include" 
 CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include" 
@@ -43,3 +43,12 @@ ships.o: ships.cpp
 
 vector2D.o: vector2D.cpp
 	$(CPP) -c vector2D.cpp -o vector2D.o $(CXXFLAGS)
+
+joystick.o: joystick.cpp
+	$(CPP) -c joystick.cpp -o joystick.o $(CXXFLAGS)
+
+menu.o: menu.cpp
+	$(CPP) -c menu.cpp -o menu.o $(CXXFLAGS)
+
+menu_items.o: menu_items.cpp
+	$(CPP) -c menu_items.cpp -o menu_items.o $(CXXFLAGS)

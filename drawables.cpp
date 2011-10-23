@@ -124,16 +124,16 @@ circle::circle(double r, vector2D pos,GLfloat mycolor[3])
     y[4*64-1-i]=-y[i];
   } 
 
+
 }
 
 void circle::draw(vector2D pos)
 {
-  position.set_vector(pos);
   glPushMatrix();
   glColor3fv(color);
   //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color);
   //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,color);
-  glTranslatef(position.getX(),position.getY(),0);
+  glTranslatef(pos.getX(),pos.getY(),0);
   glLineWidth(1);
   glBegin(GL_LINE_LOOP);
   for (int i=0;i<256;i++)
