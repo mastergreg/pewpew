@@ -8,7 +8,7 @@
   2. libalut-dev
 
 
-## LICENSE_
+## LICENSE
 
 
 (The MIT License)
