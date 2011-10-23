@@ -1,7 +1,6 @@
 #-lgc -ggdb
-<<<<<<< HEAD
 LIBS=-lglut -lGL -lGLU -lalut
-EXTRA_FLAGS=-O2
+EXTRA_FLAGS=-Wall -Wextra -Wuninitialized -O2
 PROG=pewpew
 all: ${PROG}
 joystick.o: joystick.cpp joystick.h
@@ -14,8 +13,6 @@ ships.o: ships.h ships.cpp
 	g++ -c ships.cpp ${LIBS} ${EXTRA_FLAGS}
 drawables.o: drawables.cpp drawables.h
 	g++ -c drawables.cpp ${LIBS} ${EXTRA_FLAGS}
-peripherals.o:	peripherals.cpp peripherals.h
-	g++ -c peripherals.cpp ${LIBS} -o peripherals.o ${EXTRA_FLAGS}
 level.o:  sounds.h level.cpp level.h
 	g++ -c 	level.cpp ${LIBS} ${EXTRA_FLAGS}  
 sounds.o:	sounds.cpp sounds.h
@@ -27,12 +24,12 @@ menu.o: menu.cpp menu.h menu_items.o
 OBJECTS=game_object.o ships.o vector2D.o drawables.o level.o joystick.o menu.o menu_items.o sounds.o
 ${PROG}:	${PROG}.cpp ${PROG}.h ${OBJECTS}
 	g++  ${PROG}.cpp ${OBJECTS} ${LIBS} -o ${PROG} ${EXTRA_FLAGS}  
-=======
-SRC_DIR="src"
-all:
-	@cd ${SRC_DIR}; make
->>>>>>> working
+	cp ${PROG} ../
 clean:
-	@cd ${SRC_DIR}; make clean
+	rm *.o 
+
+
+
 tar:
-	@cd ${SRC_DIR}; make tar
+	tar -uzvf ${PROG}.tar *.cpp
+	tar -uzvf ${PROG}.tar *.h
