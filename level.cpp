@@ -93,6 +93,7 @@ void level::TimeBasedEvents()
   if(playerShip->isAlive() && ftime>=10)
   {
     std::list<fire *> newFireList;
+    sndp.play(0);
     ftime=0;
     newFireList = playerShip->shoot(shipMouseAngle());
     fireList.insert(fireList.end(),newFireList.begin(),newFireList.end());
@@ -146,6 +147,7 @@ void level::ScoreBasedEvents()
   enemies_killed+=enemies_before-enemies_after;
   if (enemies_killed > 0)
   {
+    sndp.play(1);
     enemies_killed = 0;
     if(score % 10000 == 0)
       insertFireUpgrade();

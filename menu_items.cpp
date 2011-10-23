@@ -6,7 +6,7 @@
 
 * Creation Date : 20-10-2011
 
-* Last Modified : Sun 23 Oct 2011 02:15:59 PM EEST
+* Last Modified : Sun 23 Oct 2011 05:59:20 PM EEST
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -14,7 +14,6 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 
 #include "menu_items.h"
-
 
 button::button()
 {
@@ -159,12 +158,12 @@ void toogle_button::activate()
 {
   if (on)
   {
-    btn_action_off;
+    (*btn_action_on)();
   }
   else
   {
-    btn_action_on;
+    (*btn_action_off)();
   }
-  on = ! on;
+  on = !on;
 
 }
