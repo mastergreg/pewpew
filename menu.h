@@ -6,7 +6,7 @@
 
 * Creation Date : 19-10-2011
 
-* Last Modified : Sun 23 Oct 2011 11:33:36 AM EEST
+* Last Modified : Sun 23 Oct 2011 02:14:38 PM EEST
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -41,6 +41,7 @@ class menu
     void specialKeyboardFunction(int key,int x, int y);
     void drawMenu(int choice);
     void add_option(std::string txt,void (*action)(void));
+    void add_option(std::string txt_on,void (*action_on)(void),std::string txt_off,void (*action_off)(void));
 };
 class infoscreen:public menu
 {

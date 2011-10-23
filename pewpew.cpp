@@ -6,7 +6,7 @@
 
  * Creation Date : 20-12-2008
 
- * Last Modified : Sun 23 Oct 2011 01:07:00 PM EEST
+ * Last Modified : Sun 23 Oct 2011 10:24:00 PM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -19,6 +19,7 @@ menu mn;
 menu opt;
 infoscreen info("Press P to start, use WASD to move the ship, Q for turbo boost, E for e-break and Esc to exit");
 int game_state = 1;
+int sounds_on = 1;
 
 int main(int argc, char** argv)
 {
@@ -43,7 +44,7 @@ int main(int argc, char** argv)
 
 
   opt.add_option(std::string("BACK"),(&gpause));
-  opt.add_option(std::string("LOL"),(&end));
+  opt.add_option(std::string("SOUNDS ON"),(&sound_off),std::string("SOUNDS OFF"),(&sound_on));
 
   //GLfloat filter[11] = {0.3,0.28,0.26,0.24,0.22,0.20,0.22,0.24,0.26,0.28,0.3};	//GOOD
   //glSeparableFilter2D(GL_SEPARABLE_2D, GL_LUMINANCE, 11, 11, GL_LUMINANCE, GL_FLOAT, filter,filter); //<< segfault !!!
@@ -185,4 +186,12 @@ void info_action(void)
 void option_action(void)
 {
   game_state = 3;
+}
+void sound_off(void)
+{
+  sounds_on = 0;
+}
+void sound_on(void)
+{
+  sounds_on = 1;
 }

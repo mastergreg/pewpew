@@ -1,5 +1,5 @@
 #-lgc -ggdb
-LIBS=-lglut -lGL -lGLU
+LIBS=-lglut -lGL -lGLU -lalut
 EXTRA_FLAGS=-O2
 PROG=pewpew
 all: ${PROG}
@@ -15,13 +15,15 @@ drawables.o: drawables.cpp drawables.h
 	g++ -c drawables.cpp ${LIBS} ${EXTRA_FLAGS}
 peripherals.o:	peripherals.cpp peripherals.h
 	g++ -c peripherals.cpp ${LIBS} -o peripherals.o ${EXTRA_FLAGS}
-level.o:  level.cpp level.h
-	g++ -c level.cpp ${LIBS} ${EXTRA_FLAGS}  
+level.o:  sounds.h level.cpp level.h
+	g++ -c 	level.cpp ${LIBS} ${EXTRA_FLAGS}  
+sounds.o:	sounds.cpp sounds.h
+	g++ -c sounds.cpp ${LIBS} ${EXTRA_FLAGS}  
 menu_items.o: menu_items.cpp menu_items.h
 	g++ -c menu_items.cpp ${LIBS} ${EXTRA_FLAGS}
 menu.o: menu.cpp menu.h menu_items.o
 	g++ -c menu.cpp ${LIBS} ${EXTRA_FLAGS}
-OBJECTS=game_object.o ships.o vector2D.o drawables.o level.o joystick.o menu.o menu_items.o
+OBJECTS=game_object.o ships.o vector2D.o drawables.o level.o joystick.o menu.o menu_items.o sounds.o
 ${PROG}:	${PROG}.cpp ${PROG}.h ${OBJECTS}
 	g++  ${PROG}.cpp ${OBJECTS} ${LIBS} -o ${PROG} ${EXTRA_FLAGS}  
 clean:

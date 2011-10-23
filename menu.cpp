@@ -6,7 +6,7 @@
 
  * Creation Date : 19-10-2011
 
- * Last Modified : Sun 23 Oct 2011 01:07:17 PM EEST
+ * Last Modified : Sun 23 Oct 2011 10:23:23 PM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -52,6 +52,11 @@ void menu::drawMenu(int choice)
 void menu::add_option(std::string txt,void (*action)())
 {
   options.push_back(new button(nextX,nextY,txt,action));
+  nextY -= 1.0;
+}
+void menu::add_option(std::string txt_on,void (*action_on)(void),std::string txt_off,void (*action_off)(void))
+{
+  options.push_back(new toogle_button(nextX,nextY,txt_on,action_on,txt_off,action_off));
   nextY -= 1.0;
 }
 void menu::drawGrid()

@@ -56,8 +56,8 @@ void level::play()
     }
     drawableList.insert(drawableList.end(),newdrawList.begin(),newdrawList.end());
   }
-  playStick();
   moveAll();
+  playStick();
 }
 void level::drawAll()
 {
@@ -93,6 +93,7 @@ void level::TimeBasedEvents()
   if(playerShip->isAlive() && ftime>=10)
   {
     std::list<fire *> newFireList;
+    sndp.play(0);
     ftime=0;
     newFireList = playerShip->shoot(shipMouseAngle());
     fireList.insert(fireList.end(),newFireList.begin(),newFireList.end());
@@ -126,13 +127,13 @@ void level::reset()
   playerShip->set_speed(startingSpeed);
   lifeDraw=playerShip->get_life();
 
+  //delete all elements TODO
   fireList.clear();
   enemyList.clear();
   fireUpgradeList.clear();
   lifeUpgradeList.clear();
   drawableList.clear();
 
-  //paused=true;
   xploded=false;
   ZoomLevel=100;
   srand(time(NULL));
@@ -146,6 +147,7 @@ void level::ScoreBasedEvents()
   enemies_killed+=enemies_before-enemies_after;
   if (enemies_killed > 0)
   {
+    sndp.play(1);
     enemies_killed = 0;
     if(score % 10000 == 0)
       insertFireUpgrade();
@@ -281,20 +283,14 @@ void level::displayLife()
   glBegin(GL_LINES);
   GLfloat  myBcolor[]={0.0,0.0,0.0};
   GLfloat  my1color[]={0.0,1.0,0.0};
-  //GLfloat shiny[]={10.0};
-  //glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,myBcolor);
   glColor3fv(myBcolor);
   glLineWidth(30);
   glVertex3f(-1.0,.999,0);  
   glVertex3f(1.0,.999,0);  
   glLineWidth(10);
-  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,my1color);
   glColor3fv(my1color);
   glVertex3f(-0.9,1.,0);  
   GLfloat  mycolor[]={0.66,0.0,0.0};
-  //glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,mycolor);
   glColor3fv(mycolor);
   glVertex3f(lifeDraw/3000.0-0.9,1.,0);  
   glEnd();
@@ -488,9 +484,7 @@ void level::playStick()
 {
   vector2D current_speed;
   current_speed.set_vector(playerShip->get_speed());
-  //wwvi_js_event *js_state = new wwvi_js_event;
-  static wwvi_js_event js_state;// = new wwvi_js_event;
-  //memset(js_state,0,sizeof(wwvi_js_event));
+  static wwvi_js_event js_state;
   js_state.button[4]=0;
   js_state.button[5]=0;
   if (get_joystick_status(&js_state)==0)
@@ -502,12 +496,12 @@ void level::playStick()
     }
     if (js_state.button[7]==1)
     {
-      current_speed.vincrease();//scale(1.2,1.2,1.2);
+      current_speed.vincrease();
       playerShip->set_speed(current_speed);
     }
     else if (js_state.button[6]==1)
     {
-      current_speed.vdecrease();//scale(0.8,0.8,0.8);
+      current_speed.vdecrease();
       playerShip->set_speed(current_speed);
     }
     else if (js_state.button[5]==1)
@@ -528,11 +522,11 @@ void level::playStick()
     double newAngle=playerShip->get_angle();
     double newX = (double) js_state.stick1_x;
     double newY = (double) js_state.stick1_y;
-    if (abs(newX)>0)
+    if (newX != 0)
     {
       jX = newX;
     }
-    if (abs(newY)>0)
+    if (newY != 0)
     {
       jY = -newY;
     }
@@ -566,7 +560,6 @@ void level::playStick()
       mY = -out;
     }
   }
-  //delete js_state;
 }
 void level::keyboardFunction(unsigned char key,int x,int y)
 {
