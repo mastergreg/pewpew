@@ -6,7 +6,7 @@
 
  * Creation Date : 20-12-2008
 
- * Last Modified : Sun 23 Oct 2011 11:48:24 AM EEST
+ * Last Modified : Sun 23 Oct 2011 01:07:00 PM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -18,7 +18,7 @@ level lv;
 menu mn;
 menu opt;
 infoscreen info("Press P to start, use WASD to move the ship, Q for turbo boost, E for e-break and Esc to exit");
-int state = 1;
+int game_state = 1;
 
 int main(int argc, char** argv)
 {
@@ -65,19 +65,19 @@ void display()
 {
   glClearColor(0,0,0,0);
   glClear(GL_COLOR_BUFFER_BIT);
-  if (state == 1)
+  if (game_state == 1)
   {
     mn.display();
   }
-  else if (state == 0)
+  else if (game_state == 0)
   {
     lv.display();
   }
-  else if (state == 2)
+  else if (game_state == 2)
   {
     info.display();
   }
-  else if (state == 3)
+  else if (game_state == 3)
   {
     opt.display();
   }
@@ -87,15 +87,15 @@ void display()
 void reshape(int w,int h)
 {
 
-  if (state == 1)
+  if (game_state == 1)
   {
     mn.reshape(w,h);
   }
-  else if (state == 0)
+  else if (game_state == 0)
   {
     lv.reshape(w,h);
   }
-  else if (state == 3)
+  else if (game_state == 3)
   {
     opt.reshape(w,h);
   }
@@ -106,11 +106,11 @@ void kbRelF(unsigned char key, int x, int y)
 }
 void kbF(unsigned char key, int x, int y)
 {
-  if (state == 1)
+  if (game_state == 1)
   {
     mn.keyboardFunction(key,x,y);
   }
-  else if (state == 3)
+  else if (game_state == 3)
   {
     opt.keyboardFunction(key,x,y);
   }
@@ -121,41 +121,41 @@ void kbF(unsigned char key, int x, int y)
 }
 void skbF(int key, int x, int y)
 {
-  if (state == 1)
+  if (game_state == 1)
   {
     mn.specialKeyboardFunction(key,x,y);
   }
-  else if (state == 0)
+  else if (game_state == 0)
   {
     lv.specialKeyboardFunction(key,x,y);
   }
-  else if (state == 3)
+  else if (game_state == 3)
   {
     opt.specialKeyboardFunction(key,x,y);
   }
 }
 void mIdleF(int x, int y)
 {
-  if (state == 1)
+  if (game_state == 1)
   {
     mn.myIdleMouseFunction(x,y);
   }
-  else if (state == 3)
+  else if (game_state == 3)
   {
     opt.myIdleMouseFunction(x,y);
   }
-  else if (state == 0)
+  else if (game_state == 0)
   {
     lv.myMouseFunction(x,y);
   }
 }
 void mF(int btn,int state,int x, int y)
 {
-  if (state == 1)
+  if (game_state == 1)
   {
     mn.myMouseFunction(btn,state,x,y);
   }
-  if (state == 3)
+  else if (game_state == 3)
   {
     opt.myMouseFunction(btn,state,x,y);
   }
@@ -172,17 +172,17 @@ void end_0(void)
 }
 void run(void)
 {
-  state = 0;
+  game_state = 0;
 }
 void gpause(void)
 {
-  state = 1;
+  game_state = 1;
 }
 void info_action(void)
 {
-  state = 2;
+  game_state = 2;
 }
 void option_action(void)
 {
-  state = 3;
+  game_state = 3;
 }

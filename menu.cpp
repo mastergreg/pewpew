@@ -6,7 +6,7 @@
 
  * Creation Date : 19-10-2011
 
- * Last Modified : Fri 21 Oct 2011 05:12:07 PM EEST
+ * Last Modified : Sun 23 Oct 2011 01:07:17 PM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -152,7 +152,6 @@ void menu::myIdleMouseFunction(int x,int y)
 }
 void menu::myMouseFunction(int butn,int state,int x,int y)
 {
- std::cout << state << std::endl;
  if (state == GLUT_DOWN)
  {
    options[Mchoice]->activate();
