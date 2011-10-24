@@ -5,8 +5,8 @@ CPP  = g++.exe
 CC   = gcc.exe
 WINDRES = windres.exe
 RES  = 
-OBJ  = drawables.o game_object.o level.o pewpew.o ships.o vector2D.o joystick.o menu.o menu_items.o $(RES)
-LINKOBJ  = drawables.o game_object.o level.o pewpew.o ships.o vector2D.o joystick.o menu.o menu_items.o $(RES)
+OBJ  = src/drawables.o src/game_object.o src/joystick.o src/level.o src/menu.o src/menu_items.o src/pewpew.o src/ships.o src/vector2D.o $(RES)
+LINKOBJ  = src/drawables.o src/game_object.o src/joystick.o src/level.o src/menu.o src/menu_items.o src/pewpew.o src/ships.o src/vector2D.o $(RES)
 LIBS =  -L"C:/Dev-Cpp/lib" -lglut32 -lglu32 -lopengl32 -lwinmm -lgdi32  
 INCS =  -I"C:/Dev-Cpp/include" 
 CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include" 
@@ -26,29 +26,29 @@ clean: clean-custom
 $(BIN): $(OBJ)
 	$(CPP) $(LINKOBJ) -o "PewPew.exe" $(LIBS)
 
-drawables.o: drawables.cpp
-	$(CPP) -c drawables.cpp -o drawables.o $(CXXFLAGS)
+src/drawables.o: src/drawables.cpp
+	$(CPP) -c src/drawables.cpp -o src/drawables.o $(CXXFLAGS)
 
-game_object.o: game_object.cpp
-	$(CPP) -c game_object.cpp -o game_object.o $(CXXFLAGS)
+src/game_object.o: src/game_object.cpp
+	$(CPP) -c src/game_object.cpp -o src/game_object.o $(CXXFLAGS)
 
-level.o: level.cpp
-	$(CPP) -c level.cpp -o level.o $(CXXFLAGS)
+src/joystick.o: src/joystick.cpp
+	$(CPP) -c src/joystick.cpp -o src/joystick.o $(CXXFLAGS)
 
-pewpew.o: pewpew.cpp
-	$(CPP) -c pewpew.cpp -o pewpew.o $(CXXFLAGS)
+src/level.o: src/level.cpp
+	$(CPP) -c src/level.cpp -o src/level.o $(CXXFLAGS)
 
-ships.o: ships.cpp
-	$(CPP) -c ships.cpp -o ships.o $(CXXFLAGS)
+src/menu.o: src/menu.cpp
+	$(CPP) -c src/menu.cpp -o src/menu.o $(CXXFLAGS)
 
-vector2D.o: vector2D.cpp
-	$(CPP) -c vector2D.cpp -o vector2D.o $(CXXFLAGS)
+src/menu_items.o: src/menu_items.cpp
+	$(CPP) -c src/menu_items.cpp -o src/menu_items.o $(CXXFLAGS)
 
-joystick.o: joystick.cpp
-	$(CPP) -c joystick.cpp -o joystick.o $(CXXFLAGS)
+src/pewpew.o: src/pewpew.cpp
+	$(CPP) -c src/pewpew.cpp -o src/pewpew.o $(CXXFLAGS)
 
-menu.o: menu.cpp
-	$(CPP) -c menu.cpp -o menu.o $(CXXFLAGS)
+src/ships.o: src/ships.cpp
+	$(CPP) -c src/ships.cpp -o src/ships.o $(CXXFLAGS)
 
-menu_items.o: menu_items.cpp
-	$(CPP) -c menu_items.cpp -o menu_items.o $(CXXFLAGS)
+src/vector2D.o: src/vector2D.cpp
+	$(CPP) -c src/vector2D.cpp -o src/vector2D.o $(CXXFLAGS)
