@@ -6,7 +6,7 @@
 
  * Creation Date : 20-12-2008
 
- * Last Modified : Sun 23 Oct 2011 10:24:00 PM EEST
+ * Last Modified : Tue 25 Oct 2011 12:25:02 AM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -18,8 +18,8 @@ level lv;
 menu mn;
 menu opt;
 infoscreen info("Press P to start, use WASD to move the ship, Q for turbo boost, E for e-break and Esc to exit");
-int game_state = 1;
-int sounds_on = 1;
+game_state gs;
+
 
 int main(int argc, char** argv)
 {
@@ -43,8 +43,11 @@ int main(int argc, char** argv)
 
 
 
-  opt.add_option(std::string("BACK"),(&gpause));
+  opt.add_option(std::string("BACK"),(&back));
   opt.add_option(std::string("SOUNDS ON"),(&sound_off),std::string("SOUNDS OFF"),(&sound_on));
+
+
+  info.add_option(std::string("BACK"),(&back));
 
   //GLfloat filter[11] = {0.3,0.28,0.26,0.24,0.22,0.20,0.22,0.24,0.26,0.28,0.3};	//GOOD
   //glSeparableFilter2D(GL_SEPARABLE_2D, GL_LUMINANCE, 11, 11, GL_LUMINANCE, GL_FLOAT, filter,filter); //<< segfault !!!
@@ -52,7 +55,9 @@ int main(int argc, char** argv)
   glHint(GL_LINE_SMOOTH_HINT, GL_FASTEST);
   glutReshapeFunc(reshape);
   glutDisplayFunc(display);
-  glutIdleFunc(glutPostRedisplay);
+  //glutIdleFunc(mytimer);
+  glutTimerFunc(100,mytimer,1);
+
   glutKeyboardUpFunc(kbRelF);
   glutSpecialFunc(skbF);
   glutKeyboardFunc(kbF);
@@ -62,44 +67,58 @@ int main(int argc, char** argv)
 
   return 0;
 }
+static void mytimer(int v)
+{
+  glutPostRedisplay();
+  glutTimerFunc(20,mytimer,1);
+}
 void display()
 {
   glClearColor(0,0,0,0);
   glClear(GL_COLOR_BUFFER_BIT);
-  if (game_state == 1)
+  if (gs.paused)
   {
-    mn.display();
+    if(gs.menu_page == 0)
+    {
+      mn.display();
+    }
+    else if(gs.menu_page == 1)
+    {
+      info.display();
+    }
+    else if(gs.menu_page == 2)
+    {
+      opt.display();
+    }
   }
-  else if (game_state == 0)
+  else 
   {
     lv.display();
   }
-  else if (game_state == 2)
-  {
-    info.display();
-  }
-  else if (game_state == 3)
-  {
-    opt.display();
-  }
-  usleep(10000);
   glutSwapBuffers();
 }
 void reshape(int w,int h)
 {
-
-  if (game_state == 1)
+  if (gs.paused)
   {
-    mn.reshape(w,h);
+    if(gs.menu_page == 0)
+    {
+      mn.reshape(w,h);
+    }
+    else if(gs.menu_page == 1)
+    {
+      info.reshape(w,h);
+    }
+    else if(gs.menu_page == 2)
+    {
+      opt.reshape(w,h);
+    }
   }
-  else if (game_state == 0)
+  else 
   {
     lv.reshape(w,h);
   }
-  else if (game_state == 3)
-  {
-    opt.reshape(w,h);
-  }
+
 }
 void kbRelF(unsigned char key, int x, int y)
 {
@@ -107,13 +126,20 @@ void kbRelF(unsigned char key, int x, int y)
 }
 void kbF(unsigned char key, int x, int y)
 {
-  if (game_state == 1)
+  if (gs.paused)
   {
-    mn.keyboardFunction(key,x,y);
-  }
-  else if (game_state == 3)
-  {
-    opt.keyboardFunction(key,x,y);
+    if(gs.menu_page == 0)
+    {
+      mn.keyboardFunction(key,x,y);
+    }
+    else if(gs.menu_page == 1)
+    {
+      info.keyboardFunction(key,x,y);
+    }
+    else if(gs.menu_page == 2)
+    {
+      opt.keyboardFunction(key,x,y);
+    }
   }
   else 
   {
@@ -122,43 +148,64 @@ void kbF(unsigned char key, int x, int y)
 }
 void skbF(int key, int x, int y)
 {
-  if (game_state == 1)
+  if (gs.paused)
   {
-    mn.specialKeyboardFunction(key,x,y);
+    if(gs.menu_page == 0)
+    {
+      mn.specialKeyboardFunction(key,x,y);
+    }
+    else if(gs.menu_page == 1)
+    {
+      info.specialKeyboardFunction(key,x,y);
+    }
+    else if(gs.menu_page == 2)
+    {
+      opt.specialKeyboardFunction(key,x,y);
+    }
   }
-  else if (game_state == 0)
+  else 
   {
     lv.specialKeyboardFunction(key,x,y);
-  }
-  else if (game_state == 3)
-  {
-    opt.specialKeyboardFunction(key,x,y);
   }
 }
 void mIdleF(int x, int y)
 {
-  if (game_state == 1)
+  if (gs.paused)
   {
-    mn.myIdleMouseFunction(x,y);
+    if(gs.menu_page == 0)
+    {
+      mn.myIdleMouseFunction(x,y);
+    }
+    else if(gs.menu_page == 1)
+    {
+      info.myIdleMouseFunction(x,y);
+    }
+    else if(gs.menu_page == 2)
+    {
+      opt.myIdleMouseFunction(x,y);
+    }
   }
-  else if (game_state == 3)
-  {
-    opt.myIdleMouseFunction(x,y);
-  }
-  else if (game_state == 0)
+  else 
   {
     lv.myMouseFunction(x,y);
   }
 }
 void mF(int btn,int state,int x, int y)
 {
-  if (game_state == 1)
+  if (gs.paused)
   {
-    mn.myMouseFunction(btn,state,x,y);
-  }
-  else if (game_state == 3)
-  {
-    opt.myMouseFunction(btn,state,x,y);
+    if(gs.menu_page == 0)
+    {
+      mn.myMouseFunction(btn,state,x,y);
+    }
+    else if(gs.menu_page == 1)
+    {
+      info.myMouseFunction(btn,state,x,y);
+    }
+    else if(gs.menu_page == 2)
+    {
+      opt.myMouseFunction(btn,state,x,y);
+    }
   }
 }
 
@@ -173,25 +220,30 @@ void end_0(void)
 }
 void run(void)
 {
-  game_state = 0;
+  gs.gs_run();
 }
 void gpause(void)
 {
-  game_state = 1;
+  gs.gs_pause();
+}
+
+void back(void)
+{
+  gs.gs_back();
 }
 void info_action(void)
 {
-  game_state = 2;
+  gs.gs_info_action();
 }
 void option_action(void)
 {
-  game_state = 3;
+  gs.gs_option_action();
 }
 void sound_off(void)
 {
-  sounds_on = 0;
+  gs.gs_sound_off();
 }
 void sound_on(void)
 {
-  sounds_on = 1;
+  gs.gs_sound_on();
 }

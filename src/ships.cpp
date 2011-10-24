@@ -613,6 +613,15 @@ void lifeUpgrade::move()
 {
   life=300;
   radius=0.02;
+  theShot = glGenLists(1);
+  glNewList(theShot,GL_COMPILE);
+  glRotatef(-90, 1.0, 0.0, 0.0); 
+
+  glRotatef(-57.29578*angle, 0.0, 1.0, 0.0); 
+  glRotatef(90, 0.0, 1.0, 0.0); 
+  //glRotatef(spini, 0.0, 0.0, 1.0);
+  glutWireCone(0.01,0.03,2,1);
+  glEndList();
 }
 void fire::move()
 {
@@ -649,11 +658,8 @@ void fire::draw()
   //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION, diff);
   glLineWidth(1);
   glTranslatef(px,py,0);
-  glRotatef(-90, 1.0, 0.0, 0.0); 
-  glRotatef(-57.29578*angle, 0.0, 1.0, 0.0); 
-  glRotatef(90, 0.0, 1.0, 0.0); 
-  glRotatef(spini, 0.0, 0.0, 1.0);
-  glutWireCone(0.01,0.03,2,1);
+  glCallList(theShot);
+
   glPopMatrix(); 
 }
 

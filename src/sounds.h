@@ -6,7 +6,7 @@
 
 * Creation Date : 23-10-2011
 
-* Last Modified : Sun 23 Oct 2011 10:13:09 PM EEST
+* Last Modified : Mon 24 Oct 2011 03:52:36 PM EEST
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -18,10 +18,11 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #include <AL/alut.h>
 #include <iostream>
 #include <cstdlib>
+#include "game_state.h"
 
 #define SOUNDS 2
 
-extern int sounds_on;
+extern game_state gs;
 
 enum {PEW,BLAST};
 class sound_player
