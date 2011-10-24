@@ -6,7 +6,7 @@
 
 * Creation Date : 19-10-2011
 
-* Last Modified : Sun 23 Oct 2011 02:14:38 PM EEST
+* Last Modified : Mon 24 Oct 2011 04:08:59 PM EEST
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -23,23 +23,23 @@ class menu
   private:
     int WINDOW_SIZEY;
     int WINDOW_SIZEX;
-    GLfloat nextX,nextY;
     void *font;
     void *tinyFont;
-    std::vector<button *> options;
-    int Mchoice;
     void playStick();
   protected:
+    GLfloat nextX,nextY;
+    void drawMenu(int choice);
+    std::vector<button *> options;
+    unsigned int Mchoice;
     void drawGrid();
   public:
     menu();
-    void display();
+    virtual void display();
     void reshape(int w,int h);
-    void myIdleMouseFunction(int x,int y);
-    void myMouseFunction(int btn,int state,int x,int y);
-    void keyboardFunction(unsigned char key,int x, int y);
-    void specialKeyboardFunction(int key,int x, int y);
-    void drawMenu(int choice);
+    virtual void myIdleMouseFunction(int x,int y);
+    virtual void myMouseFunction(int btn,int state,int x,int y);
+    virtual void keyboardFunction(unsigned char key,int x, int y);
+    virtual void specialKeyboardFunction(int key,int x, int y);
     void add_option(std::string txt,void (*action)(void));
     void add_option(std::string txt_on,void (*action_on)(void),std::string txt_off,void (*action_off)(void));
 };
@@ -51,6 +51,10 @@ class infoscreen:public menu
   public:
     infoscreen(std::string t);
     void display();
+    void myIdleMouseFunction(int x,int y);
+    void myMouseFunction(int btn,int state,int x,int y);
+    void keyboardFunction(unsigned char key,int x, int y);
+    void specialKeyboardFunction(int key,int x, int y);
 };
 
 

@@ -6,7 +6,7 @@
 
  * Creation Date : 19-10-2011
 
- * Last Modified : Sun 23 Oct 2011 02:11:27 PM EEST
+ * Last Modified : Mon 24 Oct 2011 04:14:25 PM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -206,10 +206,11 @@ infoscreen::infoscreen(std::string t)
 {
   tinyFont = GLUT_BITMAP_9_BY_15;
   text = t;
+  nextY = -DIMENSION/4.;
 }
 void infoscreen::display()
 {
-  drawGrid();
+  //drawGrid();
   glLoadIdentity();
   glOrtho(-DIMENSION/3.,DIMENSION/3.,-DIMENSION/3.,DIMENSION/3.,-5,5);
   unsigned int i,j;
@@ -221,6 +222,28 @@ void infoscreen::display()
       glutBitmapCharacter(tinyFont,text[j]);
     }
   }
+  drawMenu(0);
 }
 
 
+void infoscreen::myIdleMouseFunction(int x,int y)
+{
+}
+void infoscreen::myMouseFunction(int btn,int state,int x,int y)
+{
+}
+void infoscreen::keyboardFunction(unsigned char key,int x,int y)
+{
+  switch (key)
+  {
+    case 27:
+      options[0]->activate();
+      break;
+    case 13:
+      options[0]->activate();
+      break;
+  }
+}
+void infoscreen::specialKeyboardFunction(int key,int x, int y)
+{
+}

@@ -6,7 +6,7 @@
 
 * Creation Date : 23-10-2011
 
-* Last Modified : Sun 23 Oct 2011 10:13:37 PM EEST
+* Last Modified : Mon 24 Oct 2011 03:48:31 PM EEST
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -33,7 +33,7 @@ sound_player::sound_player()
 
 void sound_player::play(int sound)
 {
-  if (sounds_on == 1)
+  if (gs.sounds_on == 1)
   {
     switch(sound)
     {

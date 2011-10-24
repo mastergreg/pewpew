@@ -21,7 +21,9 @@ menu_items.o: menu_items.cpp menu_items.h
 	g++ -c menu_items.cpp ${LIBS} ${EXTRA_FLAGS}
 menu.o: menu.cpp menu.h menu_items.o
 	g++ -c menu.cpp ${LIBS} ${EXTRA_FLAGS}
-OBJECTS=game_object.o ships.o vector2D.o drawables.o level.o joystick.o menu.o menu_items.o sounds.o
+game_state.o: game_state.cpp game_state.h
+	g++ -c game_state.cpp ${LIBS} ${EXTRA_FLAGS}
+OBJECTS=game_object.o ships.o vector2D.o drawables.o level.o joystick.o menu.o menu_items.o sounds.o game_state.o
 ${PROG}:	${PROG}.cpp ${PROG}.h ${OBJECTS}
 	g++  ${PROG}.cpp ${OBJECTS} ${LIBS} -o ${PROG} ${EXTRA_FLAGS}  
 	cp ${PROG} ../
