@@ -533,6 +533,7 @@ void level::playStick()
       jX = newX;
     }
     if (newY != 0)
+
     {
       jY = -newY;
     }

@@ -14,9 +14,9 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #ifndef PEWPEW_H
 #define PEWPEW_H
 
-#include <windows.h>
 #include "level.h"
 #include "menu.h"
+static void mytimer(int v);
 void end(void);
 void end_0(void);
 void run(void);

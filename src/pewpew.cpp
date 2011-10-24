@@ -51,7 +51,8 @@ int main(int argc, char** argv)
   glHint(GL_LINE_SMOOTH_HINT, GL_FASTEST);
   glutReshapeFunc(reshape);
   glutDisplayFunc(display);
-  glutIdleFunc(glutPostRedisplay);
+  //glutIdleFunc(glutPostRedisplay);
+  glutTimerFunc(100,mytimer,1);
   glutKeyboardUpFunc(kbRelF);
   glutSpecialFunc(skbF);
   glutKeyboardFunc(kbF);
@@ -60,6 +61,11 @@ int main(int argc, char** argv)
   glutMainLoop();
 
   return 0;
+}
+static void mytimer(int v)
+{
+  glutPostRedisplay();
+  glutTimerFunc(20,mytimer,1);
 }
 void display()
 {
