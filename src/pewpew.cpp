@@ -6,7 +6,7 @@
 
  * Creation Date : 20-12-2008
 
- * Last Modified : Mon 24 Oct 2011 04:07:57 PM EEST
+ * Last Modified : Tue 25 Oct 2011 12:22:18 AM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -55,7 +55,9 @@ int main(int argc, char** argv)
   glHint(GL_LINE_SMOOTH_HINT, GL_FASTEST);
   glutReshapeFunc(reshape);
   glutDisplayFunc(display);
-  glutIdleFunc(glutPostRedisplay);
+  //glutIdleFunc(mytimer);
+  glutTimerFunc(100,mytimer,1);
+
   glutKeyboardUpFunc(kbRelF);
   glutSpecialFunc(skbF);
   glutKeyboardFunc(kbF);
@@ -64,6 +66,11 @@ int main(int argc, char** argv)
   glutMainLoop();
 
   return 0;
+}
+static void mytimer(int v)
+{
+  glutPostRedisplay();
+  glutTimerFunc(20,mytimer,1);
 }
 void display()
 {
@@ -88,7 +95,6 @@ void display()
   {
     lv.display();
   }
-  usleep(10000);
   glutSwapBuffers();
 }
 void reshape(int w,int h)
@@ -220,6 +226,7 @@ void gpause(void)
 {
   gs.gs_pause();
 }
+
 void back(void)
 {
   gs.gs_back();

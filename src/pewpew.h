@@ -6,7 +6,7 @@
 
 * Creation Date : 20-10-2011
 
-* Last Modified : Mon 24 Oct 2011 03:54:23 PM EEST
+* Last Modified : Tue 25 Oct 2011 12:06:10 AM EEST
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -35,6 +35,7 @@ void sound_on(void);
 
 
 
+static void mytimer(int v);
 void display(void);
 void reshape(int w, int h);
 void kbRelF(unsigned char key,int x,int y);

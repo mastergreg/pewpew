@@ -50,6 +50,8 @@ class spiralShip : public game_ship
 };
 class fire : public game_ship
 {
+  private:
+    GLuint theShot;
   public:
     void move();
     fire(vector2D posit,vector2D sp);
