@@ -219,7 +219,7 @@ void ship::downgradeWeapons()
 }
 void ship::upgradeWeapons()
 {
-  if (WeaponLevel<6)
+  if (WeaponLevel<=6)
     WeaponLevel++;
 }
 void ship::collectFireUpgrades(std::list<game_ship *> upgrades)
@@ -378,80 +378,23 @@ std::list<fire *> ship::shoot(double ang)
       rls.push_back(new fire(fpos,fspeed));
       fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
-      dang*=2;
-      fspeed.set_vector(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang),firespeed*sin(ang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
-      break;
-    case 6:
-      dang=M_PI/12;
-      firespeed*=2;
-      fspeed.set_vector(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
-      rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
-      rls.push_back(new fire(fpos,fspeed));
-      dang*=2;
-      fspeed.set_vector(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
-      rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
-      rls.push_back(new fire(fpos,fspeed));
-      dang*=2;
-      fspeed.set_vector(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
-      rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
-      rls.push_back(new fire(fpos,fspeed));
-      dang*=2;
-      fspeed.set_vector(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
-      rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
-      rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang),firespeed*sin(ang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
-      rls.push_back(new fire(fpos,fspeed));
       break;
     default:
       dang=M_PI/12;
-      firespeed*=8;
+      firespeed*=4;
       fspeed.set_vector(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
-      rls.push_back(new fire(fpos,fspeed));
       fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
       rls.push_back(new fire(fpos,fspeed));
       dang*=2;
       fspeed.set_vector(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
-      rls.push_back(new fire(fpos,fspeed));
       fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
       rls.push_back(new fire(fpos,fspeed));
       dang*=2;
       fspeed.set_vector(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
-      rls.push_back(new fire(fpos,fspeed));
       fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
-      rls.push_back(new fire(fpos,fspeed));
-      dang*=2;
-      fspeed.set_vector(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
-      rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
-      rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang),firespeed*sin(ang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
       rls.push_back(new fire(fpos,fspeed));
       break;
   }
@@ -471,7 +414,7 @@ std::list<fire *> ship::shoot(double ang)
 spiralShip::spiralShip(vector2D pos,vector2D sp)
 :game_ship(pos,sp)
 {
-  life=100000;
+  life=10000;
   radius = 0.2;
   Ttime=0;
   rot=true;
@@ -670,6 +613,15 @@ void lifeUpgrade::move()
 {
   life=300;
   radius=0.02;
+  theShot = glGenLists(1);
+  glNewList(theShot,GL_COMPILE);
+  glRotatef(-90, 1.0, 0.0, 0.0); 
+
+  glRotatef(-57.29578*angle, 0.0, 1.0, 0.0); 
+  glRotatef(90, 0.0, 1.0, 0.0); 
+  //glRotatef(spini, 0.0, 0.0, 1.0);
+  glutWireCone(0.01,0.03,2,1);
+  glEndList();
 }
 void fire::move()
 {
@@ -706,11 +658,8 @@ void fire::draw()
   //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION, diff);
   glLineWidth(1);
   glTranslatef(px,py,0);
-  glRotatef(-90, 1.0, 0.0, 0.0); 
-  glRotatef(-57.29578*angle, 0.0, 1.0, 0.0); 
-  glRotatef(90, 0.0, 1.0, 0.0); 
-  glRotatef(spini, 0.0, 0.0, 1.0);
-  glutWireCone(0.01,0.03,2,1);
+  glCallList(theShot);
+
   glPopMatrix(); 
 }
 

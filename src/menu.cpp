@@ -6,7 +6,7 @@
 
  * Creation Date : 19-10-2011
 
- * Last Modified : Sun 23 Oct 2011 01:07:17 PM EEST
+ * Last Modified : Tue 25 Oct 2011 12:25:18 AM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -52,6 +52,11 @@ void menu::drawMenu(int choice)
 void menu::add_option(std::string txt,void (*action)())
 {
   options.push_back(new button(nextX,nextY,txt,action));
+  nextY -= 1.0;
+}
+void menu::add_option(std::string txt_on,void (*action_on)(void),std::string txt_off,void (*action_off)(void))
+{
+  options.push_back(new toogle_button(nextX,nextY,txt_on,action_on,txt_off,action_off));
   nextY -= 1.0;
 }
 void menu::drawGrid()
@@ -146,7 +151,7 @@ void menu::myIdleMouseFunction(int x,int y)
   realy = viewport[3] - (GLint) y - 1;
   gluUnProject ((GLdouble) x, (GLdouble) realy, 0.0,
       mvmatrix, projmatrix, viewport, &wx, &wy, &wz);
-  area = abs(DIMENSION/2 - 1 -  wy);
+  area = abs((int)(DIMENSION/2 - 1 -  wy));
 
   Mchoice = area < options.size()-1 ? area : options.size()-1;
 }
@@ -162,7 +167,7 @@ void menu::reshape(int w,int h)
 {
   GLsizei minSize=w>h ? (GLsizei) h : (GLsizei) w;
   minSize-=50;
-  GLsizei startX=((w-h)/2.0-100);
+  GLsizei startX= ((w-h)/2-100);
   if (startX>0)
   {
     glViewport(startX,0,minSize,minSize);
@@ -201,10 +206,11 @@ infoscreen::infoscreen(std::string t)
 {
   tinyFont = GLUT_BITMAP_9_BY_15;
   text = t;
+  nextY = -DIMENSION/4.;
 }
 void infoscreen::display()
 {
-  drawGrid();
+  //drawGrid();
   glLoadIdentity();
   glOrtho(-DIMENSION/3.,DIMENSION/3.,-DIMENSION/3.,DIMENSION/3.,-5,5);
   unsigned int i,j;
@@ -216,6 +222,28 @@ void infoscreen::display()
       glutBitmapCharacter(tinyFont,text[j]);
     }
   }
+  drawMenu(0);
 }
 
 
+void infoscreen::myIdleMouseFunction(int x,int y)
+{
+}
+void infoscreen::myMouseFunction(int btn,int state,int x,int y)
+{
+}
+void infoscreen::keyboardFunction(unsigned char key,int x,int y)
+{
+  switch (key)
+  {
+    case 27:
+      options[0]->activate();
+      break;
+    case 13:
+      options[0]->activate();
+      break;
+  }
+}
+void infoscreen::specialKeyboardFunction(int key,int x, int y)
+{
+}

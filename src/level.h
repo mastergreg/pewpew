@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <time.h>
 
+#include "sounds.h"
 #include "ships.h"
 #include "pewpew.h"
 #include "joystick.h"
@@ -72,6 +73,7 @@ class level
     void drawInfoScreen();
     void ZooMStart();
     void shipExplode(vector2D position);
+    sound_player sndp;
   public:
     level();
     void insertScoreTag(vector2D position, int points);

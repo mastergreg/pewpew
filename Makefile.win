@@ -5,8 +5,8 @@ CPP  = g++.exe
 CC   = gcc.exe
 WINDRES = windres.exe
 RES  = 
-OBJ  = src/drawables.o src/game_object.o src/joystick.o src/level.o src/menu.o src/menu_items.o src/pewpew.o src/ships.o src/vector2D.o $(RES)
-LINKOBJ  = src/drawables.o src/game_object.o src/joystick.o src/level.o src/menu.o src/menu_items.o src/pewpew.o src/ships.o src/vector2D.o $(RES)
+OBJ  = src/drawables.o src/game_object.o src/joystick.o src/level.o src/menu.o src/menu_items.o src/pewpew.o src/ships.o src/vector2D.o src/sounds.o src/game_state.o $(RES)
+LINKOBJ  = src/drawables.o src/game_object.o src/joystick.o src/level.o src/menu.o src/menu_items.o src/pewpew.o src/ships.o src/vector2D.o src/sounds.o src/game_state.o $(RES)
 LIBS =  -L"C:/Dev-Cpp/lib" -lglut32 -lglu32 -lopengl32 -lwinmm -lgdi32  
 INCS =  -I"C:/Dev-Cpp/include" 
 CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include" 
@@ -52,3 +52,9 @@ src/ships.o: src/ships.cpp
 
 src/vector2D.o: src/vector2D.cpp
 	$(CPP) -c src/vector2D.cpp -o src/vector2D.o $(CXXFLAGS)
+
+src/sounds.o: src/sounds.cpp
+	$(CPP) -c src/sounds.cpp -o src/sounds.o $(CXXFLAGS)
+
+src/game_state.o: src/game_state.cpp
+	$(CPP) -c src/game_state.cpp -o src/game_state.o $(CXXFLAGS)
