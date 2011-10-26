@@ -6,7 +6,7 @@
 
  * Creation Date : 19-10-2011
 
- * Last Modified : Tue 25 Oct 2011 12:25:18 AM EEST
+ * Last Modified : Wed 26 Oct 2011 11:44:29 AM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -157,10 +157,36 @@ void menu::myIdleMouseFunction(int x,int y)
 }
 void menu::myMouseFunction(int butn,int state,int x,int y)
 {
- if (state == GLUT_DOWN)
- {
-   options[Mchoice]->activate();
- }
+  unsigned int area;
+  unsigned int Bchoice;
+
+  GLint viewport[4];
+  GLdouble mvmatrix[16], projmatrix[16];
+  GLint realy;  /*  OpenGL y coordinate position  */
+  GLdouble wx, wy, wz;  /*  returned world x, y, z coords  */
+
+  glGetIntegerv (GL_VIEWPORT, viewport);
+  glGetDoublev (GL_MODELVIEW_MATRIX, mvmatrix);
+  glGetDoublev (GL_PROJECTION_MATRIX, projmatrix);
+  /*  note viewport[3] is height of window in pixels  */
+  realy = viewport[3] - (GLint) y - 1;
+  gluUnProject ((GLdouble) x, (GLdouble) realy, 0.0,
+      mvmatrix, projmatrix, viewport, &wx, &wy, &wz);
+  area = abs(DIMENSION/2 - 1 -  wy);
+
+  Bchoice = area < options.size()-1 ? area : options.size()-1;
+  if (Bchoice == Mchoice)
+  {
+    if (state == GLUT_DOWN)
+    {
+      options[Mchoice]->activate();
+    }
+
+  }
+  else
+  {
+    Mchoice = Bchoice;
+  }
 }
 void menu::reshape(int w,int h)
   /*  note viewport[3] is height of window in pixels  */
