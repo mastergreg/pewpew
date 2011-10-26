@@ -15,6 +15,10 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 #include "menu_items.h"
 
+button::button()
+{
+}
+
 
 
 button::button(GLfloat x,GLfloat y,std::string txt,void (*action)(void),GLfloat sx,GLfloat sy)
