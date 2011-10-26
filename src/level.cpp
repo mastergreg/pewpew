@@ -388,7 +388,7 @@ void level::reshape(int w,int h)
 {
   GLsizei minSize=w>h ? (GLsizei) h : (GLsizei) w;
   minSize-=50;
-  GLsizei startX=((w-h)/2.0-100);
+  GLsizei startX= ((w-h)/2-100);
   if (startX>0)
   {
     glViewport(startX,0,minSize,minSize);
