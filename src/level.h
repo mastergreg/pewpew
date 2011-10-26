@@ -48,7 +48,6 @@ class level
     void start();
     void playStick();
     void pauseResume();
-    void reset();
     void clipArroundShip();
     void insertDummyShip();
     void insertFireUpgrade();
@@ -76,6 +75,7 @@ class level
     sound_player sndp;
   public:
     level();
+    void reset();
     void insertScoreTag(vector2D position, int points);
     void increaseScore(int points);
     void display();

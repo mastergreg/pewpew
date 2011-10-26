@@ -6,7 +6,7 @@
 
 * Creation Date : 20-10-2011
 
-* Last Modified : Tue 25 Oct 2011 12:06:10 AM EEST
+* Last Modified : Wed 26 Oct 2011 04:37:34 PM EEST
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -24,6 +24,7 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 void end(void);
 void end_0(void);
 void run(void);
+void new_game(void);
 void gpause(void);
 void back(void);
 void info_action(void);

@@ -6,7 +6,7 @@
 
  * Creation Date : 20-12-2008
 
- * Last Modified : Tue 25 Oct 2011 12:25:02 AM EEST
+ * Last Modified : Wed 26 Oct 2011 04:56:11 PM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -38,6 +38,7 @@ int main(int argc, char** argv)
 
   mn.add_option(std::string("INFO"),(&info_action));
   mn.add_option(std::string("PLAY"),(&run));
+  mn.add_option(std::string("NEW GAME"),(&new_game));
   mn.add_option(std::string("OPTIONS"),(&option_action));
   mn.add_option(std::string("QUIT"),(&end_0));
 
@@ -217,6 +218,11 @@ void end_0(void)
 {
   close_joystick();
   exit(0);
+}
+void new_game(void)
+{
+  gs.gs_run();
+  lv.reset();
 }
 void run(void)
 {

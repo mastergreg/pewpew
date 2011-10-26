@@ -6,7 +6,7 @@
 
  * Creation Date : 19-10-2011
 
- * Last Modified : Wed 26 Oct 2011 11:44:29 AM EEST
+ * Last Modified : Wed 26 Oct 2011 04:56:59 PM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -102,7 +102,8 @@ void menu::keyboardFunction(unsigned char key,int x,int y)
   switch (key)
   {
     case 27:
-      exit(0);
+      back();
+//      exit(0);
       break;
     case 'w':
       Mchoice = (Mchoice-1)%options.size();
@@ -258,18 +259,18 @@ void infoscreen::myIdleMouseFunction(int x,int y)
 void infoscreen::myMouseFunction(int btn,int state,int x,int y)
 {
 }
-void infoscreen::keyboardFunction(unsigned char key,int x,int y)
-{
-  switch (key)
-  {
-    case 27:
-      options[0]->activate();
-      break;
-    case 13:
-      options[0]->activate();
-      break;
-  }
-}
-void infoscreen::specialKeyboardFunction(int key,int x, int y)
-{
-}
+//void infoscreen::keyboardFunction(unsigned char key,int x,int y)
+//{
+//  switch (key)
+//  {
+//    case 27:
+//      options[0]->activate();
+//      break;
+//    case 13:
+//      options[0]->activate();
+//      break;
+//  }
+//}
+//void infoscreen::specialKeyboardFunction(int key,int x, int y)
+//{
+//}
