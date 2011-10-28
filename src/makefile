@@ -14,7 +14,7 @@ ships.o: ships.h ships.cpp
 drawables.o: drawables.cpp drawables.h
 	g++ -c drawables.cpp  ${EXTRA_FLAGS}
 level.o:  sounds.h level.cpp level.h
-	g++ -c 	level.cpp  ${EXTRA_FLAGS}  
+	g++ -c level.cpp  ${EXTRA_FLAGS}  
 sounds.o:	sounds.cpp sounds.h
 	g++ -c sounds.cpp  ${EXTRA_FLAGS}  
 menu_items.o: menu_items.cpp menu_items.h
