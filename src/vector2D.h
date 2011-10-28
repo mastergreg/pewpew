@@ -5,6 +5,11 @@
 #define SIN_THETA 0.069756473744125300775958835
 #define SPEED_MAX 5000 
 #define SPEED_MIN 100 
+
+
+
+#include <iostream>
+
 class vector2D
 {
   private:

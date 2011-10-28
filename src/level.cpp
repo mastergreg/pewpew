@@ -497,13 +497,11 @@ void level::playStick()
     }
     if (js_state.button[7]==1)
     {
-      current_speed.vincrease();
-      playerShip->set_speed(current_speed);
+      playerShip->accelerate();
     }
     else if (js_state.button[6]==1)
     {
-      current_speed.vdecrease();
-      playerShip->set_speed(current_speed);
+      playerShip->decelerate();
     }
     else if (js_state.button[5]==1)
     {
@@ -564,42 +562,29 @@ void level::playStick()
 }
 void level::keyboardFunction(unsigned char key,int x,int y)
 {
-  vector2D current_speed;
-  current_speed.set_vector(playerShip->get_speed());
   switch (key)
   {
     case 27:
       pauseResume();
       break;
     case 'w':
-      //current_speed.increase_vector(0,0.001,0);
-      current_speed.vincrease();//scale(1.2,1.2,1.2);
-      playerShip->set_speed(current_speed);
+      playerShip->accelerate();
       break;
     case 'a':
       //current_speed.increase_vector(-0.001,0,0);
-      current_speed.rotatel();
-      current_speed.scale(1.01,1.01);
-      playerShip->set_speed(current_speed);
+      playerShip->turn_left();
       break;
     case 's':
-      //current_speed.increase_vector(0,-0.001,0);
-      current_speed.vdecrease();//scale(0.8,0.8,0.8);
-      playerShip->set_speed(current_speed);
+      playerShip->decelerate();
       break;
     case 'd':
-      //current_speed.increase_vector(0.001,0,0);
-      current_speed.rotater();
-      current_speed.scale(1.01,1.01);
-      playerShip->set_speed(current_speed);
+      playerShip->turn_right();
       break;
     case 'q':
-      current_speed.scale(4,4);
-      playerShip->set_speed(current_speed);
+      playerShip->turbo_boost();
       break;
     case 'e':
-      current_speed.scale(0.25,0.25);
-      playerShip->set_speed(current_speed);
+      playerShip->e_brake();
       break;
     case 'p':
       pauseResume();

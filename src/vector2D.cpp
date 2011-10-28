@@ -33,11 +33,11 @@ void vector2D::scale(double a,double b)
 }
 void vector2D::vincrease()
 {
-  remaining_inc+=50;
+  remaining_inc=+50;
 }
 void vector2D::vdecrease()
 {
-  remaining_inc-=50;
+  remaining_inc=-50;
 }
 void vector2D::soft_scale()
 {
@@ -48,12 +48,10 @@ void vector2D::soft_scale()
     if (remaining_inc > 0)
     {
       factor = fabs(1+10/fx);
-      remaining_inc--;
     }
     else if (remaining_inc < 0)
     {
       factor = fabs(1-10/fx);
-      remaining_inc++;
     }
     scale(factor,factor);
   }
@@ -70,13 +68,11 @@ void vector2D::soft_rotate()
 {
   if (remaining_deg<0)
   {
-    remaining_deg++;
     x=x*COS_THETA+y*SIN_THETA;
     y=-x*SIN_THETA+y*COS_THETA;
   }
   else if (remaining_deg>0)
   {
-    remaining_deg--;
     x=x*COS_THETA-y*SIN_THETA;
     y=x*SIN_THETA+y*COS_THETA;
   }
