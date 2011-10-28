@@ -3,8 +3,8 @@ CursorCol=29
 CursorRow=100
 TopLine=89
 LeftChar=1
-Open=1
-Top=1
+Open=0
+Top=0
 [Editors]
 Focused=-1
 Order=-1
@@ -32,6 +32,10 @@ Top=0
 [Editor_7]
 Open=0
 Top=0
+CursorCol=1
+CursorRow=51
+TopLine=27
+LeftChar=1
 [Editor_8]
 Open=0
 Top=0
@@ -46,11 +50,11 @@ CursorRow=123
 TopLine=100
 LeftChar=1
 [Editor_12]
-Open=0
-Top=0
+Open=1
+Top=1
 CursorCol=1
-CursorRow=16
-TopLine=17
+CursorRow=41
+TopLine=41
 LeftChar=1
 [Editor_13]
 Open=0

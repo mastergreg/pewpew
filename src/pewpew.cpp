@@ -6,7 +6,7 @@
 
  * Creation Date : 20-12-2008
 
- * Last Modified : Tue 25 Oct 2011 12:25:02 AM EEST
+ * Last Modified : Fri 28 Oct 2011 02:37:31 PM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -38,6 +38,7 @@ int main(int argc, char** argv)
 
   mn.add_option(std::string("INFO"),(&info_action));
   mn.add_option(std::string("PLAY"),(&run));
+  mn.add_option(std::string("NEW GAME"),(&new_game));
   mn.add_option(std::string("OPTIONS"),(&option_action));
   mn.add_option(std::string("QUIT"),(&end_0));
 
@@ -55,8 +56,10 @@ int main(int argc, char** argv)
   glHint(GL_LINE_SMOOTH_HINT, GL_FASTEST);
   glutReshapeFunc(reshape);
   glutDisplayFunc(display);
-  //glutIdleFunc(glutPostRedisplay);
+  //glutIdleFunc(mytimer);
   glutTimerFunc(100,mytimer,1);
+
+  glutIgnoreKeyRepeat(1);
   glutKeyboardUpFunc(kbRelF);
   glutSpecialFunc(skbF);
   glutKeyboardFunc(kbF);
@@ -94,7 +97,6 @@ void display()
   {
     lv.display();
   }
-
   glutSwapBuffers();
 }
 void reshape(int w,int h)
@@ -217,6 +219,11 @@ void end_0(void)
 {
   close_joystick();
   exit(0);
+}
+void new_game(void)
+{
+  gs.gs_run();
+  lv.reset();
 }
 void run(void)
 {
