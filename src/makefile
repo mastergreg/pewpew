@@ -1,5 +1,5 @@
 #-lgc -ggdb
-LIBS=-lglut -lGL -lGLU -lalut -lopenal
+LIBS=-lglut -lGL -lGLU -lalut
 EXTRA_FLAGS=-Wall -Wextra -Wuninitialized -O2
 PROG=pewpew
 all: ${PROG}
