@@ -1,5 +1,5 @@
 #-lgc -ggdb
-LIBS=-lglut -lGL -lGLU -lalut
+LIBS=-lglut -lGL -lGLU -lalut -lopenal
 EXTRA_FLAGS=-O2
 PROG=pewpew
 all: ${PROG}
