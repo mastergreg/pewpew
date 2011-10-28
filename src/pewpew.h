@@ -14,8 +14,10 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #ifndef PEWPEW_H
 #define PEWPEW_H
 
+#include "menu_items.h"
 #include "level.h"
 #include "menu.h"
+
 #include "game_state.h"
 
 
