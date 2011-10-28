@@ -6,7 +6,7 @@
 
  * Creation Date : 19-10-2011
 
- * Last Modified : Wed 26 Oct 2011 05:11:14 PM EEST
+ * Last Modified : Fri 28 Oct 2011 04:27:27 PM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -21,7 +21,7 @@ menu::menu()
   font = GLUT_BITMAP_TIMES_ROMAN_24;
   tinyFont = GLUT_BITMAP_8_BY_13;
   nextX=0;
-  nextY= (GLfloat) DIMENSION/2-1;
+  nextY= (GLfloat) DIMENSION/1.5-1;
 }
 
 void menu::display()
@@ -33,7 +33,7 @@ void menu::drawMenu(int choice)
 {
   drawGrid();
   glLoadIdentity();
-  glOrtho(-DIMENSION/2,DIMENSION/2,-DIMENSION/2,DIMENSION/2,-5,5);
+  glOrtho(-DIMENSION/1.5,DIMENSION/1.5,-DIMENSION/1.5,DIMENSION/1.5,-5,5);
   std::vector<button *>::iterator p;
   p = options.begin();
   while(p!=options.end())
@@ -239,17 +239,17 @@ void infoscreen::display()
 {
   //drawGrid();
   glLoadIdentity();
-  glOrtho(-DIMENSION/3.,DIMENSION/3.,-DIMENSION/3.,DIMENSION/3.,-5,5);
+  glOrtho(-DIMENSION/1.5,DIMENSION/1.5,-DIMENSION/1.5,DIMENSION/1.5,-5,5);
+  drawMenu(0);
   unsigned int i,j;
   for (j=0;j<text.size();)
   {
-    glRasterPos2f(-DIMENSION/4.,DIMENSION/4.-j/50.);
+    glRasterPos2f(-DIMENSION/3.,DIMENSION/3.-j/50.);
     for (i=0;i<50 && j<text.size();j++,i++)
     {
       glutBitmapCharacter(tinyFont,text[j]);
     }
   }
-  drawMenu(0);
 }
 
 
