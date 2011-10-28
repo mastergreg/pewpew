@@ -403,7 +403,40 @@ std::list<fire *> ship::shoot(double ang)
 
 
 
-
+void ship::accelerate()
+{
+  speed.vincrease();
+}
+void ship::decelerate()
+{
+  speed.vdecrease();
+}
+void ship::release_acc()
+{
+  speed.increase_reset();
+}
+void ship::release_rot()
+{
+  speed.rotate_reset();
+}
+void ship::turn_right()
+{
+  speed.rotater();
+  speed.scale(1.01,1.01); //reduce error of calc
+}
+void ship::turn_left()
+{
+  speed.rotatel();
+  speed.scale(1.01,1.01); //reduce error of calc
+}
+void ship::turbo_boost()
+{
+  speed.scale(4,4);
+}
+void ship::e_brake()
+{
+  speed.scale(0.25,0.25);
+}
 
 
 

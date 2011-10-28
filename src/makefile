@@ -10,11 +10,11 @@ game_object.o: game_object.cpp game_object.h
 vector2D.o: vector2D.h vector2D.cpp
 	g++ -c vector2D.cpp -lm ${EXTRA_FLAGS}
 ships.o: ships.h ships.cpp	
-	g++ -c ships.cpp  ${EXTRA_FLAGS}
+	g++ -c ships.cpp ${EXTRA_FLAGS}
 drawables.o: drawables.cpp drawables.h
 	g++ -c drawables.cpp  ${EXTRA_FLAGS}
 level.o:  sounds.h level.cpp level.h
-	g++ -c level.cpp  ${EXTRA_FLAGS}  
+	g++ -c 	level.cpp  ${EXTRA_FLAGS}  
 sounds.o:	sounds.cpp sounds.h
 	g++ -c sounds.cpp  ${EXTRA_FLAGS}  
 menu_items.o: menu_items.cpp menu_items.h

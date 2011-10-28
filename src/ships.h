@@ -81,6 +81,15 @@ class ship : public game_ship
     std::list<game_object *> tail;
     int Ttime;
   public:
+    void accelerate();
+    void decelerate();
+    void release_acc();
+    void release_rot();
+    void turn_right();
+    void turn_left();
+    void turbo_boost();
+    void e_brake();
+
     void collectFireUpgrades(std::list<game_ship *> upgrades);
     void collectLifeUpgrades(std::list<game_ship *> upgrades);
     void draw();

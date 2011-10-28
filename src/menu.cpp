@@ -6,7 +6,7 @@
 
  * Creation Date : 19-10-2011
 
- * Last Modified : Wed 26 Oct 2011 04:56:59 PM EEST
+ * Last Modified : Wed 26 Oct 2011 05:11:14 PM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -194,7 +194,7 @@ void menu::reshape(int w,int h)
 {
   GLsizei minSize=w>h ? (GLsizei) h : (GLsizei) w;
   minSize-=50;
-  GLsizei startX=((w-h)/2.0-100);
+  GLsizei startX=((w-h)/2-100);
   if (startX>0)
   {
     glViewport(startX,0,minSize,minSize);
