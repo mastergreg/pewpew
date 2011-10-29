@@ -57,7 +57,7 @@ int main(int argc, char** argv)
   glutReshapeFunc(reshape);
   glutDisplayFunc(display);
   //glutIdleFunc(mytimer);
-  glutTimerFunc(100,mytimer,1);
+  glutTimerFunc(20,mytimer,1);
 
   glutIgnoreKeyRepeat(1);
   glutKeyboardUpFunc(kbRelF);
