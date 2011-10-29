@@ -14,7 +14,6 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 
 #include "sounds.h"
-#ifdef __linux__
 sound_player::sound_player()
 {
   alutInit(NULL,NULL);
@@ -53,12 +52,3 @@ void sound_player::play(int sound)
     alSourceStop(sources[BLAST]);
   }
 }
-#endif
-#ifdef __WIN32
-sound_player::sound_player()
-{
-}
-void sound_player::play(int sound)
-{
-}
-#endif

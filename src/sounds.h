@@ -15,11 +15,11 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #ifndef SOUNDS_H
 #define SOUNDS_H
 
-#ifdef __linux__
+//#ifdef __linux__
 
 #include <AL/alut.h>
 
-#endif
+//#endif
 
 #include <iostream>
 #include <cstdlib>
