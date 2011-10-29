@@ -174,7 +174,6 @@ void ship::draw()
   double px = position.getX();
   double py = position.getY();
 
-  speed.soft_scale();
   glPushMatrix();
 
   GLfloat  mycolor[]={0.54,0.16,0.86};
@@ -194,6 +193,7 @@ void ship::draw()
 void ship::move()
 {
   game_ship::move();
+  speed.soft_scale();
   GLfloat tailColor[3]={1,0.,0.};
   if(Ttime>12)
   {

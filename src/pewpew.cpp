@@ -6,7 +6,7 @@
 
  * Creation Date : 20-12-2008
 
- * Last Modified : Fri 28 Oct 2011 02:37:31 PM EEST
+ * Last Modified : Sat 29 Oct 2011 08:01:04 PM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -57,7 +57,7 @@ int main(int argc, char** argv)
   glutReshapeFunc(reshape);
   glutDisplayFunc(display);
   //glutIdleFunc(mytimer);
-  glutTimerFunc(100,mytimer,1);
+  glutTimerFunc(20,mytimer,1);
 
   glutIgnoreKeyRepeat(1);
   glutKeyboardUpFunc(kbRelF);
