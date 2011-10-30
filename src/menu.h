@@ -6,7 +6,7 @@
 
 * Creation Date : 19-10-2011
 
-* Last Modified : Wed 26 Oct 2011 04:57:09 PM EEST
+* Last Modified : Sun 30 Oct 2011 11:27:31 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -36,8 +36,8 @@ class menu
     menu();
     virtual void display();
     void reshape(int w,int h);
-    virtual void myIdleMouseFunction(int x,int y);
-    virtual void myMouseFunction(int btn,int state,int x,int y);
+    void myIdleMouseFunction(int x,int y);
+    void myMouseFunction(int btn,int state,int x,int y);
     void keyboardFunction(unsigned char key,int x, int y);
     void specialKeyboardFunction(int key,int x, int y);
     void add_option(std::string txt,void (*action)(void));
@@ -51,8 +51,8 @@ class infoscreen:public menu
   public:
     infoscreen(std::string t);
     void display();
-    void myIdleMouseFunction(int x,int y);
-    void myMouseFunction(int btn,int state,int x,int y);
+    //void myIdleMouseFunction(int x,int y);
+    //void myMouseFunction(int btn,int state,int x,int y);
     //void keyboardFunction(unsigned char key,int x, int y);
     //void specialKeyboardFunction(int key,int x, int y);
 };
