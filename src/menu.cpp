@@ -6,7 +6,7 @@
 
  * Creation Date : 19-10-2011
 
- * Last Modified : Wed 26 Oct 2011 05:11:14 PM EEST
+ * Last Modified : Sun 30 Oct 2011 11:55:36 PM EET
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -254,12 +254,12 @@ void infoscreen::display()
 }
 
 
-void infoscreen::myIdleMouseFunction(int x,int y)
-{
-}
-void infoscreen::myMouseFunction(int btn,int state,int x,int y)
-{
-}
+//void infoscreen::myIdleMouseFunction(int x,int y)
+//{
+//}
+//void infoscreen::myMouseFunction(int btn,int state,int x,int y)
+//{
+//}
 //void infoscreen::keyboardFunction(unsigned char key,int x,int y)
 //{
 //  switch (key)
