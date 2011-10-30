@@ -14,7 +14,6 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 
 #include "sounds.h"
-
 sound_player::sound_player()
 {
   alutInit(NULL,NULL);

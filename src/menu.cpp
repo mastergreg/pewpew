@@ -6,7 +6,7 @@
 
  * Creation Date : 19-10-2011
 
- * Last Modified : Sun 30 Oct 2011 11:27:47 PM EET
+ * Last Modified : Wed 26 Oct 2011 05:11:14 PM EEST
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -21,7 +21,7 @@ menu::menu()
   font = GLUT_BITMAP_TIMES_ROMAN_24;
   tinyFont = GLUT_BITMAP_8_BY_13;
   nextX=0;
-  nextY= (GLfloat) DIMENSION/1.5-1;
+  nextY= (GLfloat) DIMENSION/2-1;
 }
 
 void menu::display()
@@ -33,7 +33,7 @@ void menu::drawMenu(int choice)
 {
   drawGrid();
   glLoadIdentity();
-  glOrtho(-DIMENSION/1.5,DIMENSION/1.5,-DIMENSION/1.5,DIMENSION/1.5,-5,5);
+  glOrtho(-DIMENSION/2,DIMENSION/2,-DIMENSION/2,DIMENSION/2,-5,5);
   std::vector<button *>::iterator p;
   p = options.begin();
   while(p!=options.end())
@@ -152,7 +152,7 @@ void menu::myIdleMouseFunction(int x,int y)
   realy = viewport[3] - (GLint) y - 1;
   gluUnProject ((GLdouble) x, (GLdouble) realy, 0.0,
       mvmatrix, projmatrix, viewport, &wx, &wy, &wz);
-  area = abs(DIMENSION/2 - 1 -  wy);
+  area = abs((int)(DIMENSION/2 - 1 -  wy));
 
   Mchoice = area < options.size()-1 ? area : options.size()-1;
 }
@@ -173,7 +173,7 @@ void menu::myMouseFunction(int butn,int state,int x,int y)
   realy = viewport[3] - (GLint) y - 1;
   gluUnProject ((GLdouble) x, (GLdouble) realy, 0.0,
       mvmatrix, projmatrix, viewport, &wx, &wy, &wz);
-  area = abs(DIMENSION/2 - 1 -  wy);
+  area = abs((int) (DIMENSION/2 - 1 -  wy));
 
   Bchoice = area < options.size()-1 ? area : options.size()-1;
   if (Bchoice == Mchoice)
@@ -194,6 +194,7 @@ void menu::reshape(int w,int h)
 {
   GLsizei minSize=w>h ? (GLsizei) h : (GLsizei) w;
   minSize-=50;
+
   GLsizei startX=((w-h)/2-100);
   if (startX>0)
   {
@@ -239,26 +240,26 @@ void infoscreen::display()
 {
   //drawGrid();
   glLoadIdentity();
-  glOrtho(-DIMENSION/1.5,DIMENSION/1.5,-DIMENSION/1.5,DIMENSION/1.5,-5,5);
-  drawMenu(0);
+  glOrtho(-DIMENSION/3.,DIMENSION/3.,-DIMENSION/3.,DIMENSION/3.,-5,5);
   unsigned int i,j;
   for (j=0;j<text.size();)
   {
-    glRasterPos2f(-DIMENSION/3.,DIMENSION/3.-j/50.);
+    glRasterPos2f(-DIMENSION/4.,DIMENSION/4.-j/50.);
     for (i=0;i<50 && j<text.size();j++,i++)
     {
       glutBitmapCharacter(tinyFont,text[j]);
     }
   }
+  drawMenu(0);
 }
 
 
-//void infoscreen::myIdleMouseFunction(int x,int y)
-//{
-//}
-//void infoscreen::myMouseFunction(int btn,int state,int x,int y)
-//{
-//}
+void infoscreen::myIdleMouseFunction(int x,int y)
+{
+}
+void infoscreen::myMouseFunction(int btn,int state,int x,int y)
+{
+}
 //void infoscreen::keyboardFunction(unsigned char key,int x,int y)
 //{
 //  switch (key)

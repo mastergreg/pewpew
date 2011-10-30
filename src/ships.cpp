@@ -63,6 +63,7 @@ void game_ship::set_angle(double newAngle)
 
 void game_ship::move()
 {
+  speed.soft_scale();
   speed.soft_rotate();
   double x = speed.getX();
   double y = speed.getY();
@@ -90,7 +91,7 @@ void game_ship::move()
   {
     y*=-1;
   }
-  speed.set_vector(vector2D(x,y,rd,ri));
+  speed=vector2D(x,y,rd,ri);
   position.increase_vector(speed);  
   spinnit();
 
@@ -103,7 +104,7 @@ void game_ship::set_speed(vector2D new_speed)
 {
   double x = new_speed.getX();
   double y = new_speed.getY();
-  speed.set_vector(new_speed);
+  speed=(new_speed);
   if(x>=0) 
   {
     angle=atan(y/x);
@@ -174,6 +175,7 @@ void ship::draw()
   double px = position.getX();
   double py = position.getY();
 
+  speed.soft_scale();
   glPushMatrix();
 
   GLfloat  mycolor[]={0.54,0.16,0.86};
@@ -193,7 +195,6 @@ void ship::draw()
 void ship::move()
 {
   game_ship::move();
-  speed.soft_scale();
   GLfloat tailColor[3]={1,0.,0.};
   if(Ttime>12)
   {
@@ -329,72 +330,72 @@ std::list<fire *> ship::shoot(double ang)
   switch (WeaponLevel)
   {
     case 1:
-      fspeed.set_vector(vector2D(firespeed*cos(ang),firespeed*sin(ang),0,0));
+      fspeed=(vector2D(firespeed*cos(ang),firespeed*sin(ang),0,0));
       rls.push_back(new fire(fpos,fspeed));
       break;
     case 2:
       dang=M_PI/16;
-      fspeed.set_vector(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
+      fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
+      fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
       break;
     case 3:
       dang=M_PI/6;
-      fspeed.set_vector(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
+      fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
+      fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang),firespeed*sin(ang),0,0));
+      fspeed=(vector2D(firespeed*cos(ang),firespeed*sin(ang),0,0));
       rls.push_back(new fire(fpos,fspeed));
       break;
     case 4:
       dang=M_PI/6;
-      fspeed.set_vector(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
+      fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
+      fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
       dang*=2;
-      fspeed.set_vector(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
+      fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
+      fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang),firespeed*sin(ang),0,0));
+      fspeed=(vector2D(firespeed*cos(ang),firespeed*sin(ang),0,0));
       rls.push_back(new fire(fpos,fspeed));
       break;
     case 5:
       dang=M_PI/12;
-      fspeed.set_vector(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
+      fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
-      dang*=2;
-      fspeed.set_vector(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
+      fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
       dang*=2;
-      fspeed.set_vector(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
+      fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
+      fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      dang*=2;
+      fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
       break;
     default:
       dang=M_PI/12;
       firespeed*=4;
-      fspeed.set_vector(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
+      fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
-      dang*=2;
-      fspeed.set_vector(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
+      fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
       dang*=2;
-      fspeed.set_vector(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
+      fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
-      fspeed.set_vector(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
+      fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      dang*=2;
+      fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
+      rls.push_back(new fire(fpos,fspeed));
+      fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
       rls.push_back(new fire(fpos,fspeed));
       break;
   }
@@ -672,7 +673,7 @@ void fire::move()
   {
     die();
   }
-  speed.set_vector(vector2D(x,y,rd,ri));
+  speed=(vector2D(x,y,rd,ri));
   position.increase_vector(speed);  
   life--;
   if(life<1) die();

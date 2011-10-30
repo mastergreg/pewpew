@@ -13,7 +13,7 @@ level::level()
   score = 0;
   dtime = 0;
   ftime = 0;
-  startingSpeed.set_vector(vector2D(0.001,0.005,0,0));
+  startingSpeed=(vector2D(0.001,0.005,0,0));
   playerShip = new ship();
   playerShip->set_speed(startingSpeed);
   lifeDraw=playerShip->get_life();
@@ -388,6 +388,7 @@ void level::reshape(int w,int h)
 {
   GLsizei minSize=w>h ? (GLsizei) h : (GLsizei) w;
   minSize-=50;
+
   GLsizei startX= ((w-h)/2-100);
   if (startX>0)
   {
@@ -444,46 +445,32 @@ double level::shipMouseAngle()
 }
 void level::keyboardReleaseFunction(unsigned char key,int x, int y)
 {
-  vector2D current_speed;
-  current_speed.set_vector(playerShip->get_speed());
   switch (key)
   {
     case 'w':
-      //current_speed.increase_vector(0,0.001,0);
-      current_speed.increase_reset();//scale(1.2,1.2,1.2);
-      playerShip->set_speed(current_speed);
+	  playerShip->release_acc();
       break;
-
     case 'a':
-      //current_speed.increase_vector(-0.001,0,0);
-      current_speed.rotate_reset();
-      playerShip->set_speed(current_speed);
+	  playerShip->release_rot();
       break;
     case 's':
-      //current_speed.increase_vector(0,-0.001,0);
-      current_speed.increase_reset();//scale(1.2,1.2,1.2);
-      playerShip->set_speed(current_speed);
+	  playerShip->release_acc();
       break;
-
     case 'd':
-      //current_speed.increase_vector(0.001,0,0);
-      current_speed.rotate_reset();
-      playerShip->set_speed(current_speed);
+	  playerShip->release_rot();
       break;
     case 'q':
-      current_speed.scale(0.25,0.25);
-      playerShip->set_speed(current_speed);
+      playerShip->e_brake();
       break;
     case 'e':
-      current_speed.scale(4,4);
-      playerShip->set_speed(current_speed);
+      playerShip->turbo_boost();
       break;
   }
 }
 void level::playStick()
 {
   vector2D current_speed;
-  current_speed.set_vector(playerShip->get_speed());
+  current_speed=(playerShip->get_speed());
   static wwvi_js_event js_state;
   js_state.button[4]=0;
   js_state.button[5]=0;
@@ -505,18 +492,15 @@ void level::playStick()
     }
     else if (js_state.button[5]==1)
     {
-      current_speed.scale(2,2);
-      playerShip->set_speed(current_speed);
+	  playerShip->turbo_boost();
     }
     else if (js_state.button[4]==1)
     {
-      current_speed.scale(0.5,0.5);
-      playerShip->set_speed(current_speed);
+      playerShip->e_brake();
     }
     else
     {
-      current_speed.increase_reset();//scale(1.2,1.2,1.2);
-      playerShip->set_speed(current_speed);
+	  playerShip->release_acc();
     }
     double newAngle=playerShip->get_angle();
     double newX = (double) js_state.stick1_x;
@@ -571,7 +555,6 @@ void level::keyboardFunction(unsigned char key,int x,int y)
       playerShip->accelerate();
       break;
     case 'a':
-      //current_speed.increase_vector(-0.001,0,0);
       playerShip->turn_left();
       break;
     case 's':

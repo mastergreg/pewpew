@@ -15,7 +15,12 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #ifndef SOUNDS_H
 #define SOUNDS_H
 
+//#ifdef __linux__
+
 #include <AL/alut.h>
+
+//#endif
+
 #include <iostream>
 #include <cstdlib>
 #include "game_state.h"
@@ -28,8 +33,8 @@ enum {PEW,BLAST};
 class sound_player
 {
   private:
-    ALuint buffers[SOUNDS];
-    ALuint sources[SOUNDS];
+    unsigned int buffers[SOUNDS];
+    unsigned int sources[SOUNDS];
   public:
     void play(int sound);
     sound_player();

@@ -94,7 +94,7 @@ void xplosion::draw()
 circle::circle(double r, vector2D pos,GLfloat mycolor[3])
 {
   radius = r;
-  position.set_vector(pos);
+  position = (pos);
   std::copy(mycolor,mycolor+3,color);
   angleStep=2*M_PI/256.;
   for(int i=0;i<32;i++)
@@ -152,7 +152,7 @@ ship_tail::ship_tail(vector2D pos,double ang,GLfloat mycolor[3])
 {
   angle=ang;
   spin=0;
-  position.set_vector(pos);
+  position = (pos);
   std::copy(mycolor,mycolor+3,color);
   life=100;
 }
