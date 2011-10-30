@@ -6,7 +6,7 @@
 
  * Creation Date : 19-10-2011
 
- * Last Modified : Wed 26 Oct 2011 05:11:14 PM EEST
+ * Last Modified : Sun 30 Oct 2011 11:55:36 PM EET
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -152,7 +152,7 @@ void menu::myIdleMouseFunction(int x,int y)
   realy = viewport[3] - (GLint) y - 1;
   gluUnProject ((GLdouble) x, (GLdouble) realy, 0.0,
       mvmatrix, projmatrix, viewport, &wx, &wy, &wz);
-  area = abs(DIMENSION/2 - 1 -  wy);
+  area = abs((int)(DIMENSION/2 - 1 -  wy));
 
   Mchoice = area < options.size()-1 ? area : options.size()-1;
 }
@@ -173,7 +173,7 @@ void menu::myMouseFunction(int butn,int state,int x,int y)
   realy = viewport[3] - (GLint) y - 1;
   gluUnProject ((GLdouble) x, (GLdouble) realy, 0.0,
       mvmatrix, projmatrix, viewport, &wx, &wy, &wz);
-  area = abs(DIMENSION/2 - 1 -  wy);
+  area = abs((int) (DIMENSION/2 - 1 -  wy));
 
   Bchoice = area < options.size()-1 ? area : options.size()-1;
   if (Bchoice == Mchoice)
@@ -194,6 +194,7 @@ void menu::reshape(int w,int h)
 {
   GLsizei minSize=w>h ? (GLsizei) h : (GLsizei) w;
   minSize-=50;
+
   GLsizei startX=((w-h)/2-100);
   if (startX>0)
   {
@@ -253,12 +254,12 @@ void infoscreen::display()
 }
 
 
-void infoscreen::myIdleMouseFunction(int x,int y)
-{
-}
-void infoscreen::myMouseFunction(int btn,int state,int x,int y)
-{
-}
+//void infoscreen::myIdleMouseFunction(int x,int y)
+//{
+//}
+//void infoscreen::myMouseFunction(int btn,int state,int x,int y)
+//{
+//}
 //void infoscreen::keyboardFunction(unsigned char key,int x,int y)
 //{
 //  switch (key)
