@@ -23,7 +23,7 @@ class vector2D
     vector2D();
     vector2D(double a,double b,int rd,int ri);
     void increase_vector(vector2D v);
-    void set_vector(vector2D v);
+    //void set_vector(vector2D v);
     void scale(double a,double b);
     void vincrease();
     void vdecrease();

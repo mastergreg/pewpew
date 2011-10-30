@@ -1,12 +1,12 @@
 #include "vector2D.h"
 #include <iostream>
-void vector2D::set_vector(vector2D v)
-{
-  x=v.x;
-  y=v.y;
-  remaining_deg=v.remaining_deg;
-  remaining_inc=v.remaining_inc;
-}
+//void vector2D::set_vector(vector2D v)
+//{
+//  x=v.x;
+//  y=v.y;
+//  remaining_deg=v.remaining_deg;
+//  remaining_inc=v.remaining_inc;
+//}
 void vector2D::increase_vector(vector2D v)
 {
   x+=v.x;
@@ -45,6 +45,7 @@ void vector2D::soft_scale()
   double fx = 100000*sqrt(x*x+y*y) ;
   if (fx<SPEED_MAX && fx>SPEED_MIN)
   {
+		std::cout << remaining_inc << std::endl;
     if (remaining_inc > 0)
     {
       factor = fabs(1+10/fx);
@@ -79,11 +80,11 @@ void vector2D::soft_rotate()
 }
 void vector2D::rotater()
 {
-  remaining_deg-=100;
+  remaining_deg=-100;
 }
 void vector2D::rotatel()
 {
-  remaining_deg+=100;
+  remaining_deg=+100;
 }
 
 double vector2D::getX()

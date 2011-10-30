@@ -117,16 +117,16 @@ int get_joystick_status(wwvi_js_event *my_js_out)
 #ifdef _WIN32
 int open_joystick()
 {
-  return 0;
+  return 1;
 }
 
 int rumble()
 {
-  return 0;
+  return 1;
 }
 int read_joystick_event(js_event *jse)
 {
-    return 0;
+  return 1;
 }
 void close_joystick()
 {
@@ -136,6 +136,6 @@ void close_joystick()
 int get_joystick_status(wwvi_js_event *my_js_out)
 {
 
-  return 0;
+  return 1;
 }
 #endif
