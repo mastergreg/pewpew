@@ -1,5 +1,6 @@
 *.swp
 *.o
+*.obj
 helpers
 rara
 mp3
