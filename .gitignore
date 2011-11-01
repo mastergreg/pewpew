@@ -1,6 +1,7 @@
 *.swp
 *.o
 helpers
+high_scores.txt
 pewpew
 rara
 mp3
