@@ -1,5 +1,6 @@
 *.swp
 *.o
+*.txt
 helpers
 pewpew
 rara
