@@ -6,7 +6,7 @@
 
  * Creation Date : 20-12-2008
 
- * Last Modified : Fri 28 Oct 2011 02:37:31 PM EEST
+ * Last Modified : Tue 01 Nov 2011 02:19:34 PM EET
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -19,6 +19,11 @@ menu mn;
 menu opt;
 infoscreen info("Press P to start, use WASD to move the ship, Q for turbo boost, E for e-break and Esc to exit");
 game_state gs;
+static void mytimer(int v)
+{
+  glutPostRedisplay();
+  glutTimerFunc(20,mytimer,1);
+}
 
 
 int main(int argc, char** argv)
@@ -68,11 +73,6 @@ int main(int argc, char** argv)
   glutMainLoop();
 
   return 0;
-}
-static void mytimer(int v)
-{
-  glutPostRedisplay();
-  glutTimerFunc(20,mytimer,1);
 }
 void display()
 {
