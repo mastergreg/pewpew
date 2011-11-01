@@ -1,6 +1,6 @@
 #-lgc -ggdb
 LIBS=-lglut -lGL -lGLU -lalut -lopenal
-EXTRA_FLAGS=-O3
+EXTRA_FLAGS=-O3 -flto
 PROG=pewpew
 all: ${PROG}
 joystick.o: joystick.cpp joystick.h
@@ -23,9 +23,13 @@ menu.o: menu.cpp menu.h menu_items.o
 	g++ -c menu.cpp  ${EXTRA_FLAGS}
 game_state.o: game_state.cpp game_state.h
 	g++ -c game_state.cpp  ${EXTRA_FLAGS}
-OBJECTS=game_object.o ships.o vector2D.o drawables.o level.o joystick.o menu.o menu_items.o sounds.o game_state.o
-${PROG}:	${PROG}.cpp ${PROG}.h ${OBJECTS}
-	g++  ${PROG}.cpp ${OBJECTS} ${LIBS} -o ${PROG} ${EXTRA_FLAGS}  
+pewpew.o:  pewpew.cpp pewpew.h
+	g++ -c pewpew.cpp ${EXTRA_FLAGS}
+high_score_handler.o: high_score_handler.cpp high_score_handler.h
+	gcc -c high_score_handler.cpp ${EXTRA_FLAGS}
+OBJECTS=game_object.o ships.o vector2D.o drawables.o level.o joystick.o menu.o menu_items.o sounds.o game_state.o pewpew.o high_score_handler.o
+${PROG}:	${OBJECTS}
+	g++  ${OBJECTS} ${LIBS} -o ${PROG} ${EXTRA_FLAGS}  
 	cp ${PROG} ../
 clean:
 	rm *.o 
