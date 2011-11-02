@@ -6,7 +6,7 @@
 
 * Creation Date : 19-10-2011
 
-* Last Modified : Sun 30 Oct 2011 11:27:31 PM EET
+* Last Modified : Wed 02 Nov 2011 09:49:53 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -16,28 +16,24 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #define MENU
 #include "level.h"
 #include "menu_items.h"
+#include "screen_handler.h"
 #include <vector>
 #include <GL/glut.h>
-class menu
+class menu : public screen_handler
 {
-  private:
-    int WINDOW_SIZEY;
-    int WINDOW_SIZEX;
-    void *font;
-    void *tinyFont;
-    void playStick();
   protected:
     GLfloat nextX,nextY;
     void drawMenu(int choice);
     std::vector<button *> options;
     unsigned int Mchoice;
     void drawGrid();
+    void playStick();
   public:
     menu();
     virtual void display();
     void reshape(int w,int h);
-    void myIdleMouseFunction(int x,int y);
-    void myMouseFunction(int btn,int state,int x,int y);
+    void idleMouseFunction(int x,int y);
+    void mouseFunction(int btn,int state,int x,int y);
     void keyboardFunction(unsigned char key,int x, int y);
     void specialKeyboardFunction(int key,int x, int y);
     void add_option(std::string txt,void (*action)(void));
@@ -51,10 +47,6 @@ class infoscreen:public menu
   public:
     infoscreen(std::string t);
     void display();
-    //void myIdleMouseFunction(int x,int y);
-    //void myMouseFunction(int btn,int state,int x,int y);
-    //void keyboardFunction(unsigned char key,int x, int y);
-    //void specialKeyboardFunction(int key,int x, int y);
 };
 
 

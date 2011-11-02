@@ -6,7 +6,7 @@
 
  * Creation Date : 20-12-2008
 
- * Last Modified : Tue 01 Nov 2011 02:19:34 PM EET
+ * Last Modified : Wed 02 Nov 2011 09:49:35 PM EET
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -176,20 +176,20 @@ void mIdleF(int x, int y)
   {
     if(gs.menu_page == 0)
     {
-      mn.myIdleMouseFunction(x,y);
+      mn.idleMouseFunction(x,y);
     }
     else if(gs.menu_page == 1)
     {
-      info.myIdleMouseFunction(x,y);
+      info.idleMouseFunction(x,y);
     }
     else if(gs.menu_page == 2)
     {
-      opt.myIdleMouseFunction(x,y);
+      opt.idleMouseFunction(x,y);
     }
   }
   else 
   {
-    lv.myMouseFunction(x,y);
+    lv.idleMouseFunction(x,y);
   }
 }
 void mF(int btn,int state,int x, int y)
@@ -198,15 +198,15 @@ void mF(int btn,int state,int x, int y)
   {
     if(gs.menu_page == 0)
     {
-      mn.myMouseFunction(btn,state,x,y);
+      mn.mouseFunction(btn,state,x,y);
     }
     else if(gs.menu_page == 1)
     {
-      info.myMouseFunction(btn,state,x,y);
+      info.mouseFunction(btn,state,x,y);
     }
     else if(gs.menu_page == 2)
     {
-      opt.myMouseFunction(btn,state,x,y);
+      opt.mouseFunction(btn,state,x,y);
     }
   }
 }

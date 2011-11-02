@@ -13,16 +13,13 @@
 #include "ships.h"
 #include "pewpew.h"
 #include "joystick.h"
+#include "screen_handler.h"
 #define DT 0.01
 #define DIMENSION 6
 
 
-class level
+class level : public screen_handler
 {
-    void *font;
-    void *tinyFont;
-    int WINDOW_SIZEX;
-    int WINDOW_SIZEY;
     int enemies_before;
     int enemies_after;
     int enemies_killed;
@@ -82,7 +79,7 @@ class level
     void keyboardReleaseFunction(unsigned char key,int x, int y);
     void specialKeyboardFunction(int key,int x,int y);
     void keyboardFunction(unsigned char key,int x,int y);
-    void myMouseFunction(int x,int y);
+    void idleMouseFunction(int x,int y);
     void reshape(int w,int h);
 };
 #endif

@@ -401,7 +401,7 @@ void level::reshape(int w,int h)
   WINDOW_SIZEX=w;
   WINDOW_SIZEY=h;
 }
-void level::myMouseFunction(int x,int y)
+void level::idleMouseFunction(int x,int y)
 {
   vector2D pos = playerShip->get_pos();
   GLint viewport[4];
