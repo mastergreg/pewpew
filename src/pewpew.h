@@ -6,7 +6,7 @@
 
 * Creation Date : 20-10-2011
 
-* Last Modified : Tue 01 Nov 2011 02:19:00 PM EET
+* Last Modified : Wed 02 Nov 2011 09:54:57 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -15,6 +15,7 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #define PEWPEW_H
 
 
+#include <stack>
 #include "level.h"
 #include "menu.h"
 #include "game_state.h"

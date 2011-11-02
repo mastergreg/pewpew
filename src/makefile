@@ -25,9 +25,11 @@ game_state.o: game_state.cpp game_state.h
 	g++ -c game_state.cpp  ${EXTRA_FLAGS}
 pewpew.o:  pewpew.cpp pewpew.h
 	g++ -c pewpew.cpp ${EXTRA_FLAGS}
+screen_handler.o:	screen_handler.cpp screen_handler.h
+	g++ -c screen_handler.cpp ${EXTRA_FLAGS}
 high_score_handler.o: high_score_handler.cpp high_score_handler.h
-	gcc -c high_score_handler.cpp ${EXTRA_FLAGS}
-OBJECTS=game_object.o ships.o vector2D.o drawables.o level.o joystick.o menu.o menu_items.o sounds.o game_state.o pewpew.o high_score_handler.o
+	g++ -c high_score_handler.cpp ${EXTRA_FLAGS}
+OBJECTS=game_object.o ships.o vector2D.o drawables.o level.o joystick.o menu.o menu_items.o sounds.o game_state.o pewpew.o high_score_handler.o screen_handler.o
 ${PROG}:	${OBJECTS}
 	g++  ${OBJECTS} ${LIBS} -o ${PROG} ${EXTRA_FLAGS}  
 	cp ${PROG} ../

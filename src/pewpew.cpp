@@ -6,7 +6,7 @@
 
  * Creation Date : 20-12-2008
 
- * Last Modified : Tue 01 Nov 2011 02:19:34 PM EET
+ * Last Modified : Wed 02 Nov 2011 10:04:11 PM EET
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -14,11 +14,13 @@
 
 #include "pewpew.h"
 
+
 level lv;
 menu mn;
 menu opt;
 infoscreen info("Press P to start, use WASD to move the ship, Q for turbo boost, E for e-break and Esc to exit");
 game_state gs;
+std::stack<screen_handler *> menu_pages;
 static void mytimer(int v)
 {
   glutPostRedisplay();
@@ -46,6 +48,7 @@ int main(int argc, char** argv)
   mn.add_option(std::string("NEW GAME"),(&new_game));
   mn.add_option(std::string("OPTIONS"),(&option_action));
   mn.add_option(std::string("QUIT"),(&end_0));
+  menu_pages.push(&mn);
 
 
 
@@ -78,137 +81,33 @@ void display()
 {
   glClearColor(0,0,0,0);
   glClear(GL_COLOR_BUFFER_BIT);
-  if (gs.paused)
-  {
-    if(gs.menu_page == 0)
-    {
-      mn.display();
-    }
-    else if(gs.menu_page == 1)
-    {
-      info.display();
-    }
-    else if(gs.menu_page == 2)
-    {
-      opt.display();
-    }
-  }
-  else 
-  {
-    lv.display();
-  }
+  menu_pages.top()->display();
   glutSwapBuffers();
 }
 void reshape(int w,int h)
 {
-  if (gs.paused)
-  {
-    if(gs.menu_page == 0)
-    {
-      mn.reshape(w,h);
-    }
-    else if(gs.menu_page == 1)
-    {
-      info.reshape(w,h);
-    }
-    else if(gs.menu_page == 2)
-    {
-      opt.reshape(w,h);
-    }
-  }
-  else 
-  {
-    lv.reshape(w,h);
-  }
-
+  menu_pages.top()->reshape(w,h);
 }
 void kbRelF(unsigned char key, int x, int y)
 {
-  lv.keyboardReleaseFunction(key,x,y);
+  menu_pages.top()->keyboardReleaseFunction(key,x,y);
+
 }
 void kbF(unsigned char key, int x, int y)
 {
-  if (gs.paused)
-  {
-    if(gs.menu_page == 0)
-    {
-      mn.keyboardFunction(key,x,y);
-    }
-    else if(gs.menu_page == 1)
-    {
-      info.keyboardFunction(key,x,y);
-    }
-    else if(gs.menu_page == 2)
-    {
-      opt.keyboardFunction(key,x,y);
-    }
-  }
-  else 
-  {
-    lv.keyboardFunction(key,x,y);
-  }
+  menu_pages.top()->keyboardFunction(key,x,y);
 }
 void skbF(int key, int x, int y)
 {
-  if (gs.paused)
-  {
-    if(gs.menu_page == 0)
-    {
-      mn.specialKeyboardFunction(key,x,y);
-    }
-    else if(gs.menu_page == 1)
-    {
-      info.specialKeyboardFunction(key,x,y);
-    }
-    else if(gs.menu_page == 2)
-    {
-      opt.specialKeyboardFunction(key,x,y);
-    }
-  }
-  else 
-  {
-    lv.specialKeyboardFunction(key,x,y);
-  }
+  menu_pages.top()->specialKeyboardFunction(key,x,y);
 }
 void mIdleF(int x, int y)
 {
-  if (gs.paused)
-  {
-    if(gs.menu_page == 0)
-    {
-      mn.myIdleMouseFunction(x,y);
-    }
-    else if(gs.menu_page == 1)
-    {
-      info.myIdleMouseFunction(x,y);
-    }
-    else if(gs.menu_page == 2)
-    {
-      opt.myIdleMouseFunction(x,y);
-    }
-  }
-  else 
-  {
-    lv.myMouseFunction(x,y);
-  }
+  menu_pages.top()->idleMouseFunction(x,y);
 }
 void mF(int btn,int state,int x, int y)
 {
-  if (gs.paused)
-  {
-    if(gs.menu_page == 0)
-    {
-      mn.myMouseFunction(btn,state,x,y);
-    }
-    else if(gs.menu_page == 1)
-    {
-      info.myMouseFunction(btn,state,x,y);
-    }
-    else if(gs.menu_page == 2)
-    {
-      opt.myMouseFunction(btn,state,x,y);
-    }
-  }
+  menu_pages.top()->mouseFunction(btn,state,x,y);
 }
 
 void end(void)
@@ -222,29 +121,29 @@ void end_0(void)
 }
 void new_game(void)
 {
-  gs.gs_run();
+  menu_pages.push(&lv);
   lv.reset();
 }
 void run(void)
 {
-  gs.gs_run();
+  menu_pages.push(&lv);
 }
 void gpause(void)
 {
-  gs.gs_pause();
+  menu_pages.pop();
 }
 
 void back(void)
 {
-  gs.gs_back();
+  menu_pages.pop();
 }
 void info_action(void)
 {
-  gs.gs_info_action();
+  menu_pages.push(&info);
 }
 void option_action(void)
 {
-  gs.gs_option_action();
+  menu_pages.push(&opt);
 }
 void sound_off(void)
 {

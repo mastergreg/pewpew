@@ -6,7 +6,7 @@
 
  * Creation Date : 19-10-2011
 
- * Last Modified : Sun 30 Oct 2011 11:55:36 PM EET
+ * Last Modified : Wed 02 Nov 2011 09:49:02 PM EET
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -136,7 +136,7 @@ void menu::specialKeyboardFunction(int key,int x, int y)
       break;
   }
 }
-void menu::myIdleMouseFunction(int x,int y)
+void menu::idleMouseFunction(int x,int y)
 {
   unsigned int area;
 
@@ -156,7 +156,7 @@ void menu::myIdleMouseFunction(int x,int y)
 
   Mchoice = area < options.size()-1 ? area : options.size()-1;
 }
-void menu::myMouseFunction(int butn,int state,int x,int y)
+void menu::mouseFunction(int butn,int state,int x,int y)
 {
   unsigned int area;
   unsigned int Bchoice;
