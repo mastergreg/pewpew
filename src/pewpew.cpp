@@ -6,7 +6,7 @@
 
  * Creation Date : 20-12-2008
 
- * Last Modified : Wed 02 Nov 2011 10:04:11 PM EET
+ * Last Modified : Wed 02 Nov 2011 11:10:25 PM EET
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -121,21 +121,27 @@ void end_0(void)
 }
 void new_game(void)
 {
+  gs.gs_run();
   menu_pages.push(&lv);
   lv.reset();
 }
 void run(void)
 {
+  gs.gs_run();
   menu_pages.push(&lv);
 }
 void gpause(void)
 {
+  gs.gs_pause();
   menu_pages.pop();
 }
 
 void back(void)
 {
-  menu_pages.pop();
+  if (menu_pages.size() > 1)
+  {
+    menu_pages.pop();
+  }
 }
 void info_action(void)
 {
