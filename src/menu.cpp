@@ -6,7 +6,7 @@
 
  * Creation Date : 19-10-2011
 
- * Last Modified : Thu 03 Nov 2011 08:12:22 PM EET
+ * Last Modified : Thu 03 Nov 2011 08:16:06 PM EET
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -156,7 +156,6 @@ void menu::idleMouseFunction(int x,int y)
   farea = DIMENSION/2 - 1 -  wy;
   area = (unsigned int) farea;
   rem = farea - area;
-  std::cout << farea << std::endl;
   if (rem > 0.6)
   {
 
