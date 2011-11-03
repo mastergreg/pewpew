@@ -6,7 +6,7 @@
 
  * Creation Date : 19-10-2011
 
- * Last Modified : Thu 03 Nov 2011 08:16:06 PM EET
+ * Last Modified : Thu 03 Nov 2011 08:31:22 PM EET
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -156,7 +156,7 @@ void menu::idleMouseFunction(int x,int y)
   farea = DIMENSION/2 - 1 -  wy;
   area = (unsigned int) farea;
   rem = farea - area;
-  if (rem > 0.6)
+  if (rem > 0.4)
   {
 
     Mchoice = area < options.size()-1 ? area : options.size()-1;
@@ -184,7 +184,7 @@ void menu::mouseFunction(int butn,int state,int x,int y)
   area = (unsigned int) farea;
   rem = farea - area;
 
-  if (rem > 0.6)
+  if (rem > 0.4)
   {
   Bchoice = area < options.size()-1 ? area : options.size()-1;
   if (Bchoice == Mchoice)
