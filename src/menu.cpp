@@ -6,7 +6,7 @@
 
  * Creation Date : 19-10-2011
 
- * Last Modified : Wed 02 Nov 2011 09:49:02 PM EET
+ * Last Modified : Thu 03 Nov 2011 08:12:22 PM EET
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -138,6 +138,7 @@ void menu::specialKeyboardFunction(int key,int x, int y)
 }
 void menu::idleMouseFunction(int x,int y)
 {
+  GLdouble farea,rem;
   unsigned int area;
 
   GLint viewport[4];
@@ -152,12 +153,19 @@ void menu::idleMouseFunction(int x,int y)
   realy = viewport[3] - (GLint) y - 1;
   gluUnProject ((GLdouble) x, (GLdouble) realy, 0.0,
       mvmatrix, projmatrix, viewport, &wx, &wy, &wz);
-  area = abs((int)(DIMENSION/2 - 1 -  wy));
+  farea = DIMENSION/2 - 1 -  wy;
+  area = (unsigned int) farea;
+  rem = farea - area;
+  std::cout << farea << std::endl;
+  if (rem > 0.6)
+  {
 
-  Mchoice = area < options.size()-1 ? area : options.size()-1;
+    Mchoice = area < options.size()-1 ? area : options.size()-1;
+  }
 }
 void menu::mouseFunction(int butn,int state,int x,int y)
 {
+  GLdouble farea,rem;
   unsigned int area;
   unsigned int Bchoice;
 
@@ -173,8 +181,12 @@ void menu::mouseFunction(int butn,int state,int x,int y)
   realy = viewport[3] - (GLint) y - 1;
   gluUnProject ((GLdouble) x, (GLdouble) realy, 0.0,
       mvmatrix, projmatrix, viewport, &wx, &wy, &wz);
-  area = abs((int) (DIMENSION/2 - 1 -  wy));
+  farea = DIMENSION/2 - 1 -  wy;
+  area = (unsigned int) farea;
+  rem = farea - area;
 
+  if (rem > 0.6)
+  {
   Bchoice = area < options.size()-1 ? area : options.size()-1;
   if (Bchoice == Mchoice)
   {
@@ -186,7 +198,11 @@ void menu::mouseFunction(int butn,int state,int x,int y)
   }
   else
   {
-    Mchoice = Bchoice;
+    if (state == GLUT_DOWN)
+    {
+      Mchoice = Bchoice;
+    }
+  }
   }
 }
 void menu::reshape(int w,int h)
