@@ -6,7 +6,7 @@
 
 * Creation Date : 05-11-2011
 
-* Last Modified : Sat 05 Nov 2011 08:39:34 PM EET
+* Last Modified : Sat 05 Nov 2011 08:52:12 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -21,8 +21,6 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #include <GL/glut.h>
 
 
-//#include "level.h"
-//extern level lv;
 
 
 
