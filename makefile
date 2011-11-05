@@ -14,8 +14,10 @@ $(PROG) :	$(OBJ_FILES)
 
 
 
-obj/%.o : src/%.cpp src/%.h
+obj/%.o : src/%.cpp src/%.h obj
 	$(CC) $(CXXFLAGS) -c -o $@ $< 
+obj:
+	mkdir -p obj
 clean:
 	rm obj/*.o 
 
