@@ -1,8 +1,26 @@
 #-lgc -ggdb
-SRC_DIR="src"
-all:
-	@cd ${SRC_DIR}; make
+LDFLAGS :=-lglut -lGL -lGLU -lalut -lopenal
+CXXFLAGS :=
+CC=g++
+PROG=pewpew
+
+
+CPP_FILES := $(wildcard src/*.cpp)
+OBJ_FILES := $(patsubst src/%.cpp,obj/%.o,$(CPP_FILES))
+
+all : $(PROG)
+$(PROG) :	$(OBJ_FILES)
+	$(CC) -o $(PROG) $(OBJ_FILES) $(LDFLAGS) 
+
+
+
+obj/%.o : src/%.cpp src/%.h
+	$(CC) $(CXXFLAGS) -c -o $@ $< 
 clean:
-	@cd ${SRC_DIR}; make clean
+	rm obj/*.o 
+
+
+
 tar:
-	@cd ${SRC_DIR}; make tar
+	tar -uzvf $(PROG).tar *.cpp
+	tar -uzvf $(PROG).tar *.h
