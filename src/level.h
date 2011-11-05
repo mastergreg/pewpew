@@ -14,8 +14,8 @@
 #include "pewpew.h"
 #include "joystick.h"
 #include "screen_handler.h"
-#define DT 0.01
-#define DIMENSION 6
+
+#include "defaults.h"
 
 
 class level : public screen_handler
