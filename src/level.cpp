@@ -448,16 +448,16 @@ void level::keyboardReleaseFunction(unsigned char key,int x, int y)
   switch (key)
   {
     case 'w':
-	  playerShip->release_acc();
+      playerShip->release_acc();
       break;
     case 'a':
-	  playerShip->release_rot();
+      playerShip->release_rot();
       break;
     case 's':
-	  playerShip->release_acc();
+      playerShip->release_acc();
       break;
     case 'd':
-	  playerShip->release_rot();
+      playerShip->release_rot();
       break;
     case 'q':
       playerShip->e_brake();
@@ -472,35 +472,54 @@ void level::playStick()
   vector2D current_speed;
   current_speed=(playerShip->get_speed());
   static wwvi_js_event js_state;
-  js_state.button[4]=0;
-  js_state.button[5]=0;
-  js_state.button[9]=0;
+  static bool use_flag = false;
+  static bool brake_flag = true;
+  static bool boost_flag = true;
+  js_state.button[9]=0; //start button
   if (get_joystick_status(&js_state)==0)
   {
     double out = 0;
-    if (js_state.button[9]==1)
+    if (js_state.button[9])
     {
       pauseResume();
     }
-    if (js_state.button[7]==1)
+    if (js_state.button[7])
     {
+      use_flag = true;
       playerShip->accelerate();
     }
     else if (js_state.button[6]==1)
     {
+      use_flag = true;
       playerShip->decelerate();
     }
-    else if (js_state.button[5]==1)
+    else if (js_state.button[5] && boost_flag)
     {
-	  playerShip->turbo_boost();
+      use_flag = true;
+      playerShip->turbo_boost();
+      boost_flag = false;
     }
-    else if (js_state.button[4]==1)
+    else if (!js_state.button[5] && ! boost_flag)
     {
+      use_flag = true;
       playerShip->e_brake();
+      boost_flag = true;
     }
-    else
+    else if (js_state.button[4] && brake_flag)
     {
-	  playerShip->release_acc();
+      use_flag = true;
+      playerShip->e_brake();
+      brake_flag = false;
+    }
+    else if (!js_state.button[4] && ! brake_flag)
+    {
+      use_flag = true;
+      playerShip->turbo_boost();
+      brake_flag = true;
+    }
+    else if (use_flag)
+    {
+      playerShip->release_acc();
     }
     double newAngle=playerShip->get_angle();
     double newX = (double) js_state.stick1_x;
