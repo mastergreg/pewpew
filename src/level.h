@@ -69,11 +69,11 @@ class level : public screen_handler
     void drawInfoScreen();
     void ZooMStart();
     void shipExplode(vector2D position);
+    void insertScoreTag(vector2D position, int points);
     sound_player sndp;
   public:
     level();
     void reset();
-    void insertScoreTag(vector2D position, int points);
     void increaseScore(int points);
     void display();
     void keyboardReleaseFunction(unsigned char key,int x, int y);

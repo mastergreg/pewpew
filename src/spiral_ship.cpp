@@ -6,7 +6,7 @@
 
 * Creation Date : 05-11-2011
 
-* Last Modified : Sat 05 Nov 2011 08:49:16 PM EET
+* Last Modified : Sun 06 Nov 2011 07:11:23 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -16,8 +16,6 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 //SpiralShip enemy
 
 
-#include "level.h"
-extern level lv;
 spiralShip::spiralShip(vector2D pos,vector2D sp)
 :game_ship(pos,sp)
 {
@@ -25,6 +23,7 @@ spiralShip::spiralShip(vector2D pos,vector2D sp)
   radius = 0.2;
   Ttime=0;
   rot=true;
+  points = 10000;
 
   /*
   double r = 1;
@@ -66,7 +65,6 @@ spiralShip::spiralShip(vector2D pos,vector2D sp)
 void spiralShip::die()
 {
   life=-1;
-  lv.insertScoreTag(position,10000);
 }
 
 void spiralShip::draw()

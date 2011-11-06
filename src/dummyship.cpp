@@ -6,15 +6,13 @@
 
 * Creation Date : 05-11-2011
 
-* Last Modified : Sat 05 Nov 2011 08:43:31 PM EET
+* Last Modified : Sun 06 Nov 2011 07:10:33 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
 _._._._._._._._._._._._._._._._._._._._._.*/
 #include "dummyship.h"
 
-#include "level.h"
-extern level lv;
 //DummyShips "Meteor" type
 void dummyship::draw()
 {
@@ -39,11 +37,12 @@ void dummyship::draw()
 {
   life=1000;
   radius = 0.04;
+  points = 1000;
 }
 
 void dummyship::die()
 {
   game_ship::die();
-  lv.insertScoreTag(position,1000);
+  //lv.insertScoreTag(position,1000);
 }
 

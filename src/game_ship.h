@@ -6,7 +6,7 @@
 
 * Creation Date : 05-11-2011
 
-* Last Modified : Sat 05 Nov 2011 08:52:12 PM EET
+* Last Modified : Sun 06 Nov 2011 07:06:27 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -31,10 +31,12 @@ class game_ship : public game_object
     vector2D speed;
     double spini;
     double spinnit();
+    int points;
   public:
     virtual void die();
     virtual void move();
     double get_angle();
+    int get_points();
     void set_angle(double newAngle);
     game_ship(vector2D pos,vector2D sp);
     vector2D get_speed();

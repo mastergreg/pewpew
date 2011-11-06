@@ -17,7 +17,6 @@ $(PROG) : $(DEP_FILES) $(OBJ_FILES)
 
 -include $(DEP_FILES)
 %.d : %.cpp
-	echo "Building dep files"
 	@set -e; $(CC) -MM $(CXXFLAGS) $<  > $@;
 
 %.o : %.cpp

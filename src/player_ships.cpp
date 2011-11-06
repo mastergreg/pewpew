@@ -6,7 +6,7 @@
 
 * Creation Date : 20-12-2008
 
-* Last Modified : Sat 05 Nov 2011 08:48:00 PM EET
+* Last Modified : Sun 06 Nov 2011 07:11:12 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -14,8 +14,6 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #include "player_ships.h"
 
 
-#include "level.h"
-extern level lv;
 //Main Ship. PlayerShip
 //
   ship::ship()

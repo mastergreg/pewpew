@@ -335,6 +335,10 @@ void level::clean_dead(std::list<game_ship *> *ls)
   {
     if ((*iter)->get_life()<0)
     {
+      if((*iter)->get_points()>0)
+      {
+        insertScoreTag((*iter)->get_pos(),(*iter)->get_points());
+      }
       delete *iter;
       *iter = NULL;
     }
