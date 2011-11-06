@@ -1,28 +1,8 @@
 #-lgc -ggdb
-LDFLAGS :=-lglut -lGL -lGLU -lalut -lopenal
-CXXFLAGS :=-Wall -Wextra -Wuninitialized -O2 -flto
-CC=g++
-PROG=pewpew
-
-
-CPP_FILES := $(wildcard src/*.cpp)
-OBJ_FILES := $(patsubst src/%.cpp,obj/%.o,$(CPP_FILES))
-
-all : $(PROG)
-$(PROG) :	$(OBJ_FILES)
-	$(CC) -o $(PROG) $(OBJ_FILES) $(LDFLAGS) 
-
-
-
-obj/%.o : src/%.cpp src/%.h obj
-	$(CC) $(CXXFLAGS) -c -o $@ $< 
-obj:
-	mkdir -p obj
+SRC_DIR="src"
+all:
+	@cd ${SRC_DIR}; make
 clean:
-	rm obj/*.o 
-
-
-
+	@cd ${SRC_DIR}; make clean
 tar:
-	tar -uzvf $(PROG).tar *.cpp
-	tar -uzvf $(PROG).tar *.h
+	@cd ${SRC_DIR}; make tar

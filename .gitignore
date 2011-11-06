@@ -1,5 +1,6 @@
 *.swp
 *.o
+*.d
 helpers
 high_scores.txt
 pewpew
