@@ -92,7 +92,7 @@ void level::TimeBasedEvents()
   }
   if(playerShip->isAlive() && ftime>=10)
   {
-    std::list<fire *> newFireList;
+    std::list<main_weapon *> newFireList;
     sndp.play(0);
     ftime=0;
     newFireList = playerShip->shoot(shipMouseAngle());

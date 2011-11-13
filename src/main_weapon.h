@@ -6,7 +6,7 @@
 
 * Creation Date : 05-11-2011
 
-* Last Modified : Sat 05 Nov 2011 08:14:04 PM EET
+* Last Modified : Mon 14 Nov 2011 12:19:42 AM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -16,14 +16,15 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 #include "game_ship.h"
 
-class fire : public game_ship
+class main_weapon : public game_ship
 {
-  private:
+  protected:
     GLuint theShot;
+    virtual void compileDraw();
   public:
     void move();
-    fire(vector2D posit,vector2D sp);
-    void draw();
+    main_weapon(vector2D posit,vector2D sp);
+    virtual void draw();
 };
 
 

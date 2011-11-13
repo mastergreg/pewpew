@@ -6,7 +6,7 @@
 
 * Creation Date : 20-12-2008
 
-* Last Modified : Sun 06 Nov 2011 07:11:12 PM EET
+* Last Modified : Mon 14 Nov 2011 12:32:23 AM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -176,14 +176,14 @@ void ship::drawUpgradeRing(std::list<game_ship *> fireUpgradeList,std::list<game
     LUit++;
   }
 }
-std::list<fire *> ship::shoot()
+std::list<main_weapon *> ship::shoot()
 {
   return shoot(angle);
 }
-std::list<fire *> ship::shoot(double ang)
+std::list<main_weapon *> ship::shoot(double ang)
 {
   double firespeed=0.025;
-  std::list<fire *> rls;
+  std::list<main_weapon *> rls;
   vector2D fspeed;
   vector2D fpos(position.getX()+0.05*cos(ang),position.getY()+0.05*sin(ang),0,0);
   double dang;

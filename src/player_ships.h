@@ -6,7 +6,7 @@
 
 * Creation Date : 20-12-2008
 
-* Last Modified : Sun 06 Nov 2011 12:35:39 PM EET
+* Last Modified : Mon 14 Nov 2011 12:23:29 AM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -16,7 +16,8 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #define PLAYER_SHIPS_H
 
 #include "game_ship.h"
-#include "main_weapon.h"
+#include "fire_weapon.h"
+#include "pulse_weapon.h"
 #include "upgrades.h"
 
 
@@ -43,8 +44,8 @@ class ship : public game_ship
     void draw();
     void move();
     void downgradeWeapons();
-    std::list<fire*> shoot();
-    std::list<fire*> shoot(double ang);
+    std::list<main_weapon*> shoot();
+    std::list<main_weapon*> shoot(double ang);
     void drawUpgradeRing(std::list<game_ship *> fireUpgradeList,std::list<game_ship *> lifeUpgradeList);
     ship();
     ~ship();

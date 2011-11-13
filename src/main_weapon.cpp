@@ -6,7 +6,7 @@
 
 * Creation Date : 05-11-2011
 
-* Last Modified : Sat 05 Nov 2011 08:49:02 PM EET
+* Last Modified : Mon 14 Nov 2011 12:19:44 AM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -14,22 +14,17 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #include "main_weapon.h"
 
 //Bullets for playership
-  fire::fire(vector2D pos,vector2D sp)
+  main_weapon::main_weapon(vector2D pos,vector2D sp)
 :game_ship(pos,sp)
 {
-  life=300;
-  radius=0.02;
-  theShot = glGenLists(1);
-  glNewList(theShot,GL_COMPILE);
-  glRotatef(-90, 1.0, 0.0, 0.0); 
-
-  glRotatef(-57.29578*angle, 0.0, 1.0, 0.0); 
-  glRotatef(90, 0.0, 1.0, 0.0); 
-  //glRotatef(spini, 0.0, 0.0, 1.0);
-  glutWireCone(0.01,0.03,2,1);
-  glEndList();
+  life=0;
+  radius=0;
+  compileDraw();
 }
-void fire::move()
+void main_weapon::compileDraw()
+{
+}
+void main_weapon::move()
 {
   double x = speed.getX();
   double y = speed.getY();
@@ -51,9 +46,8 @@ void fire::move()
   if(life<1) die();
   spinnit();
 }
-void fire::draw()
+void main_weapon::draw()
 {
-
   double px = position.getX();
   double py = position.getY();
 
