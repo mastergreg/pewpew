@@ -6,7 +6,7 @@
 
 * Creation Date : 05-11-2011
 
-* Last Modified : Mon 14 Nov 2011 12:12:25 PM EET
+* Last Modified : Mon 14 Nov 2011 03:46:14 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -24,6 +24,7 @@ class main_weapon : public game_ship
   protected:
     GLuint theShot;
     virtual void compileDraw();
+    int killStep;
   public:
     void move();
     main_weapon(vector2D posit,vector2D sp);

@@ -6,7 +6,7 @@
 
 * Creation Date : 05-11-2011
 
-* Last Modified : Mon 14 Nov 2011 12:23:05 AM EET
+* Last Modified : Mon 14 Nov 2011 03:48:20 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -19,6 +19,7 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 {
   life=300;
   radius=0.02;
+  killStep=1;
   compileDraw();
 }
 void fire::compileDraw()

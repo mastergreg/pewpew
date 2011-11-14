@@ -6,7 +6,7 @@
 
 * Creation Date : 05-11-2011
 
-* Last Modified : Mon 14 Nov 2011 12:19:44 AM EET
+* Last Modified : Mon 14 Nov 2011 03:48:13 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -19,6 +19,7 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 {
   life=0;
   radius=0;
+  killStep=0;
   compileDraw();
 }
 void main_weapon::compileDraw()
@@ -42,7 +43,7 @@ void main_weapon::move()
   }
   speed=(vector2D(x,y,rd,ri));
   position.increase_vector(speed);  
-  life--;
+  life-=killStep;
   if(life<1) die();
   spinnit();
 }
