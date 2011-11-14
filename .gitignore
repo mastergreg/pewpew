@@ -2,6 +2,7 @@
 *.o
 *.txt
 *.d
+*.tar
 helpers
 pewpew
 rara

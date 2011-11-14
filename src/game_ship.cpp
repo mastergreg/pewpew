@@ -6,7 +6,7 @@
 
 * Creation Date : 05-11-2011
 
-* Last Modified : Sat 05 Nov 2011 08:50:31 PM EET
+* Last Modified : Sun 06 Nov 2011 07:08:07 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -18,6 +18,7 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 :game_object(pos)
 {
   spini=0;
+  points = 0;
   set_speed(sp);
 }
 double game_ship::spinnit()
@@ -131,4 +132,9 @@ bool game_ship::isAlive()
 vector2D game_ship::get_pos()
 {
   return position;
+}
+
+int game_ship::get_points()
+{
+  return points;
 }
