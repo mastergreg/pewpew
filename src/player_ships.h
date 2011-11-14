@@ -6,7 +6,7 @@
 
 * Creation Date : 20-12-2008
 
-* Last Modified : Mon 14 Nov 2011 12:23:29 AM EET
+* Last Modified : Mon 14 Nov 2011 12:14:01 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -29,6 +29,9 @@ class ship : public game_ship
     void drawUPArrow(game_ship * upgrade,GLfloat color[3]);
     std::list<game_object *> tail;
     int Ttime;
+    int WeaponType;
+    template <class T> 
+      std::list<main_weapon*> fireWeapon(double angle);
   public:
     void accelerate();
     void decelerate();

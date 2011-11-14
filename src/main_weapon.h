@@ -6,7 +6,7 @@
 
 * Creation Date : 05-11-2011
 
-* Last Modified : Mon 14 Nov 2011 12:19:42 AM EET
+* Last Modified : Mon 14 Nov 2011 12:12:25 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -14,6 +14,9 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #ifndef MAIN_WEAPON_H
 #define MAIN_WEAPON_H
 
+#ifndef WEAPONS
+#define WEAPONS 2
+#endif
 #include "game_ship.h"
 
 class main_weapon : public game_ship

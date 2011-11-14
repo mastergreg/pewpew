@@ -6,7 +6,7 @@
 
 * Creation Date : 05-11-2011
 
-* Last Modified : Sat 05 Nov 2011 08:12:57 PM EET
+* Last Modified : Mon 14 Nov 2011 12:57:02 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -15,10 +15,11 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 
 //Upgrades to playership
-  fireUpgrade::fireUpgrade(vector2D pos)
+  fireUpgrade::fireUpgrade(vector2D pos,int wT)
 :game_ship(pos,vector2D())
 {
   life=500;
+  WeaponType = wT;
 }
 void fireUpgrade::draw()
 {
@@ -26,7 +27,21 @@ void fireUpgrade::draw()
   double px = position.getX();
   double py = position.getY();
   glPushMatrix();
-  GLfloat mycolor[] = {1,0.63,0.06}; 
+  GLfloat mycolor[3];
+  GLfloat color0[3]={1,0.63,0.06};
+  GLfloat color1[3]={0,1,1};
+  switch (WeaponType)
+  {  
+    case 0:
+      std::copy(color0,color0+3,mycolor);
+      break;
+    case 1:
+      std::copy(color1,color1+3,mycolor);
+      break;
+    default:
+      std::copy(color0,color0+3,mycolor);
+      break;
+  }
   glColor3fv(mycolor);
   //GLfloat diff[] = {0.,0.,0.}; 
   //GLfloat shiny[]={0.0};
@@ -45,6 +60,10 @@ void fireUpgrade::move()
 {
   spinnit();
   life--;
+}
+int fireUpgrade::getType()
+{
+  return WeaponType;
 }
 
   lifeUpgrade::lifeUpgrade(vector2D pos)
@@ -77,6 +96,5 @@ void lifeUpgrade::move()
 {
   spinnit();
 }
-
 
 

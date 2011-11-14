@@ -149,7 +149,7 @@ void level::ScoreBasedEvents()
   {
     sndp.play(1);
     enemies_killed = 0;
-    if(score % 10000 == 0)
+    if(score % 100 == 0)
       insertFireUpgrade();
     if(score % 50000 == 0) 
     {
@@ -188,7 +188,8 @@ void level::insertFireUpgrade()
   double px = ((rand() % 2000)-1000)*(DIMENSION-0.25)/1000.;
   double py = ((rand() % 2000)-1000)*(DIMENSION-0.25)/1000.;
   vector2D rpos(px,py,0,0);
-  fireUpgradeList.push_back(new fireUpgrade(rpos));
+  int wtype = rand() % WEAPONS;
+  fireUpgradeList.push_back(new fireUpgrade(rpos,wtype));
 }
 void level::insertDummyShip()
 {
