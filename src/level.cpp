@@ -149,7 +149,7 @@ void level::ScoreBasedEvents()
   {
     sndp.play(1);
     enemies_killed = 0;
-    if(score % 100 == 0)
+    if(score % 10000 == 0)
       insertFireUpgrade();
     if(score % 50000 == 0) 
     {
