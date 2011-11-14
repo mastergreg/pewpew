@@ -6,7 +6,7 @@
 
 * Creation Date : 05-11-2011
 
-* Last Modified : Mon 14 Nov 2011 03:46:14 PM EET
+* Last Modified : Mon 14 Nov 2011 10:15:05 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -15,7 +15,7 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #define MAIN_WEAPON_H
 
 #ifndef WEAPONS
-#define WEAPONS 2
+#define WEAPONS 3
 #endif
 #include "game_ship.h"
 
@@ -25,6 +25,7 @@ class main_weapon : public game_ship
     GLuint theShot;
     virtual void compileDraw();
     int killStep;
+    double wfs;
   public:
     void move();
     main_weapon(vector2D posit,vector2D sp);

@@ -6,7 +6,7 @@
 
 * Creation Date : 05-11-2011
 
-* Last Modified : Mon 14 Nov 2011 03:48:13 PM EET
+* Last Modified : Mon 14 Nov 2011 10:24:39 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -20,6 +20,7 @@ _._._._._._._._._._._._._._._._._._._._._.*/
   life=0;
   radius=0;
   killStep=0;
+  wfs=1;
   compileDraw();
 }
 void main_weapon::compileDraw()
@@ -27,8 +28,8 @@ void main_weapon::compileDraw()
 }
 void main_weapon::move()
 {
-  double x = speed.getX();
-  double y = speed.getY();
+  double x = speed.getX()*wfs;
+  double y = speed.getY()*wfs;
   int rd = speed.getRD(); 
   int ri = speed.getRI(); 
   double px = position.getX();
@@ -41,7 +42,7 @@ void main_weapon::move()
   {
     die();
   }
-  speed=(vector2D(x,y,rd,ri));
+  vector2D bufspeed=(vector2D(x,y,rd,ri));
   position.increase_vector(speed);  
   life-=killStep;
   if(life<1) die();

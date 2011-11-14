@@ -6,7 +6,7 @@
 
 * Creation Date : 13-11-2011
 
-* Last Modified : Mon 14 Nov 2011 04:29:01 PM EET
+* Last Modified : Mon 14 Nov 2011 10:27:24 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -16,9 +16,10 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 pulse::pulse(vector2D p,vector2D s)
 :main_weapon(p,s)
 {
-  life = 500;
+  life = 5000;
   radius = 0.05;
-  killStep = 4;
+  killStep = 150;
+  wfs=0.2;
   compileDraw();
 
 }

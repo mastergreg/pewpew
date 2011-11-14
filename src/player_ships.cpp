@@ -6,7 +6,7 @@
 
 * Creation Date : 20-12-2008
 
-* Last Modified : Mon 14 Nov 2011 04:37:21 PM EET
+* Last Modified : Mon 14 Nov 2011 10:53:12 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -165,6 +165,7 @@ void ship::drawUpgradeRing(std::list<game_ship *> fireUpgradeList,std::list<game
   GLfloat  FUcolor[3];
   GLfloat  FUcolor1[3]={1.0,0.63,0.06};
   GLfloat  FUcolor2[3]={0,1,1};
+  GLfloat  FUcolor3[3]={1,0,1};
   GLfloat  LUcolor[3]={1.0,0.,0.};
   UpgradeCirc->draw(position);
   std::list<game_ship *>::iterator FUit=fireUpgradeList.begin();
@@ -179,6 +180,9 @@ void ship::drawUpgradeRing(std::list<game_ship *> fireUpgradeList,std::list<game
         break;
       case 1:
         std::copy(FUcolor2,FUcolor2+3,FUcolor);
+        break;
+      case 2:
+        std::copy(FUcolor3,FUcolor3+3,FUcolor);
         break;
       default:
         std::copy(FUcolor1,FUcolor1+3,FUcolor);
@@ -197,7 +201,7 @@ void ship::drawUpgradeRing(std::list<game_ship *> fireUpgradeList,std::list<game
 template <class T> 
 std::list<main_weapon *> ship::fireWeapon(double ang)
 {
-  double firespeed=speed.length()+0.005;
+  double firespeed=0.025; //speed.length()+0.005;
   std::list<main_weapon *> rls;
   vector2D fspeed;
   vector2D fpos(position.getX()+0.05*cos(ang),position.getY()+0.05*sin(ang),0,0);
@@ -288,10 +292,16 @@ std::list<main_weapon *> ship::shoot(double ang)
   {
     case 0:
       return fireWeapon<fire>(ang);
+      break;
     case 1:
       return fireWeapon<pulse>(ang);
+      break;
+    case 2:
+      return fireWeapon<sonic>(ang);
+      break;
     default:
       return fireWeapon<fire>(ang);
+      break;
   }
 }
 
