@@ -6,7 +6,7 @@
 
 * Creation Date : 13-11-2011
 
-* Last Modified : Mon 14 Nov 2011 12:28:02 AM EET
+* Last Modified : Mon 14 Nov 2011 09:54:35 AM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -48,6 +48,8 @@ void pulse::draw()
   //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION, diff);
   glLineWidth(1);
   glTranslatef(px,py,0);
+  glRotatef(-57.29578*angle, 0.0, 0.0, 1.0); 
+  angle+=0.05;
   glCallList(theShot);
 
   glPopMatrix(); 
