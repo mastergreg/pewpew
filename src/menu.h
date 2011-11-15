@@ -6,7 +6,7 @@
 
 * Creation Date : 19-10-2011
 
-* Last Modified : Wed 02 Nov 2011 09:49:53 PM EET
+* Last Modified : Tue 15 Nov 2011 12:40:18 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -27,7 +27,7 @@ class menu : public screen_handler
     std::vector<button *> options;
     unsigned int Mchoice;
     void drawGrid();
-//    void playStick();
+    void playStick();
   public:
     menu();
     virtual void display();

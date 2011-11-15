@@ -6,7 +6,7 @@
 
  * Creation Date : 19-10-2011
 
- * Last Modified : Thu 03 Nov 2011 08:31:22 PM EET
+ * Last Modified : Tue 15 Nov 2011 12:40:01 PM EET
 
  * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -26,7 +26,7 @@ menu::menu()
 
 void menu::display()
 {
-//  playStick();
+  playStick();
   drawMenu(Mchoice);
 }
 void menu::drawMenu(int choice)
@@ -223,7 +223,6 @@ void menu::reshape(int w,int h)
   WINDOW_SIZEY=h;
 }
 
-/*
 void menu::playStick()
 {
   wwvi_js_event *js_state = new wwvi_js_event;
@@ -244,7 +243,6 @@ void menu::playStick()
     }
   }
 }
-*/ 
 
 infoscreen::infoscreen(std::string t)
 {

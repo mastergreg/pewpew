@@ -52,12 +52,12 @@ void level::play()
     if (prlife>playerShip->get_life()) 
     {
       playerShip->downgradeWeapons();
-      //rumble();
+      rumble();
     }
     drawableList.insert(drawableList.end(),newdrawList.begin(),newdrawList.end());
   }
   moveAll();
-//  playStick();
+  playStick();
 }
 void level::drawAll()
 {
