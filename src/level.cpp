@@ -52,12 +52,12 @@ void level::play()
     if (prlife>playerShip->get_life()) 
     {
       playerShip->downgradeWeapons();
-      rumble();
+      //rumble();
     }
     drawableList.insert(drawableList.end(),newdrawList.begin(),newdrawList.end());
   }
   moveAll();
-  playStick();
+//  playStick();
 }
 void level::drawAll()
 {
@@ -472,6 +472,8 @@ void level::keyboardReleaseFunction(unsigned char key,int x, int y)
       break;
   }
 }
+
+
 void level::playStick()
 {
   vector2D current_speed;
@@ -566,8 +568,9 @@ void level::playStick()
     {
       mY = -out;
     }
-  }
-}
+  } 
+} 
+
 void level::keyboardFunction(unsigned char key,int x,int y)
 {
   switch (key)

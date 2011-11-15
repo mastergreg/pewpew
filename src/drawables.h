@@ -4,7 +4,7 @@
 #include "game_object.h"
 #include <cstring>
 #include <algorithm>
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 #include <cstdio>
 
 

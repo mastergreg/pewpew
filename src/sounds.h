@@ -17,7 +17,8 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 //#ifdef __linux__
 
-#include <AL/alut.h>
+//#include <OpenAL/al.h>
+#include "alut.h"
 
 //#endif
 

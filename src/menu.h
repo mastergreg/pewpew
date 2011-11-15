@@ -18,7 +18,7 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #include "menu_items.h"
 #include "screen_handler.h"
 #include <vector>
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 class menu : public screen_handler
 {
   protected:
@@ -27,7 +27,7 @@ class menu : public screen_handler
     std::vector<button *> options;
     unsigned int Mchoice;
     void drawGrid();
-    void playStick();
+//    void playStick();
   public:
     menu();
     virtual void display();

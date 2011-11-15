@@ -18,7 +18,7 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #include "game_object.h"
 #include "drawables.h"
 #include <list>
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 
 
 

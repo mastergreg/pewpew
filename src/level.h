@@ -1,7 +1,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 #include <stdio.h>
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 #include <iostream>
 #include <cstring>
 #include <string>

@@ -26,7 +26,7 @@ menu::menu()
 
 void menu::display()
 {
-  playStick();
+//  playStick();
   drawMenu(Mchoice);
 }
 void menu::drawMenu(int choice)
@@ -223,7 +223,7 @@ void menu::reshape(int w,int h)
   WINDOW_SIZEY=h;
 }
 
-
+/*
 void menu::playStick()
 {
   wwvi_js_event *js_state = new wwvi_js_event;
@@ -244,6 +244,7 @@ void menu::playStick()
     }
   }
 }
+*/ 
 
 infoscreen::infoscreen(std::string t)
 {

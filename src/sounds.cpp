@@ -17,8 +17,8 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 sound_player::sound_player()
 {
   alutInit(NULL,NULL);
-  buffers[PEW] = alutCreateBufferFromFile("sounds/pew.wav");
-  buffers[BLAST] = alutCreateBufferFromFile("sounds/blast.wav");
+//  buffers[PEW] = alutCreateBufferFromFile("sounds/pew.wav");
+//  buffers[BLAST] = alutCreateBufferFromFile("sounds/blast.wav");
 
   //alGenSources(1,&source);
   alGenSources(SOUNDS,sources);
@@ -32,7 +32,7 @@ sound_player::sound_player()
 
 void sound_player::play(int sound)
 {
-  if (gs.sounds_on == 1)
+/*  if (gs.sounds_on == 1)
   {
     switch(sound)
     {
@@ -51,4 +51,5 @@ void sound_player::play(int sound)
     alSourceStop(sources[PEW]);
     alSourceStop(sources[BLAST]);
   }
+*/
 }

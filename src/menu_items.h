@@ -15,7 +15,7 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #ifndef MENU_ITEMS_H
 #define MENU_ITEMS_H
 #include <string>
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 class button
 {
   private:
