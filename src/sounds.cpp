@@ -6,7 +6,7 @@
 
 * Creation Date : 23-10-2011
 
-* Last Modified : Tue 15 Nov 2011 02:42:03 PM EET
+* Last Modified : Tue 15 Nov 2011 03:19:15 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -14,23 +14,29 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 
 #include "sounds.h"
-unsigned int myAlutCreateBufferFromFile(ALbyte *filename)
-{
-  unsigned int buffer;
-  ALsizei size, freq;
-  ALenum format;
-  ALvoid *data;
-  alutLoadWAVFile(filename, &format, &data, &size, &freq);
-  alBufferData(buffer, format, data, size, freq);
-  alutUnloadWAV(format, data, size, freq);
-  return buffer;
-}
+
+
 sound_player::sound_player()
 {
   alutInit(NULL,NULL);
+  #ifdef __APPLE__
+  ALsizei size, freq;
+  ALenum format;
+  ALvoid *data;
 
-  buffers[PEW] = myAlutCreateBufferFromFile((ALbyte*)"sounds/pew.wav");
-  buffers[BLAST] = myAlutCreateBufferFromFile((ALbyte*)"sounds/blast.wav");
+  alutLoadWAVFile("sounds/pew.wav", &format, &data, &size, &freq);
+  alBufferData(buffers[PEW], format, data, size, freq);
+  alutUnloadWAV(format,data,size,freq);
+
+  alutLoadWAVFile("sounds/blast.wav", &format, &data, &size, &freq);
+  alBufferData(buffers[BLAST], format, data, size, freq);
+  alutUnloadWAV(format,data,size,freq);
+
+  #elif __linux__ || _WIN32 || _WIN64
+  buffers[PEW] = alutCreateBufferFromFile("sounds/pew.wav");
+  buffers[BLAST] = alutCreateBufferFromFile("sounds/blast.wav");
+  #endif
+
 
   //alGenSources(1,&source);
   alGenSources(SOUNDS,sources);
