@@ -6,7 +6,7 @@
 
 * Creation Date : 05-11-2011
 
-* Last Modified : Mon 14 Nov 2011 10:15:05 PM EET
+* Last Modified : Wed 16 Nov 2011 01:06:53 AM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -27,7 +27,7 @@ class main_weapon : public game_ship
     int killStep;
     double wfs;
   public:
-    void move();
+    virtual void move();
     main_weapon(vector2D posit,vector2D sp);
     virtual void draw();
 };

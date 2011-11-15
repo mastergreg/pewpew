@@ -6,7 +6,7 @@
 
 * Creation Date : 14-11-2011
 
-* Last Modified : Mon 14 Nov 2011 09:41:11 PM EET
+* Last Modified : Wed 16 Nov 2011 01:13:36 AM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -23,6 +23,7 @@ class sonic : public main_weapon
     GLuint theShot;
     void compileDraw();
   public:
+    void move();
     sonic(vector2D p,vector2D s);
     void draw();
 

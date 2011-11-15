@@ -6,7 +6,7 @@
 
 * Creation Date : 14-11-2011
 
-* Last Modified : Mon 14 Nov 2011 10:52:25 PM EET
+* Last Modified : Wed 16 Nov 2011 01:18:43 AM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -18,7 +18,7 @@ sonic::sonic(vector2D p,vector2D s)
 {
   life = 50000;
   radius = 0.05;
-  killStep = 2000;
+  killStep = 1000;
   wfs=0.001;
   compileDraw();
 
@@ -32,12 +32,36 @@ void sonic::compileDraw()
   for(i=0;i<70;i++)
   {
     //glVertex3f(0.04*sin(i),0.008*cos(i),0);
-    glVertex3f(0.08*sin(i*M_PI/180),0.05*cos(i*M_PI/180),0);
-    glVertex3f(-0.08*sin(i*M_PI/180),0.05*cos(i*M_PI/180),0);
+    glVertex3f(2*radius*sin(i*M_PI/180),radius*cos(i*M_PI/180),0);
+    glVertex3f(-2*radius*sin(i*M_PI/180),radius*cos(i*M_PI/180),0);
   }
   glEnd();
   glEndList();
 
+}
+void sonic::move()
+{
+  double x = speed.getX()*wfs;
+  double y = speed.getY()*wfs;
+  int rd = speed.getRD(); 
+  int ri = speed.getRI(); 
+  double px = position.getX();
+  double py = position.getY();
+  if (px > (DIMENSION-radius-0.2) || px < -(DIMENSION-radius-0.2)) 
+  {
+    die(); 
+  }
+  else if (py > (DIMENSION-radius-0.2) ||py < -(DIMENSION-radius-0.2)) 
+  {
+    die();
+  }
+  vector2D bufspeed=(vector2D(x,y,rd,ri));
+  position.increase_vector(speed);  
+  radius+=0.005;
+  compileDraw();
+  life-=killStep;
+  if(life<1) die();
+  spinnit();
 }
 void sonic::draw()
 {
