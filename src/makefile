@@ -1,0 +1,31 @@
+#-lgc -ggdb
+LDFLAGS := -framework OpenAL -framework GLUT -framework OpenGL -framework Foundation
+CXXFLAGS :=-Wall -Wextra -Wuninitialized -O2
+CC=g++
+PROG=../pewpew
+
+
+CPP_FILES := $(wildcard *.cpp)
+OBJ_FILES := $(patsubst %.cpp,%.o,$(CPP_FILES))
+DEP_FILES := $(OBJ_FILES:.o=.d)
+
+all : $(PROG)
+
+
+$(PROG) : $(DEP_FILES) $(OBJ_FILES)
+	$(CC) -o $(PROG) $(OBJ_FILES) $(LDFLAGS)
+
+-include $(DEP_FILES)
+%.d : %.cpp
+	@set -e; $(CC) -MM $(CXXFLAGS) $<  > $@;
+
+%.o : %.cpp
+	$(CC) $(CXXFLAGS) -c -o $@ $<
+
+.PHONY: clean tar
+
+clean:
+	rm *.o *.d $(PROG)
+
+tar:
+	tar -czvf $(PROG).tar *.cpp *.h
