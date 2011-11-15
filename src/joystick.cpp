@@ -56,7 +56,7 @@ int read_joystick_event(js_event *jse)
 {
   int bytes;
 
-  bytes = read(joystick_fd, jse, sizeof(*jse)); 
+  bytes = read(joystick_fd, jse, sizeof(*jse));
 
   if (bytes == -1)
     return 0;
@@ -81,12 +81,12 @@ int get_joystick_status(wwvi_js_event *my_js_out)
   js_event jse;
   if (joystick_fd < 0)
     return -1;
-  while ((rc = read_joystick_event(&jse) == 1)) 
+  while ((rc = read_joystick_event(&jse) == 1))
   {
     jse.type &= ~JS_EVENT_INIT; /* ignore synthetic events */
-    if (jse.type == JS_EVENT_AXIS) 
+    if (jse.type == JS_EVENT_AXIS)
     {
-      switch (jse.code) 
+      switch (jse.code)
       {
         case 0: js_state.stick1_x = jse.value;
                 break;
@@ -113,8 +113,30 @@ int get_joystick_status(wwvi_js_event *my_js_out)
   // printf("%d\n", wjse->stick1_y);
   return 0;
 }
-#endif
-#ifdef _WIN32
+#elif _WIN32 || _WIN64
+int open_joystick()
+{
+  return 1;
+}
+
+int rumble()
+{
+  return 1;
+}
+int read_joystick_event(js_event *jse)
+{
+  return 1;
+}
+void close_joystick()
+{
+}
+
+int get_joystick_status(wwvi_js_event *my_js_out)
+{
+
+  return 1;
+}
+#elif __APPLE__
 int open_joystick()
 {
   return 1;
