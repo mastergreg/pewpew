@@ -1,6 +1,6 @@
 #-lgc -ggdb
-LDFLAGS :=-lglut -lGL -lGLU -lalut -lopenal
-CXXFLAGS :=-Wall -Wextra -Wuninitialized -O2 -flto
+LDFLAGS := -framework OpenAL -framework GLUT -framework OpenGL -framework Foundation
+CXXFLAGS :=-Wall -Wextra -Wuninitialized -O2
 CC=g++
 PROG=../pewpew
 
@@ -13,14 +13,14 @@ all : $(PROG)
 
 
 $(PROG) : $(DEP_FILES) $(OBJ_FILES)
-	$(CC) -o $(PROG) $(OBJ_FILES) $(LDFLAGS) 
+	$(CC) -o $(PROG) $(OBJ_FILES) $(LDFLAGS)
 
 -include $(DEP_FILES)
 %.d : %.cpp
 	@set -e; $(CC) -MM $(CXXFLAGS) $<  > $@;
 
 %.o : %.cpp
-	$(CC) $(CXXFLAGS) -c -o $@ $< 
+	$(CC) $(CXXFLAGS) -c -o $@ $<
 
 .PHONY: clean tar
 
