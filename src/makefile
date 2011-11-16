@@ -12,14 +12,14 @@ DEP_FILES := $(patsubst %.cpp,dep/%.d,$(CPP_FILES))
 all : $(PROG)
 
 
-$(PROG) : $(DEP_FILES) $(OBJ_FILES)
+$(PROG) : dep obj $(DEP_FILES) $(OBJ_FILES)
 	$(CC) -o $(PROG) $(OBJ_FILES) $(LDFLAGS) 
 
 -include $(DEP_FILES)
-dep/%.d : %.cpp dep
+dep/%.d : %.cpp
 	@set -e; $(CC) -MM $(CXXFLAGS) $<  | sed "s,^$*.o,obj/$*.o," > $@;
 
-obj/%.o : %.cpp obj
+obj/%.o : %.cpp
 	$(CC) $(CXXFLAGS) -c -o $@ $< 
 dep:
 	mkdir -p dep
@@ -29,7 +29,7 @@ obj:
 .PHONY: clean tar
 
 clean:
-	rm *.o dep/*.d $(PROG)
+	rm obj/*.o dep/*.d $(PROG)
 
 tar:
 	tar -czvf $(PROG).tar *.cpp *.h

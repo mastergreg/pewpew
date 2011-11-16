@@ -6,7 +6,7 @@
 
 * Creation Date : 14-11-2011
 
-* Last Modified : Wed 16 Nov 2011 01:13:36 AM EET
+* Last Modified : Wed 16 Nov 2011 01:45:38 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -19,6 +19,8 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 class sonic : public main_weapon
 {
+  private:
+    double internal_radius;
   protected:
     GLuint theShot;
     void compileDraw();
