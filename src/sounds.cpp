@@ -6,7 +6,7 @@
 
 * Creation Date : 23-10-2011
 
-* Last Modified : Mon 24 Oct 2011 03:48:31 PM EEST
+* Last Modified : Tue 15 Nov 2011 03:19:15 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -14,11 +14,29 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 
 #include "sounds.h"
+
+
 sound_player::sound_player()
 {
   alutInit(NULL,NULL);
+  #ifdef __APPLE__
+  ALsizei size, freq;
+  ALenum format;
+  ALvoid *data;
+
+  alutLoadWAVFile("sounds/pew.wav", &format, &data, &size, &freq);
+  alBufferData(buffers[PEW], format, data, size, freq);
+  alutUnloadWAV(format,data,size,freq);
+
+  alutLoadWAVFile("sounds/blast.wav", &format, &data, &size, &freq);
+  alBufferData(buffers[BLAST], format, data, size, freq);
+  alutUnloadWAV(format,data,size,freq);
+
+  #elif __linux__ || _WIN32 || _WIN64
   buffers[PEW] = alutCreateBufferFromFile("sounds/pew.wav");
   buffers[BLAST] = alutCreateBufferFromFile("sounds/blast.wav");
+  #endif
+
 
   //alGenSources(1,&source);
   alGenSources(SOUNDS,sources);
@@ -51,4 +69,5 @@ void sound_player::play(int sound)
     alSourceStop(sources[PEW]);
     alSourceStop(sources[BLAST]);
   }
+
 }

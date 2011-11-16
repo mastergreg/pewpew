@@ -6,7 +6,7 @@
 
 * Creation Date : 05-11-2011
 
-* Last Modified : Sat 05 Nov 2011 08:12:42 PM EET
+* Last Modified : Mon 14 Nov 2011 12:19:59 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -16,12 +16,15 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 #include "game_ship.h"
 
+
 class fireUpgrade : public game_ship
 {
+    int WeaponType;
   public:
     void move();
     void draw();
-    fireUpgrade(vector2D p);
+    fireUpgrade(vector2D p,int wT);
+    int getType();
 };
 class lifeUpgrade : public game_ship
 {

@@ -6,7 +6,7 @@
 
 * Creation Date : 20-12-2008
 
-* Last Modified : Mon 14 Nov 2011 09:56:09 AM EET
+* Last Modified : Wed 16 Nov 2011 02:26:38 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -25,6 +25,7 @@ _._._._._._._._._._._._._._._._._._._._._.*/
   life=5000;
   Ttime=0;
   radius = 0.04;
+  WeaponType=0;
 }
   ship::~ship()
 {
@@ -90,7 +91,8 @@ void ship::collectFireUpgrades(std::list<game_ship *> upgrades)
   {
     if( collides((game_object *)*it)) 
     {
-
+      WeaponType = (dynamic_cast<fireUpgrade *> (*it))->getType();
+      //TODO UGLY
       upgradeWeapons(); 
       (*it)->die();
     }
@@ -160,12 +162,32 @@ void ship::drawUPArrow(game_ship * upgrade,GLfloat color[])
 }
 void ship::drawUpgradeRing(std::list<game_ship *> fireUpgradeList,std::list<game_ship *> lifeUpgradeList)
 {
-  GLfloat  FUcolor[]={1.0,0.63,0.06};
-  GLfloat  LUcolor[]={1.0,0.,0.};
+  GLfloat  FUcolor[3];
+  GLfloat  FUcolor1[3]={1.0,0.63,0.06};
+  GLfloat  FUcolor2[3]={0,1,1};
+  GLfloat  FUcolor3[3]={1,0,1};
+  GLfloat  LUcolor[3]={1.0,0.,0.};
   UpgradeCirc->draw(position);
   std::list<game_ship *>::iterator FUit=fireUpgradeList.begin();
+  int WType;
   while(FUit!=fireUpgradeList.end())
   {
+    WType = (dynamic_cast<fireUpgrade *> (* FUit))->getType();
+    switch (WType)
+    {
+      case 0:
+        std::copy(FUcolor1,FUcolor1+3,FUcolor);
+        break;
+      case 1:
+        std::copy(FUcolor2,FUcolor2+3,FUcolor);
+        break;
+      case 2:
+        std::copy(FUcolor3,FUcolor3+3,FUcolor);
+        break;
+      default:
+        std::copy(FUcolor1,FUcolor1+3,FUcolor);
+        break;
+    }
     drawUPArrow(*FUit,FUcolor);
     FUit++;
   }
@@ -176,13 +198,10 @@ void ship::drawUpgradeRing(std::list<game_ship *> fireUpgradeList,std::list<game
     LUit++;
   }
 }
-std::list<main_weapon *> ship::shoot()
+template <class T> 
+std::list<main_weapon *> ship::fireWeapon(double ang)
 {
-  return shoot(angle);
-}
-std::list<main_weapon *> ship::shoot(double ang)
-{
-  double firespeed=0.025;
+  double firespeed=0.025; //speed.length()+0.005;
   std::list<main_weapon *> rls;
   vector2D fspeed;
   vector2D fpos(position.getX()+0.05*cos(ang),position.getY()+0.05*sin(ang),0,0);
@@ -190,76 +209,100 @@ std::list<main_weapon *> ship::shoot(double ang)
   switch (WeaponLevel)
   {
     case 1:
+      
       fspeed=(vector2D(firespeed*cos(ang),firespeed*sin(ang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       break;
     case 2:
       dang=M_PI/16;
       fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       break;
     case 3:
       dang=M_PI/6;
       fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       fspeed=(vector2D(firespeed*cos(ang),firespeed*sin(ang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       break;
     case 4:
       dang=M_PI/6;
       fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       dang*=2;
       fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       fspeed=(vector2D(firespeed*cos(ang),firespeed*sin(ang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       break;
     case 5:
       dang=M_PI/12;
       fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       dang*=2;
       fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       dang*=2;
       fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       break;
     default:
       dang=M_PI/12;
       firespeed*=4;
       fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       dang*=2;
       fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       dang*=2;
       fspeed=(vector2D(firespeed*cos(ang-dang),firespeed*sin(ang-dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       fspeed=(vector2D(firespeed*cos(ang+dang),firespeed*sin(ang+dang),0,0));
-      rls.push_back(new fire(fpos,fspeed));
+      rls.push_back(new T(fpos,fspeed));
       break;
   }
   return rls;
+
+}
+std::list<main_weapon *> ship::shoot()
+{
+  return shoot(angle);
+}
+std::list<main_weapon *> ship::shoot(double ang)
+{
+  switch (WeaponType)
+  {
+    case 0:
+      return fireWeapon<fire>(ang);
+      break;
+    case 1:
+      return fireWeapon<pulse>(ang);
+      break;
+    case 2:
+      return fireWeapon<sonic>(ang);
+      break;
+    default:
+      return fireWeapon<fire>(ang);
+      break;
+  }
 }
 
 

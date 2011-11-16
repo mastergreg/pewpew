@@ -6,7 +6,7 @@
 
 * Creation Date : 20-12-2008
 
-* Last Modified : Mon 14 Nov 2011 12:23:29 AM EET
+* Last Modified : Mon 14 Nov 2011 09:46:37 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -18,6 +18,7 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #include "game_ship.h"
 #include "fire_weapon.h"
 #include "pulse_weapon.h"
+#include "sonic_weapon.h"
 #include "upgrades.h"
 
 
@@ -29,6 +30,9 @@ class ship : public game_ship
     void drawUPArrow(game_ship * upgrade,GLfloat color[3]);
     std::list<game_object *> tail;
     int Ttime;
+    int WeaponType;
+    template <class T> 
+      std::list<main_weapon*> fireWeapon(double angle);
   public:
     void accelerate();
     void decelerate();

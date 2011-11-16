@@ -6,7 +6,7 @@
 
 * Creation Date : 13-11-2011
 
-* Last Modified : Mon 14 Nov 2011 09:54:35 AM EET
+* Last Modified : Mon 14 Nov 2011 10:27:24 PM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -16,8 +16,10 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 pulse::pulse(vector2D p,vector2D s)
 :main_weapon(p,s)
 {
-  life = 500;
+  life = 5000;
   radius = 0.05;
+  killStep = 150;
+  wfs=0.2;
   compileDraw();
 
 }
@@ -27,9 +29,12 @@ void pulse::compileDraw()
   int i; //TODO optimize this
   glNewList(theShot,GL_COMPILE);
   glBegin(GL_POINTS);
-  for(i=0;i<=360;i++)
+  for(i=0;i<=90;i++)
   {
-    glVertex3f(0.06*sin(i),0.01*cos(i),0);
+    glVertex3f(0.04*sin(i),0.008*cos(i),0);
+    glVertex3f(-0.04*sin(i),0.008*cos(i),0);
+    glVertex3f(0.04*sin(i),-0.008*cos(i),0);
+    glVertex3f(-0.04*sin(i),-0.008*cos(i),0);
   }
   glEnd();
   glEndList();
