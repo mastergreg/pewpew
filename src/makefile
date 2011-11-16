@@ -6,8 +6,8 @@ PROG=../pewpew
 
 
 CPP_FILES := $(wildcard *.cpp)
-OBJ_FILES := $(patsubst %.cpp,%.o,$(CPP_FILES))
-DEP_FILES := $(OBJ_FILES:.o=.d)
+OBJ_FILES := $(patsubst %.cpp,obj/%.o,$(CPP_FILES))
+DEP_FILES := $(patsubst %.cpp,dep/%.d,$(CPP_FILES))
 
 all : $(PROG)
 
@@ -16,16 +16,20 @@ $(PROG) : $(DEP_FILES) $(OBJ_FILES)
 	$(CC) -o $(PROG) $(OBJ_FILES) $(LDFLAGS) 
 
 -include $(DEP_FILES)
-%.d : %.cpp
-	@set -e; $(CC) -MM $(CXXFLAGS) $<  > $@;
+dep/%.d : %.cpp dep
+	@set -e; $(CC) -MM $(CXXFLAGS) $<  | sed "s,^$*.o,obj/$*.o," > $@;
 
-%.o : %.cpp
+obj/%.o : %.cpp obj
 	$(CC) $(CXXFLAGS) -c -o $@ $< 
+dep:
+	mkdir -p dep
+obj:
+	mkdir -p obj
 
 .PHONY: clean tar
 
 clean:
-	rm *.o *.d $(PROG)
+	rm *.o dep/*.d $(PROG)
 
 tar:
 	tar -czvf $(PROG).tar *.cpp *.h
