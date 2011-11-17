@@ -1,6 +1,6 @@
 #-lgc -ggdb
 LDFLAGS :=-lglut -lGL -lGLU -lalut -lopenal
-CXXFLAGS :=
+CXXFLAGS := -O2
 CC=g++
 PROG=../pewpew
 
@@ -12,14 +12,16 @@ DEP_FILES := $(patsubst %.cpp,dep/%.d,$(CPP_FILES))
 all : $(PROG)
 
 
-$(PROG) : dep obj $(DEP_FILES) $(OBJ_FILES)
+$(PROG) : $(DEP_FILES) $(OBJ_FILES)
 	$(CC) -o $(PROG) $(OBJ_FILES) $(LDFLAGS) 
 
 -include $(DEP_FILES)
 dep/%.d : %.cpp
-	@set -e; $(CC) -MM $(CXXFLAGS) $<  | sed "s,^$*.o,obj/$*.o," > $@;
+	@mkdir -p dep;
+	$(CC) -MM $(CXXFLAGS) $<  | sed "s,^$*.o,obj/$*.o," > $@;
 
 obj/%.o : %.cpp
+	@mkdir -p obj;
 	$(CC) $(CXXFLAGS) -c -o $@ $< 
 dep:
 	mkdir -p dep
