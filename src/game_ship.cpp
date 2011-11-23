@@ -6,7 +6,7 @@
 
 * Creation Date : 05-11-2011
 
-* Last Modified : Sun 06 Nov 2011 07:08:07 PM EET
+* Last Modified : Wed 23 Nov 2011 10:40:27 AM EET
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -80,6 +80,7 @@ void game_ship::move()
   double y = speed.getY();
   int rd = speed.getRD(); 
   int ri = speed.getRI();
+  position.increase_vector(speed);  
   double px = position.getX();
   double py = position.getY();
   if(x>0) 
@@ -97,13 +98,18 @@ void game_ship::move()
   if (px > (DIMENSION-radius-0.2) ||px < -(DIMENSION-radius-0.2)) 
   {
     x*=-1;
+    position.decrease_vector(speed);
+    speed=vector2D(x,y,rd,ri);
+    position.increase_vector(speed);
+    
   }
   if (py > (DIMENSION-radius-0.2) ||py < -(DIMENSION-radius-0.2)) 
   {
     y*=-1;
+    position.decrease_vector(speed);
+    speed=vector2D(x,y,rd,ri);
+    position.increase_vector(speed);
   }
-  speed=vector2D(x,y,rd,ri);
-  position.increase_vector(speed);  
   spinnit();
 
 }

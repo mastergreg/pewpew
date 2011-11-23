@@ -1,5 +1,5 @@
 #-lgc -ggdb
-LDFLAGS :=-Wl,-Bstatic -lglut -lalut -Wl,-Bdynamic -lGLU -lopenal -lGL
+LDFLAGS :=-lglut -lalut -lGLU -lopenal -lGL
 CXXFLAGS :=-Wall -Wextra -Wuninitialized -O2 -flto
 CC=g++
 PROG=../pewpew

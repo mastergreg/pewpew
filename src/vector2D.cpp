@@ -7,6 +7,11 @@ void vector2D::increase_vector(vector2D v)
   x+=v.x;
   y+=v.y;
 }
+void vector2D::decrease_vector(vector2D v)
+{
+  x-=v.x;
+  y-=v.y;
+}
 vector2D::vector2D()
 {
   x=0;
