@@ -3,7 +3,9 @@
 *.txt
 *.d
 *.tar
+.deps
 helpers
 pewpew
 rara
 mp3
+autom4te.cache
