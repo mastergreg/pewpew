@@ -1,15 +1,3 @@
-## DEPENDENCIES
-
-* compiler:
-  1. g++ or equivalent compiler
-  2. make (optional)
-* libs:
-  1. freeglut3-dev
-  2. libalut-dev
-
-
-## LICENSE
-
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 

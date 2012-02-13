@@ -7,6 +7,11 @@ void vector2D::increase_vector(vector2D v)
   x+=v.x;
   y+=v.y;
 }
+void vector2D::decrease_vector(vector2D v)
+{
+  x-=v.x;
+  y-=v.y;
+}
 vector2D::vector2D()
 {
   x=0;
@@ -38,8 +43,14 @@ void vector2D::soft_scale()
 {
   double factor=1;
   double fx = 100000*sqrt(x*x+y*y) ;
-  if (fx<SPEED_MAX && fx>SPEED_MIN)
+  if (fx > SPEED_MAX)
   {
+    fx = SPEED_MAX-128;
+  }
+  else  if (fx < SPEED_MIN)
+  {
+    fx = SPEED_MIN+128;
+  }
     if (remaining_inc > 0)
     {
       factor = fabs(1+10/fx);
@@ -48,8 +59,7 @@ void vector2D::soft_scale()
     {
       factor = fabs(1-10/fx);
     }
-    scale(factor,factor);
-  }
+  scale(factor,factor);
 }
 void vector2D::increase_reset()
 {
