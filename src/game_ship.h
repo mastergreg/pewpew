@@ -6,7 +6,7 @@
 
 * Creation Date : 05-11-2011
 
-* Last Modified : Sun 06 Nov 2011 07:06:27 PM EET
+* Last Modified : Sat 18 Aug 2012 01:26:26 PM EEST
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -26,13 +26,13 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 class game_ship : public game_object
 {
-  protected:
+protected:
     double angle;
     vector2D speed;
     double spini;
     double spinnit();
     int points;
-  public:
+public:
     virtual void die();
     virtual void move();
     double get_angle();
@@ -42,7 +42,7 @@ class game_ship : public game_object
     vector2D get_speed();
     bool isAlive();
     void set_speed(vector2D new_speed);
-    std::list<game_object *> collisions(std::list<game_ship *> lst);
+    std::list<game_object *> collisions(std::list<game_ship *> &lst);
     vector2D get_pos();
 };
 

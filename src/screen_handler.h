@@ -18,13 +18,13 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 class screen_handler
 {
-  protected:
+protected:
     int WINDOW_SIZEY;
     int WINDOW_SIZEX;
     void *font;
     void *tinyFont;
     virtual void playStick();
-  public:
+public:
     screen_handler();
     virtual void display();
     virtual void reshape(int w,int h);

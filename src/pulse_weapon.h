@@ -18,10 +18,10 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 class pulse : public main_weapon
 {
-  protected:
+protected:
     GLuint theShot;
     void compileDraw();
-  public:
+public:
     pulse(vector2D p,vector2D s);
     void draw();
 

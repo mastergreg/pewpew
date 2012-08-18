@@ -14,6 +14,7 @@
 #include "pewpew.h"
 #include "joystick.h"
 #include "screen_handler.h"
+#include "high_score_handler.h"
 
 #include "defaults.h"
 
@@ -36,6 +37,7 @@ class level : public screen_handler
     int ZoomLevel;
     bool firstLaunch;
     bool xploded;
+    bool highScoreSaved;
     std::list<game_ship *> fireList;
     std::list<game_ship *> enemyList;
     std::list<game_ship *> fireUpgradeList;
@@ -53,7 +55,7 @@ class level : public screen_handler
     void drawGrid();
     void show_score(double x,double y,int score);
     void displayLife();
-    void collisionDetect(std::list<game_ship *> bullets,std::list<game_ship *> enemies);
+    void collisionDetect(std::list<game_ship *> &bullets,std::list<game_ship *> &enemies);
     void globalCollisions();
     void clearDead();
     void moveAll();
@@ -68,10 +70,12 @@ class level : public screen_handler
     void drawMenu(int choice);
     void drawInfoScreen();
     void ZooMStart();
+    void saveHighScore();
     void shipExplode(vector2D position);
     void insertScoreTag(vector2D position, int points);
     sound_player sndp;
-  public:
+    high_score_handler hs;
+public:
     level();
     void reset();
     void increaseScore(int points);

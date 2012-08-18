@@ -20,7 +20,7 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 class fireUpgrade : public game_ship
 {
     int WeaponType;
-  public:
+public:
     void move();
     void draw();
     fireUpgrade(vector2D p,int wT);
@@ -28,7 +28,7 @@ class fireUpgrade : public game_ship
 };
 class lifeUpgrade : public game_ship
 {
-  public:
+public:
     void move();
     void draw();
     lifeUpgrade(vector2D p);

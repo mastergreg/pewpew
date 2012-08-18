@@ -19,7 +19,7 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 class dummyship : public game_ship
 {
-  public:
+public:
     void draw();
     void die();
     dummyship(vector2D pos,vector2D sp);

@@ -19,12 +19,12 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 class sonic : public main_weapon
 {
-  private:
+private:
     double internal_radius;
-  protected:
+protected:
     GLuint theShot;
     void compileDraw();
-  public:
+public:
     void move();
     sonic(vector2D p,vector2D s);
     void draw();

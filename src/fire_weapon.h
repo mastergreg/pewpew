@@ -17,10 +17,10 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #include "main_weapon.h"
 class fire : public main_weapon
 {
-  private:
+private:
     GLuint theShot;
     void compileDraw();
-  public:
+public:
     fire(vector2D posit,vector2D sp);
     void draw();
 };

@@ -6,7 +6,7 @@
 
 * Creation Date : 01-11-2011
 
-* Last Modified : Tue 01 Nov 2011 02:17:48 PM EET
+* Last Modified : Sat 18 Aug 2012 05:26:00 PM EEST
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -21,29 +21,40 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #include <ostream>
 #include <vector>
 #include <string>
+#include <cstdlib>
+#include <sys/stat.h>
+#include <sys/types.h>
+
+
+#define MAX_SCORES 10
 
 class h_score
 {
-  private:
+private:
     std::string name;
     unsigned int score;
-  public:
+public:
     friend bool operator < (h_score,h_score);
     friend std::ostream& operator << (std::ostream& out,h_score& a);
+    std::string *to_str();
     h_score(std::string n,unsigned int s);
 };
 class high_score_handler
 {
-  private:
-    std::fstream score_file;
+private:
+    std::ofstream *of_score_file;
+    std::ifstream *if_score_file;
     std::vector<h_score *> scores;
-  public:
+    char high_scores_path[100];
+public:
     friend std::ostream& operator << (std::ostream& out,high_score_handler& a);
     void load_scores();
     void insert_score(std::string n,unsigned int s);
     void save_scores();
+    void get_scores(std::vector<std::string *> &myscores);
     high_score_handler();
-    
+    ~high_score_handler();
+
 };
 
 

@@ -34,25 +34,26 @@
 
 #define JS_EVENT_BUTTON         0x01
 #define JS_EVENT_AXIS           0x02    /* joystick moved */
-#define JS_EVENT_INIT           0x80  
+#define JS_EVENT_INIT           0x80
 
 #endif //ifdef linux
 
-struct js_event {
+struct js_event
+{
     unsigned int time; /* event timestamp in milliseconds */
     short value; /* value */
     unsigned char type; /* event type */
     unsigned char code; /* axis/button number */
-    };
+};
 typedef struct js_event js_event;
 
-struct wwvi_js_event 
+struct wwvi_js_event
 {
-  int button[32];
-  int stick1_x;
-  int stick1_y;
-  int stick2_x;
-  int stick2_y;
+    int button[32];
+    int stick1_x;
+    int stick1_y;
+    int stick2_x;
+    int stick2_y;
 };
 
 typedef struct wwvi_js_event wwvi_js_event;

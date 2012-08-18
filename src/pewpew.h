@@ -6,7 +6,7 @@
 
 * Creation Date : 20-10-2011
 
-* Last Modified : Sun 06 Nov 2011 03:15:16 PM EET
+* Last Modified : Sat 18 Aug 2012 02:26:13 PM EEST
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -29,6 +29,7 @@ void new_game(void);
 void gpause(void);
 void back(void);
 void info_action(void);
+void scores_action(void);
 void option_action(void);
 void sound_off(void);
 void sound_on(void);

@@ -15,17 +15,17 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #define GAME_STATE_H
 class game_state
 {
-  public: 
-  bool paused;
-  bool sounds_on;
-  unsigned int diffifulty_level;
-  unsigned int level_type;
-  unsigned int player_ship_type;
-  game_state();
-  void gs_run(void);
-  void gs_pause(void);
-  void gs_sound_off(void);
-  void gs_sound_on(void);
+public:
+    bool paused;
+    bool sounds_on;
+    unsigned int diffifulty_level;
+    unsigned int level_type;
+    unsigned int player_ship_type;
+    game_state();
+    void gs_run(void);
+    void gs_pause(void);
+    void gs_sound_off(void);
+    void gs_sound_on(void);
 };
 
 

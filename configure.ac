@@ -1,5 +1,5 @@
 AC_PREREQ(2.59)
-AC_INIT([pewpew],[1.0],[gregliras@gmail.com])
+AC_INIT([pewpew],[1.1],[gregliras@gmail.com])
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])

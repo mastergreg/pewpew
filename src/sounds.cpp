@@ -18,56 +18,56 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 sound_player::sound_player()
 {
-  alutInit(NULL,NULL);
-  #ifdef __APPLE__
-  ALsizei size, freq;
-  ALenum format;
-  ALvoid *data;
+    alutInit(NULL,NULL);
+#ifdef __APPLE__
+    ALsizei size, freq;
+    ALenum format;
+    ALvoid *data;
 
-  alutLoadWAVFile("sounds/pew.wav", &format, &data, &size, &freq);
-  alBufferData(buffers[PEW], format, data, size, freq);
-  alutUnloadWAV(format,data,size,freq);
+    alutLoadWAVFile("sounds/pew.wav", &format, &data, &size, &freq);
+    alBufferData(buffers[PEW], format, data, size, freq);
+    alutUnloadWAV(format,data,size,freq);
 
-  alutLoadWAVFile("sounds/blast.wav", &format, &data, &size, &freq);
-  alBufferData(buffers[BLAST], format, data, size, freq);
-  alutUnloadWAV(format,data,size,freq);
+    alutLoadWAVFile("sounds/blast.wav", &format, &data, &size, &freq);
+    alBufferData(buffers[BLAST], format, data, size, freq);
+    alutUnloadWAV(format,data,size,freq);
 
-  #elif __linux__ || _WIN32 || _WIN64
-  buffers[PEW] = alutCreateBufferFromFile("sounds/pew.wav");
-  buffers[BLAST] = alutCreateBufferFromFile("sounds/blast.wav");
-  #endif
+#elif __linux__ || _WIN32 || _WIN64
+    buffers[PEW] = alutCreateBufferFromFile("sounds/pew.wav");
+    buffers[BLAST] = alutCreateBufferFromFile("sounds/blast.wav");
+#endif
 
 
-  //alGenSources(1,&source);
-  alGenSources(SOUNDS,sources);
+    //alGenSources(1,&source);
+    alGenSources(SOUNDS,sources);
 
-  alSourcei(sources[PEW],AL_BUFFER,buffers[PEW]);
-  alSourcei(sources[PEW],AL_LOOPING,AL_FALSE);
+    alSourcei(sources[PEW],AL_BUFFER,buffers[PEW]);
+    alSourcei(sources[PEW],AL_LOOPING,AL_FALSE);
 
-  alSourcei(sources[BLAST],AL_BUFFER,buffers[BLAST]);
-  alSourcei(sources[BLAST],AL_LOOPING,AL_FALSE);
+    alSourcei(sources[BLAST],AL_BUFFER,buffers[BLAST]);
+    alSourcei(sources[BLAST],AL_LOOPING,AL_FALSE);
 }
 
 void sound_player::play(int sound)
 {
-  if (gs.sounds_on == 1)
-  {
-    switch(sound)
+    if (gs.sounds_on == 1)
     {
-      case PEW:
-        alSourcePlay(sources[PEW]);
-        break;
-      case BLAST:
-        alSourcePlay(sources[BLAST]);
-        break;
-      default:
-        break;
+        switch(sound)
+        {
+        case PEW:
+            alSourcePlay(sources[PEW]);
+            break;
+        case BLAST:
+            alSourcePlay(sources[BLAST]);
+            break;
+        default:
+            break;
+        }
     }
-  }
-  else
-  {
-    alSourceStop(sources[PEW]);
-    alSourceStop(sources[BLAST]);
-  }
+    else
+    {
+        alSourceStop(sources[PEW]);
+        alSourceStop(sources[BLAST]);
+    }
 
 }

@@ -18,15 +18,15 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #include <GL/glut.h>
 class button
 {
-  private:
+private:
     std::string text;
     void (*btn_action)(void);
-  protected:
+protected:
     bool hoover;
     GLfloat X,Y,sizeX,sizeY;
     void *font;
     GLuint theButton;
-  public:
+public:
     button();
     button(GLfloat x,GLfloat y,std::string txt,void (*action)(void),GLfloat sizex = 4.4,GLfloat sizey = 0.4);
     virtual void draw();
@@ -37,14 +37,14 @@ class button
 };
 class toogle_button: public button
 {
-  private:
+private:
     std::string text_on;
     std::string text_off;
     bool on;
     void (*btn_action_on)(void);
     void (*btn_action_off)(void);
 
-  public:
+public:
     toogle_button(GLfloat x,GLfloat y,std::string txt_on,void (*action_on)(void),std::string txt_off,void (*action_off)(void),GLfloat sizex = 4.4,GLfloat sizey = 0.4);
     void draw();
     void activate();

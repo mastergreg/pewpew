@@ -18,12 +18,12 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 class spiralShip : public game_ship
 {
-  private:
+private:
     std::list<vector2D *> pattern;
     std::list<game_object *> tail;
     int Ttime;
     bool rot;
-  public:
+public:
     void draw();
     void die();
     void move();

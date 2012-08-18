@@ -31,9 +31,9 @@ class ship : public game_ship
     std::list<game_object *> tail;
     int Ttime;
     int WeaponType;
-    template <class T> 
-      std::list<main_weapon*> fireWeapon(double angle);
-  public:
+    template <class T>
+    std::list<main_weapon*> fireWeapon(double angle);
+public:
     void accelerate();
     void decelerate();
     void release_acc();

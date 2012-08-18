@@ -32,10 +32,10 @@ extern game_state gs;
 enum {PEW,BLAST};
 class sound_player
 {
-  private:
+private:
     unsigned int buffers[SOUNDS];
     unsigned int sources[SOUNDS];
-  public:
+public:
     void play(int sound);
     sound_player();
 };

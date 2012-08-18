@@ -21,12 +21,12 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 class main_weapon : public game_ship
 {
-  protected:
+protected:
     GLuint theShot;
     virtual void compileDraw();
     int killStep;
     double wfs;
-  public:
+public:
     virtual void move();
     main_weapon(vector2D posit,vector2D sp);
     virtual void draw();

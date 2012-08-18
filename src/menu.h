@@ -6,7 +6,7 @@
 
 * Creation Date : 19-10-2011
 
-* Last Modified : Wed 02 Nov 2011 09:49:53 PM EET
+* Last Modified : Sat 18 Aug 2012 02:25:22 PM EEST
 
 * Created By : Greg Liras <gregliras@gmail.com>
 
@@ -17,18 +17,20 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 #include "level.h"
 #include "menu_items.h"
 #include "screen_handler.h"
+#include "high_score_handler.h"
 #include <vector>
 #include <GL/glut.h>
+#include <string>
 class menu : public screen_handler
 {
-  protected:
+protected:
     GLfloat nextX,nextY;
     void drawMenu(int choice);
     std::vector<button *> options;
     unsigned int Mchoice;
     void drawGrid();
     void playStick();
-  public:
+public:
     menu();
     virtual void display();
     void reshape(int w,int h);
@@ -41,11 +43,22 @@ class menu : public screen_handler
 };
 class infoscreen:public menu
 {
-  private:
+private:
     void *tinyFont;
     std::string text;
-  public:
+public:
     infoscreen(std::string t);
+    void display();
+};
+
+class scorescreen:public menu
+{
+private:
+    void *tinyFont;
+    high_score_handler hs;
+    std::vector<std::string *> hscores;
+public:
+    scorescreen();
     void display();
 };
 

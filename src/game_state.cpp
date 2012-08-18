@@ -15,25 +15,25 @@ _._._._._._._._._._._._._._._._._._._._._.*/
 
 game_state::game_state()
 {
-  paused = true;
-  sounds_on = true;
-  diffifulty_level = 0;
-  level_type = 0;
-  player_ship_type = 0;
+    paused = true;
+    sounds_on = true;
+    diffifulty_level = 0;
+    level_type = 0;
+    player_ship_type = 0;
 }
 void game_state::gs_run(void)
 {
-  paused = false;
+    paused = false;
 }
 void game_state::gs_pause(void)
 {
-  paused = true;
+    paused = true;
 }
 void game_state::gs_sound_off(void)
 {
-  sounds_on = false;
+    sounds_on = false;
 }
 void game_state::gs_sound_on(void)
 {
-  sounds_on = true;
+    sounds_on = true;
 }
